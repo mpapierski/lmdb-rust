@@ -1,0 +1,19 @@
+[workspace]
+members = [
+]
+[package]
+name = "lmdb_rust"
+authors = ["C2Rust"]
+version = "0.0.0"
+publish = false
+edition = "2021"
+autobins = false
+
+[lib]
+name = "lmdb_rust"
+
+[dependencies]
+libc = "0.2"
+
+[dev-dependencies]
+tempfile = "3.14.0"

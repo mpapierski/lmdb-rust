@@ -31,34 +31,15 @@ extern "C" {
         __size: size_t,
     ) -> libc::c_int;
     fn abort() -> !;
-    fn memcmp(
-        _: *const libc::c_void,
-        _: *const libc::c_void,
-        _: libc::c_ulong,
-    ) -> libc::c_int;
-    fn memcpy(
-        _: *mut libc::c_void,
-        _: *const libc::c_void,
-        _: libc::c_ulong,
-    ) -> *mut libc::c_void;
-    fn memmove(
-        _: *mut libc::c_void,
-        _: *const libc::c_void,
-        _: libc::c_ulong,
-    ) -> *mut libc::c_void;
-    fn memset(
-        _: *mut libc::c_void,
-        _: libc::c_int,
-        _: libc::c_ulong,
-    ) -> *mut libc::c_void;
+    fn memcmp(_: *const libc::c_void, _: *const libc::c_void, _: libc::c_ulong) -> libc::c_int;
+    fn memcpy(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
+    fn memmove(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong)
+        -> *mut libc::c_void;
+    fn memset(_: *mut libc::c_void, _: libc::c_int, _: libc::c_ulong) -> *mut libc::c_void;
     fn strcpy(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
     fn strerror(_: libc::c_int) -> *mut libc::c_char;
     fn strlen(_: *const libc::c_char) -> libc::c_ulong;
-    fn strncmp(
-        _: *const libc::c_char,
-        _: *const libc::c_char,
-        _: libc::c_ulong,
-    ) -> libc::c_int;
+    fn strncmp(_: *const libc::c_char, _: *const libc::c_char, _: libc::c_ulong) -> libc::c_int;
     fn strdup(_: *const libc::c_char) -> *mut libc::c_char;
     fn close(_: libc::c_int) -> libc::c_int;
     fn getpid() -> pid_t;
@@ -80,39 +61,29 @@ extern "C" {
     fn fsync(_: libc::c_int) -> libc::c_int;
     fn ftruncate(_: libc::c_int, _: off_t) -> libc::c_int;
     fn pthread_cond_destroy(_: *mut pthread_cond_t) -> libc::c_int;
-    fn pthread_cond_init(
-        _: *mut pthread_cond_t,
-        _: *const pthread_condattr_t,
-    ) -> libc::c_int;
+    fn pthread_cond_init(_: *mut pthread_cond_t, _: *const pthread_condattr_t) -> libc::c_int;
     fn pthread_cond_signal(_: *mut pthread_cond_t) -> libc::c_int;
     fn pthread_cond_wait(_: *mut pthread_cond_t, _: *mut pthread_mutex_t) -> libc::c_int;
     fn pthread_create(
         _: *mut pthread_t,
         _: *const pthread_attr_t,
-        _: Option::<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        _: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
         _: *mut libc::c_void,
     ) -> libc::c_int;
     fn pthread_getspecific(_: pthread_key_t) -> *mut libc::c_void;
     fn pthread_join(_: pthread_t, _: *mut *mut libc::c_void) -> libc::c_int;
     fn pthread_key_create(
         _: *mut pthread_key_t,
-        _: Option::<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
+        _: Option<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
     ) -> libc::c_int;
     fn pthread_key_delete(_: pthread_key_t) -> libc::c_int;
     fn pthread_mutex_destroy(_: *mut pthread_mutex_t) -> libc::c_int;
-    fn pthread_mutex_init(
-        _: *mut pthread_mutex_t,
-        _: *const pthread_mutexattr_t,
-    ) -> libc::c_int;
+    fn pthread_mutex_init(_: *mut pthread_mutex_t, _: *const pthread_mutexattr_t) -> libc::c_int;
     fn pthread_mutex_lock(_: *mut pthread_mutex_t) -> libc::c_int;
     fn pthread_mutex_unlock(_: *mut pthread_mutex_t) -> libc::c_int;
     fn pthread_self() -> pthread_t;
     fn pthread_setspecific(_: pthread_key_t, _: *const libc::c_void) -> libc::c_int;
-    fn pthread_sigmask(
-        _: libc::c_int,
-        _: *const sigset_t,
-        _: *mut sigset_t,
-    ) -> libc::c_int;
+    fn pthread_sigmask(_: libc::c_int, _: *const sigset_t, _: *mut sigset_t) -> libc::c_int;
     fn sigwait(_: *const sigset_t, _: *mut libc::c_int) -> libc::c_int;
     fn ftok(_: *const libc::c_char, _: libc::c_int) -> key_t;
     fn semctl(_: libc::c_int, _: libc::c_int, _: libc::c_int, _: ...) -> libc::c_int;
@@ -125,11 +96,7 @@ extern "C" {
     fn mdb_midl_need(idp: *mut MDB_IDL, num: libc::c_uint) -> libc::c_int;
     fn mdb_midl_append(idp: *mut MDB_IDL, id: MDB_ID) -> libc::c_int;
     fn mdb_midl_append_list(idp: *mut MDB_IDL, app: MDB_IDL) -> libc::c_int;
-    fn mdb_midl_append_range(
-        idp: *mut MDB_IDL,
-        id: MDB_ID,
-        n: libc::c_uint,
-    ) -> libc::c_int;
+    fn mdb_midl_append_range(idp: *mut MDB_IDL, id: MDB_ID, n: libc::c_uint) -> libc::c_int;
     fn mdb_midl_xmerge(idl: MDB_IDL, merge: MDB_IDL);
     fn mdb_midl_sort(ids: MDB_IDL);
     fn mdb_mid2l_search(ids: MDB_ID2L, id: MDB_ID) -> libc::c_uint;
@@ -157,7 +124,7 @@ pub type __darwin_uid_t = __uint32_t;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct __darwin_pthread_handler_rec {
-    pub __routine: Option::<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
+    pub __routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
     pub __arg: *mut libc::c_void,
     pub __next: *mut __darwin_pthread_handler_rec,
 }
@@ -289,23 +256,13 @@ pub struct __sFILE {
     pub _bf: __sbuf,
     pub _lbfsize: libc::c_int,
     pub _cookie: *mut libc::c_void,
-    pub _close: Option::<unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int>,
-    pub _read: Option::<
-        unsafe extern "C" fn(
-            *mut libc::c_void,
-            *mut libc::c_char,
-            libc::c_int,
-        ) -> libc::c_int,
+    pub _close: Option<unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int>,
+    pub _read: Option<
+        unsafe extern "C" fn(*mut libc::c_void, *mut libc::c_char, libc::c_int) -> libc::c_int,
     >,
-    pub _seek: Option::<
-        unsafe extern "C" fn(*mut libc::c_void, fpos_t, libc::c_int) -> fpos_t,
-    >,
-    pub _write: Option::<
-        unsafe extern "C" fn(
-            *mut libc::c_void,
-            *const libc::c_char,
-            libc::c_int,
-        ) -> libc::c_int,
+    pub _seek: Option<unsafe extern "C" fn(*mut libc::c_void, fpos_t, libc::c_int) -> fpos_t>,
+    pub _write: Option<
+        unsafe extern "C" fn(*mut libc::c_void, *const libc::c_char, libc::c_int) -> libc::c_int,
     >,
     pub _ub: __sbuf,
     pub _extra: *mut __sFILEX,
@@ -396,7 +353,7 @@ pub struct MDB_env {
     pub me_rmutex: mdb_mutex_t,
     pub me_wmutex: mdb_mutex_t,
     pub me_userctx: *mut libc::c_void,
-    pub me_assert_func: Option::<MDB_assert_func>,
+    pub me_assert_func: Option<MDB_assert_func>,
 }
 pub type MDB_assert_func = unsafe extern "C" fn(*mut MDB_env, *const libc::c_char) -> ();
 pub type mdb_mutex_t = [mdb_mutex; 1];
@@ -456,9 +413,9 @@ pub type txnid_t = MDB_ID;
 #[repr(C)]
 pub struct MDB_dbx {
     pub md_name: MDB_val,
-    pub md_cmp: Option::<MDB_cmp_func>,
-    pub md_dcmp: Option::<MDB_cmp_func>,
-    pub md_rel: Option::<MDB_rel_func>,
+    pub md_cmp: Option<MDB_cmp_func>,
+    pub md_dcmp: Option<MDB_cmp_func>,
+    pub md_rel: Option<MDB_rel_func>,
     pub md_relctx: *mut libc::c_void,
 }
 pub type MDB_rel_func = unsafe extern "C" fn(
@@ -473,10 +430,7 @@ pub struct MDB_val {
     pub mv_size: size_t,
     pub mv_data: *mut libc::c_void,
 }
-pub type MDB_cmp_func = unsafe extern "C" fn(
-    *const MDB_val,
-    *const MDB_val,
-) -> libc::c_int;
+pub type MDB_cmp_func = unsafe extern "C" fn(*const MDB_val, *const MDB_val) -> libc::c_int;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct MDB_txn {
@@ -731,10 +685,7 @@ pub const Mask: C2RustUnnamed_10 = 49232;
 pub type C2RustUnnamed_10 = libc::c_uint;
 pub const MDB_END_EMPTY_COMMIT: C2RustUnnamed_12 = 1;
 pub const MDB_END_RESET: C2RustUnnamed_12 = 3;
-pub type MDB_msg_func = unsafe extern "C" fn(
-    *const libc::c_char,
-    *mut libc::c_void,
-) -> libc::c_int;
+pub type MDB_msg_func = unsafe extern "C" fn(*const libc::c_char, *mut libc::c_void) -> libc::c_int;
 pub type C2RustUnnamed_11 = libc::c_uint;
 pub type C2RustUnnamed_12 = libc::c_uint;
 pub const __DARWIN_NULL: libc::c_int = 0 as libc::c_int;
@@ -794,10 +745,7 @@ pub const MDB_VERSION_MAJOR: libc::c_int = 0 as libc::c_int;
 pub const MDB_VERSION_MINOR: libc::c_int = 9 as libc::c_int;
 pub const MDB_VERSION_PATCH: libc::c_int = 70 as libc::c_int;
 pub const MDB_VERSION_STRING: [libc::c_char; 33] = unsafe {
-    *::core::mem::transmute::<
-        &[u8; 33],
-        &[libc::c_char; 33],
-    >(b"LMDB 0.9.70: (December 19, 2015)\0")
+    *::core::mem::transmute::<&[u8; 33], &[libc::c_char; 33]>(b"LMDB 0.9.70: (December 19, 2015)\0")
 };
 pub const MDB_FIXEDMAP: libc::c_int = 0x1 as libc::c_int;
 pub const MDB_NOSUBDIR: libc::c_int = 0x4000 as libc::c_int;
@@ -828,7 +776,7 @@ pub const MDB_MULTIPLE: libc::c_int = 0x80000 as libc::c_int;
 pub const MDB_CP_COMPACT: libc::c_int = 0x1 as libc::c_int;
 pub const MDB_SUCCESS: libc::c_int = 0 as libc::c_int;
 pub const MDB_KEYEXIST: libc::c_int = -(30799 as libc::c_int);
-pub const MDB_NOTFOUND: libc::c_int = -(30798 as libc::c_int);
+pub const MDB_NOTFOUND: libc::c_int = -30798;
 pub const MDB_PAGE_NOTFOUND: libc::c_int = -(30797 as libc::c_int);
 pub const MDB_CORRUPTED: libc::c_int = -(30796 as libc::c_int);
 pub const MDB_PANIC: libc::c_int = -(30795 as libc::c_int);
@@ -849,8 +797,7 @@ pub const MDB_BAD_DBI: libc::c_int = -(30780 as libc::c_int);
 pub const MDB_PROBLEM: libc::c_int = -(30779 as libc::c_int);
 pub const MDB_LAST_ERRCODE: libc::c_int = MDB_PROBLEM;
 pub const MDB_IDL_LOGN: libc::c_int = 16 as libc::c_int;
-pub const MDB_IDL_UM_SIZE: libc::c_int = (1 as libc::c_int)
-    << MDB_IDL_LOGN + 1 as libc::c_int;
+pub const MDB_IDL_UM_SIZE: libc::c_int = (1 as libc::c_int) << MDB_IDL_LOGN + 1 as libc::c_int;
 pub const MDB_IDL_UM_MAX: libc::c_int = MDB_IDL_UM_SIZE - 1 as libc::c_int;
 pub const NULL: libc::c_int = 0 as libc::c_int;
 pub const UINT_MAX: libc::c_uint = 0xffffffff as libc::c_uint;
@@ -874,7 +821,11 @@ unsafe extern "C" fn mdb_sem_wait(mut sem: mdb_mutexref_t) -> libc::c_int {
     sb.sem_num = (*sem).semnum as libc::c_ushort;
     loop {
         if semop((*sem).semid, &mut sb, 1 as libc::c_int as size_t) == 0 {
-            rc = if *locked != 0 { MDB_OWNERDEAD } else { MDB_SUCCESS };
+            rc = if *locked != 0 {
+                MDB_OWNERDEAD
+            } else {
+                MDB_SUCCESS
+            };
             *locked = 1 as libc::c_int;
             break;
         } else {
@@ -911,10 +862,14 @@ pub const F_DUPDATA: libc::c_int = 0x4 as libc::c_int;
 pub const NODE_ADD_FLAGS: libc::c_int = F_DUPDATA | F_SUBDATA | MDB_RESERVE | MDB_APPEND;
 pub const NODESIZE: libc::c_ulong = 8 as libc::c_ulong;
 pub const MDB_VALID: libc::c_int = 0x8000 as libc::c_int;
-pub const PERSISTENT_FLAGS: libc::c_int = 0xffff as libc::c_int
-    & !(0x8000 as libc::c_int);
-pub const VALID_FLAGS: libc::c_int = MDB_REVERSEKEY | MDB_DUPSORT | MDB_INTEGERKEY
-    | MDB_DUPFIXED | MDB_INTEGERDUP | MDB_REVERSEDUP | MDB_CREATE;
+pub const PERSISTENT_FLAGS: libc::c_int = 0xffff as libc::c_int & !(0x8000 as libc::c_int);
+pub const VALID_FLAGS: libc::c_int = MDB_REVERSEKEY
+    | MDB_DUPSORT
+    | MDB_INTEGERKEY
+    | MDB_DUPFIXED
+    | MDB_INTEGERDUP
+    | MDB_REVERSEDUP
+    | MDB_CREATE;
 pub const FREE_DBI: libc::c_int = 0 as libc::c_int;
 pub const MAIN_DBI: libc::c_int = 1 as libc::c_int;
 pub const CORE_DBS: libc::c_int = 2 as libc::c_int;
@@ -933,8 +888,7 @@ pub const MDB_TXN_ERROR: libc::c_int = 0x2 as libc::c_int;
 pub const MDB_TXN_DIRTY: libc::c_int = 0x4 as libc::c_int;
 pub const MDB_TXN_SPILLS: libc::c_int = 0x8 as libc::c_int;
 pub const MDB_TXN_HAS_CHILD: libc::c_int = 0x10 as libc::c_int;
-pub const MDB_TXN_BLOCKED: libc::c_int = MDB_TXN_FINISHED | MDB_TXN_ERROR
-    | MDB_TXN_HAS_CHILD;
+pub const MDB_TXN_BLOCKED: libc::c_int = MDB_TXN_FINISHED | MDB_TXN_ERROR | MDB_TXN_HAS_CHILD;
 pub const CURSOR_STACK: libc::c_int = 32 as libc::c_int;
 pub const C_INITIALIZED: libc::c_int = 0x1 as libc::c_int;
 pub const C_EOF: libc::c_int = 0x2 as libc::c_int;
@@ -948,8 +902,8 @@ pub const MDB_ENV_ACTIVE: libc::c_uint = 0x20000000 as libc::c_uint;
 pub const MDB_ENV_TXKEY: libc::c_uint = 0x10000000 as libc::c_uint;
 pub const MDB_COMMIT_PAGES: libc::c_int = 64 as libc::c_int;
 pub const MAX_WRITE: libc::c_uint = 0x40000000 as libc::c_uint
-    >> (::core::mem::size_of::<ssize_t>() as libc::c_ulong
-        == 4 as libc::c_int as libc::c_ulong) as libc::c_int;
+    >> (::core::mem::size_of::<ssize_t>() as libc::c_ulong == 4 as libc::c_int as libc::c_ulong)
+        as libc::c_int;
 pub const MDB_END_UPDATE: libc::c_int = 0x10 as libc::c_int;
 pub const MDB_END_FREE: libc::c_int = 0x20 as libc::c_int;
 pub const MDB_END_SLOT: libc::c_int = 0x200000 as libc::c_int;
@@ -958,10 +912,8 @@ pub const MDB_PS_ROOTONLY: libc::c_int = 2 as libc::c_int;
 pub const MDB_PS_FIRST: libc::c_int = 4 as libc::c_int;
 pub const MDB_PS_LAST: libc::c_int = 8 as libc::c_int;
 pub const MDB_SPLIT_REPLACE: libc::c_int = 0x40000 as libc::c_int;
-pub const mdb_cmp_clong: unsafe extern "C" fn(
-    *const MDB_val,
-    *const MDB_val,
-) -> libc::c_int = mdb_cmp_cint;
+pub const mdb_cmp_clong: unsafe extern "C" fn(*const MDB_val, *const MDB_val) -> libc::c_int =
+    mdb_cmp_cint;
 #[no_mangle]
 #[cold]
 pub unsafe extern "C" fn mdb_version(
@@ -983,61 +935,59 @@ pub unsafe extern "C" fn mdb_version(
 static mut mdb_errstr: [*mut libc::c_char; 21] = [
     b"MDB_KEYEXIST: Key/data pair already exists\0" as *const u8 as *const libc::c_char
         as *mut libc::c_char,
-    b"MDB_NOTFOUND: No matching key/data pair found\0" as *const u8
-        as *const libc::c_char as *mut libc::c_char,
+    b"MDB_NOTFOUND: No matching key/data pair found\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
     b"MDB_PAGE_NOTFOUND: Requested page not found\0" as *const u8 as *const libc::c_char
         as *mut libc::c_char,
     b"MDB_CORRUPTED: Located page was wrong type\0" as *const u8 as *const libc::c_char
         as *mut libc::c_char,
-    b"MDB_PANIC: Update of meta page failed or environment had fatal error\0"
-        as *const u8 as *const libc::c_char as *mut libc::c_char,
+    b"MDB_PANIC: Update of meta page failed or environment had fatal error\0" as *const u8
+        as *const libc::c_char as *mut libc::c_char,
     b"MDB_VERSION_MISMATCH: Database environment version mismatch\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
     b"MDB_INVALID: File is not an LMDB file\0" as *const u8 as *const libc::c_char
         as *mut libc::c_char,
-    b"MDB_MAP_FULL: Environment mapsize limit reached\0" as *const u8
+    b"MDB_MAP_FULL: Environment mapsize limit reached\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
+    b"MDB_DBS_FULL: Environment maxdbs limit reached\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
+    b"MDB_READERS_FULL: Environment maxreaders limit reached\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
+    b"MDB_TLS_FULL: Thread-local storage keys full - too many environments open\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
-    b"MDB_DBS_FULL: Environment maxdbs limit reached\0" as *const u8
+    b"MDB_TXN_FULL: Transaction has too many dirty pages - transaction too big\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
-    b"MDB_READERS_FULL: Environment maxreaders limit reached\0" as *const u8
-        as *const libc::c_char as *mut libc::c_char,
-    b"MDB_TLS_FULL: Thread-local storage keys full - too many environments open\0"
-        as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"MDB_TXN_FULL: Transaction has too many dirty pages - transaction too big\0"
-        as *const u8 as *const libc::c_char as *mut libc::c_char,
     b"MDB_CURSOR_FULL: Internal error - cursor stack limit reached\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
-    b"MDB_PAGE_FULL: Internal error - page has no more space\0" as *const u8
-        as *const libc::c_char as *mut libc::c_char,
+    b"MDB_PAGE_FULL: Internal error - page has no more space\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
     b"MDB_MAP_RESIZED: Database contents grew beyond environment mapsize\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
-    b"MDB_INCOMPATIBLE: Operation and DB incompatible, or DB flags changed\0"
-        as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"MDB_BAD_RSLOT: Invalid reuse of reader locktable slot\0" as *const u8
+    b"MDB_INCOMPATIBLE: Operation and DB incompatible, or DB flags changed\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
+    b"MDB_BAD_RSLOT: Invalid reuse of reader locktable slot\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
     b"MDB_BAD_TXN: Transaction must abort, has a child, or is invalid\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
-    b"MDB_BAD_VALSIZE: Unsupported size of key/DB name/data, or wrong DUPFIXED size\0"
-        as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"MDB_BAD_DBI: The specified DBI handle was closed/changed unexpectedly\0"
-        as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"MDB_PROBLEM: Unexpected problem - txn should abort\0" as *const u8
+    b"MDB_BAD_VALSIZE: Unsupported size of key/DB name/data, or wrong DUPFIXED size\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
+    b"MDB_BAD_DBI: The specified DBI handle was closed/changed unexpectedly\0" as *const u8
+        as *const libc::c_char as *mut libc::c_char,
+    b"MDB_PROBLEM: Unexpected problem - txn should abort\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
 ];
 #[no_mangle]
 pub unsafe extern "C" fn mdb_strerror(mut err: libc::c_int) -> *mut libc::c_char {
     let mut i: libc::c_int = 0;
     if err == 0 {
-        return b"Successful return: 0\0" as *const u8 as *const libc::c_char
-            as *mut libc::c_char;
+        return b"Successful return: 0\0" as *const u8 as *const libc::c_char as *mut libc::c_char;
     }
     if err >= MDB_KEYEXIST && err <= MDB_LAST_ERRCODE {
         i = err - MDB_KEYEXIST;
         return mdb_errstr[i as usize];
     }
     if err < 0 as libc::c_int {
-        return b"Invalid error code\0" as *const u8 as *const libc::c_char
-            as *mut libc::c_char;
+        return b"Invalid error code\0" as *const u8 as *const libc::c_char as *mut libc::c_char;
     }
     return strerror(err);
 }
@@ -1052,18 +1002,20 @@ unsafe extern "C" fn mdb_assert_fail(
     let mut buf: [libc::c_char; 400] = [0; 400];
     sprintf(
         buf.as_mut_ptr(),
-        b"%.100s:%d: Assertion '%.200s' failed in %.40s()\0" as *const u8
-            as *const libc::c_char,
+        b"%.100s:%d: Assertion '%.200s' failed in %.40s()\0" as *const u8 as *const libc::c_char,
         file,
         line,
         expr_txt,
         func,
     );
     if ((*env).me_assert_func).is_some() {
-        ((*env).me_assert_func)
-            .expect("non-null function pointer")(env, buf.as_mut_ptr());
+        ((*env).me_assert_func).expect("non-null function pointer")(env, buf.as_mut_ptr());
     }
-    fprintf(__stderrp, b"%s\n\0" as *const u8 as *const libc::c_char, buf.as_mut_ptr());
+    fprintf(
+        __stderrp,
+        b"%s\n\0" as *const u8 as *const libc::c_char,
+        buf.as_mut_ptr(),
+    );
     abort();
 }
 #[no_mangle]
@@ -1073,8 +1025,9 @@ pub unsafe extern "C" fn mdb_cmp(
     mut a: *const MDB_val,
     mut b: *const MDB_val,
 ) -> libc::c_int {
-    return ((*((*txn).mt_dbxs).offset(dbi as isize)).md_cmp)
-        .expect("non-null function pointer")(a, b);
+    return ((*((*txn).mt_dbxs).offset(dbi as isize)).md_cmp).expect("non-null function pointer")(
+        a, b,
+    );
 }
 #[no_mangle]
 pub unsafe extern "C" fn mdb_dcmp(
@@ -1083,8 +1036,7 @@ pub unsafe extern "C" fn mdb_dcmp(
     mut a: *const MDB_val,
     mut b: *const MDB_val,
 ) -> libc::c_int {
-    let mut dcmp: Option::<MDB_cmp_func> = (*((*txn).mt_dbxs).offset(dbi as isize))
-        .md_dcmp;
+    let mut dcmp: Option<MDB_cmp_func> = (*((*txn).mt_dbxs).offset(dbi as isize)).md_dcmp;
     if (UINT_MAX as libc::c_ulong) < MDB_SIZE_MAX
         && dcmp == Some(mdb_cmp_int as MDB_cmp_func)
         && (*a).mv_size == ::core::mem::size_of::<mdb_size_t>() as libc::c_ulong
@@ -1134,7 +1086,8 @@ unsafe extern "C" fn mdb_page_free(mut env: *mut MDB_env, mut mp: *mut MDB_page)
 }
 unsafe extern "C" fn mdb_dpage_free(mut env: *mut MDB_env, mut dp: *mut MDB_page) {
     if !((*(dp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x4 as libc::c_int == 0x4 as libc::c_int)
+        & 0x4 as libc::c_int
+        == 0x4 as libc::c_int)
         || (*dp).mp_pb.pb_pages == 1 as libc::c_int as uint32_t
     {
         mdb_page_free(env, dp);
@@ -1155,16 +1108,11 @@ unsafe extern "C" fn mdb_dlist_free(mut txn: *mut MDB_txn) {
     }
     (*dl.offset(0 as libc::c_int as isize)).mid = 0 as libc::c_int as MDB_ID;
 }
-unsafe extern "C" fn mdb_page_loose(
-    mut mc: *mut MDB_cursor,
-    mut mp: *mut MDB_page,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_page_loose(mut mc: *mut MDB_cursor, mut mp: *mut MDB_page) -> libc::c_int {
     let mut loose = 0 as libc::c_int;
     let mut pgno = (*mp).mp_p.p_pgno;
     let mut txn = (*mc).mc_txn;
-    if (*mp).mp_flags as libc::c_int & P_DIRTY != 0
-        && (*mc).mc_dbi != FREE_DBI as MDB_dbi
-    {
+    if (*mp).mp_flags as libc::c_int & P_DIRTY != 0 && (*mc).mc_dbi != FREE_DBI as MDB_dbi {
         if !((*txn).mt_parent).is_null() {
             let mut dl = (*txn).mt_u.dirty_list;
             if (*dl.offset(0 as libc::c_int as isize)).mid != 0 {
@@ -1185,8 +1133,7 @@ unsafe extern "C" fn mdb_page_loose(
         }
     }
     if loose != 0 {
-        let ref mut fresh0 = *(mp.offset(2 as libc::c_int as isize)
-            as *mut *mut MDB_page);
+        let ref mut fresh0 = *(mp.offset(2 as libc::c_int as isize) as *mut *mut MDB_page);
         *fresh0 = (*txn).mt_loose_pgs;
         (*txn).mt_loose_pgs = mp;
         (*txn).mt_loose_count += 1;
@@ -1225,19 +1172,16 @@ unsafe extern "C" fn mdb_pages_xkeep(
                 j = 0 as libc::c_int as libc::c_uint;
                 while j < (*m3).mc_snum as libc::c_uint {
                     mp = (*m3).mc_pg[j as usize];
-                    if ((*mp).mp_flags as libc::c_int & Mask as libc::c_int)
-                        as libc::c_uint == pflags
+                    if ((*mp).mp_flags as libc::c_int & Mask as libc::c_int) as libc::c_uint
+                        == pflags
                     {
-                        (*mp)
-                            .mp_flags = ((*mp).mp_flags as libc::c_int ^ P_KEEP)
-                            as uint16_t;
+                        (*mp).mp_flags = ((*mp).mp_flags as libc::c_int ^ P_KEEP) as uint16_t;
                     }
                     j = j.wrapping_add(1);
                     j;
                 }
                 mx = (*m3).mc_xcursor;
-                if !(!mx.is_null()
-                    && (*mx).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint != 0)
+                if !(!mx.is_null() && (*mx).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint != 0)
                 {
                     break;
                 }
@@ -1249,9 +1193,9 @@ unsafe extern "C" fn mdb_pages_xkeep(
                         *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                             .as_mut_ptr()
                             .offset(
-                                (*m3)
-                                    .mc_ki[j.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                                    as usize] as isize,
+                                (*m3).mc_ki
+                                    [j.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize]
+                                    as isize,
                             ) as libc::c_int as isize,
                     )
                     .offset(
@@ -1286,12 +1230,11 @@ unsafe extern "C" fn mdb_pages_xkeep(
                     if rc != MDB_SUCCESS {
                         break;
                     }
-                    if ((*dp).mp_flags as libc::c_int & Mask as libc::c_int)
-                        as libc::c_uint == pflags && level <= 1 as libc::c_int
+                    if ((*dp).mp_flags as libc::c_int & Mask as libc::c_int) as libc::c_uint
+                        == pflags
+                        && level <= 1 as libc::c_int
                     {
-                        (*dp)
-                            .mp_flags = ((*dp).mp_flags as libc::c_int ^ P_KEEP)
-                            as uint16_t;
+                        (*dp).mp_flags = ((*dp).mp_flags as libc::c_int ^ P_KEEP) as uint16_t;
                     }
                 }
             }
@@ -1319,20 +1262,16 @@ unsafe extern "C" fn mdb_page_spill(
     }
     i = (*(*m0).mc_db).md_depth as libc::c_uint;
     if (*m0).mc_dbi >= CORE_DBS as MDB_dbi {
-        i = i
-            .wrapping_add(
-                (*((*txn).mt_dbs).offset(MAIN_DBI as isize)).md_depth as libc::c_uint,
-            );
+        i = i.wrapping_add((*((*txn).mt_dbs).offset(MAIN_DBI as isize)).md_depth as libc::c_uint);
     }
     if !key.is_null() {
-        i = (i as libc::c_ulong)
-            .wrapping_add(
-                NODESIZE
-                    .wrapping_add((*key).mv_size)
-                    .wrapping_add((*data).mv_size)
-                    .wrapping_add((*(*txn).mt_env).me_psize as libc::c_ulong)
-                    .wrapping_div((*(*txn).mt_env).me_psize as libc::c_ulong),
-            ) as libc::c_uint as libc::c_uint;
+        i = (i as libc::c_ulong).wrapping_add(
+            NODESIZE
+                .wrapping_add((*key).mv_size)
+                .wrapping_add((*data).mv_size)
+                .wrapping_add((*(*txn).mt_env).me_psize as libc::c_ulong)
+                .wrapping_div((*(*txn).mt_env).me_psize as libc::c_ulong),
+        ) as libc::c_uint as libc::c_uint;
     }
     i = i.wrapping_add(i);
     need = i;
@@ -1383,9 +1322,8 @@ unsafe extern "C" fn mdb_page_spill(
                                 <= *((*tx2).mt_spill_pgs).offset(0 as libc::c_int as isize)
                                 && *((*tx2).mt_spill_pgs).offset(j as isize) == pn
                             {
-                                (*dp)
-                                    .mp_flags = ((*dp).mp_flags as libc::c_int | P_KEEP)
-                                    as uint16_t;
+                                (*dp).mp_flags =
+                                    ((*dp).mp_flags as libc::c_int | P_KEEP) as uint16_t;
                                 break;
                             }
                         }
@@ -1421,17 +1359,16 @@ unsafe extern "C" fn mdb_page_spill(
                 mdb_midl_sort((*txn).mt_spill_pgs);
                 rc = mdb_page_flush(txn, i as libc::c_int);
                 if !(rc != MDB_SUCCESS) {
-                    rc = mdb_pages_xkeep(
-                        m0,
-                        (P_DIRTY | P_KEEP) as libc::c_uint,
-                        i as libc::c_int,
-                    );
+                    rc = mdb_pages_xkeep(m0, (P_DIRTY | P_KEEP) as libc::c_uint, i as libc::c_int);
                 }
             }
         }
     }
-    (*txn).mt_flags
-        |= (if rc != 0 { MDB_TXN_ERROR } else { MDB_TXN_SPILLS }) as libc::c_uint;
+    (*txn).mt_flags |= (if rc != 0 {
+        MDB_TXN_ERROR
+    } else {
+        MDB_TXN_SPILLS
+    }) as libc::c_uint;
     return rc;
 }
 unsafe extern "C" fn mdb_find_oldest(mut txn: *mut MDB_txn) -> txnid_t {
@@ -1462,31 +1399,23 @@ unsafe extern "C" fn mdb_page_dirty(mut txn: *mut MDB_txn, mut mp: *mut MDB_page
         mptr: 0 as *mut libc::c_void,
     };
     let mut rc: libc::c_int = 0;
-    let mut insert: Option::<
-        unsafe extern "C" fn(MDB_ID2L, *mut MDB_ID2) -> libc::c_int,
-    > = None;
+    let mut insert: Option<unsafe extern "C" fn(MDB_ID2L, *mut MDB_ID2) -> libc::c_int> = None;
     if (*txn).mt_flags & MDB_TXN_WRITEMAP as libc::c_uint != 0 {
-        insert = Some(
-            mdb_mid2l_append
-                as unsafe extern "C" fn(MDB_ID2L, *mut MDB_ID2) -> libc::c_int,
-        );
+        insert =
+            Some(mdb_mid2l_append as unsafe extern "C" fn(MDB_ID2L, *mut MDB_ID2) -> libc::c_int);
     } else {
-        insert = Some(
-            mdb_mid2l_insert
-                as unsafe extern "C" fn(MDB_ID2L, *mut MDB_ID2) -> libc::c_int,
-        );
+        insert =
+            Some(mdb_mid2l_insert as unsafe extern "C" fn(MDB_ID2L, *mut MDB_ID2) -> libc::c_int);
     }
     mid.mid = (*mp).mp_p.p_pgno;
     mid.mptr = mp as *mut libc::c_void;
     rc = insert.expect("non-null function pointer")((*txn).mt_u.dirty_list, &mut mid);
-    if rc == 0 as libc::c_int {} else {
+    if rc == 0 as libc::c_int {
+    } else {
         mdb_assert_fail(
             (*txn).mt_env,
             b"rc == 0\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 15],
-                &[libc::c_char; 15],
-            >(b"mdb_page_dirty\0"))
+            (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(b"mdb_page_dirty\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             2467 as libc::c_int,
@@ -1537,9 +1466,7 @@ unsafe extern "C" fn mdb_page_alloc(
     let mut found_old = 0 as libc::c_int;
     if num == 1 as libc::c_int && !((*txn).mt_loose_pgs).is_null() {
         np = (*txn).mt_loose_pgs;
-        (*txn)
-            .mt_loose_pgs = *(np.offset(2 as libc::c_int as isize)
-            as *mut *mut MDB_page);
+        (*txn).mt_loose_pgs = *(np.offset(2 as libc::c_int as isize) as *mut *mut MDB_page);
         (*txn).mt_loose_count -= 1;
         (*txn).mt_loose_count;
         *mp = np;
@@ -1565,9 +1492,7 @@ unsafe extern "C" fn mdb_page_alloc(
                 i = mop_len;
                 loop {
                     pgno = *mop.offset(i as isize);
-                    if *mop.offset(i.wrapping_sub(n2) as isize)
-                        == pgno.wrapping_add(n2 as pgno_t)
-                    {
+                    if *mop.offset(i.wrapping_sub(n2) as isize) == pgno.wrapping_add(n2 as pgno_t) {
                         current_block = 5537592996104297960;
                         break 's_69;
                     }
@@ -1585,12 +1510,7 @@ unsafe extern "C" fn mdb_page_alloc(
             if op as libc::c_uint == MDB_FIRST as libc::c_int as libc::c_uint {
                 last = (*env).me_pgstate.mf_pglast;
                 oldest = (*env).me_pgoldest;
-                mdb_cursor_init(
-                    &mut m2,
-                    txn,
-                    FREE_DBI as MDB_dbi,
-                    NULL as *mut MDB_xcursor,
-                );
+                mdb_cursor_init(&mut m2, txn, FREE_DBI as MDB_dbi, NULL as *mut MDB_xcursor);
                 if last != 0 {
                     op = MDB_SET_RANGE;
                     key.mv_data = &mut last as *mut txnid_t as *mut libc::c_void;
@@ -1644,8 +1564,8 @@ unsafe extern "C" fn mdb_page_alloc(
                     .offset(
                         *((*(np as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                             .as_mut_ptr()
-                            .offset(m2.mc_ki[m2.mc_top as usize] as isize) as libc::c_int
-                            as isize,
+                            .offset(m2.mc_ki[m2.mc_top as usize] as isize)
+                            as libc::c_int as isize,
                     )
                     .offset(
                         (if 0 as libc::c_int != 0 {
@@ -1703,8 +1623,7 @@ unsafe extern "C" fn mdb_page_alloc(
                     815053351550855110 => {}
                     _ => {
                         if (*env).me_flags & MDB_WRITEMAP as uint32_t != 0 {
-                            np = ((*env).me_map)
-                                .offset(((*env).me_psize as pgno_t * pgno) as isize)
+                            np = ((*env).me_map).offset(((*env).me_psize as pgno_t * pgno) as isize)
                                 as *mut MDB_page;
                             current_block = 16779030619667747692;
                         } else {
@@ -1756,16 +1675,16 @@ unsafe extern "C" fn mdb_page_copy(
     unused = (unused as libc::c_int & -(Align as libc::c_int)) as indx_t;
     if unused as libc::c_int != 0
         && !((*(src as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-            & 0x20 as libc::c_int == 0x20 as libc::c_int)
+            & 0x20 as libc::c_int
+            == 0x20 as libc::c_int)
     {
-        upper = ((upper as libc::c_uint)
-            .wrapping_add(
-                (if 0 as libc::c_int != 0 {
-                    PAGEHDRSZ as libc::c_uint
-                } else {
-                    0 as libc::c_int as libc::c_uint
-                }),
-            ) & -(Align as libc::c_int) as libc::c_uint) as indx_t;
+        upper = ((upper as libc::c_uint).wrapping_add(
+            (if 0 as libc::c_int != 0 {
+                PAGEHDRSZ as libc::c_uint
+            } else {
+                0 as libc::c_int as libc::c_uint
+            }),
+        ) & -(Align as libc::c_int) as libc::c_uint) as indx_t;
         memcpy(
             dst as *mut libc::c_void,
             src as *const libc::c_void,
@@ -1781,10 +1700,10 @@ unsafe extern "C" fn mdb_page_copy(
                 & -(Align as libc::c_int) as libc::c_uint) as libc::c_ulong,
         );
         memcpy(
-            (dst as *mut libc::c_char).offset(upper as libc::c_int as isize)
-                as *mut pgno_t as *mut libc::c_void,
-            (src as *mut libc::c_char).offset(upper as libc::c_int as isize)
-                as *mut pgno_t as *const libc::c_void,
+            (dst as *mut libc::c_char).offset(upper as libc::c_int as isize) as *mut pgno_t
+                as *mut libc::c_void,
+            (src as *mut libc::c_char).offset(upper as libc::c_int as isize) as *mut pgno_t
+                as *const libc::c_void,
             psize.wrapping_sub(upper as libc::c_uint) as libc::c_ulong,
         );
     } else {
@@ -1817,8 +1736,9 @@ unsafe extern "C" fn mdb_page_unspill(
                 if (*txn).mt_dirty_room == 0 as libc::c_int as libc::c_uint {
                     return MDB_TXN_FULL;
                 }
-                if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                    as libc::c_int & 0x4 as libc::c_int == 0x4 as libc::c_int
+                if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                    & 0x4 as libc::c_int
+                    == 0x4 as libc::c_int
                 {
                     num = (*mp).mp_pb.pb_pages as libc::c_int;
                 } else {
@@ -1835,24 +1755,20 @@ unsafe extern "C" fn mdb_page_unspill(
                         memcpy(
                             np as *mut libc::c_void,
                             mp as *const libc::c_void,
-                            (num as libc::c_uint).wrapping_mul((*env).me_psize)
-                                as libc::c_ulong,
+                            (num as libc::c_uint).wrapping_mul((*env).me_psize) as libc::c_ulong,
                         );
                     } else {
                         mdb_page_copy(np, mp, (*env).me_psize);
                     }
                 }
                 if tx2 == txn as *const MDB_txn {
-                    if x as MDB_ID
-                        == *((*txn).mt_spill_pgs).offset(0 as libc::c_int as isize)
-                    {
-                        let ref mut fresh1 = *((*txn).mt_spill_pgs)
-                            .offset(0 as libc::c_int as isize);
+                    if x as MDB_ID == *((*txn).mt_spill_pgs).offset(0 as libc::c_int as isize) {
+                        let ref mut fresh1 =
+                            *((*txn).mt_spill_pgs).offset(0 as libc::c_int as isize);
                         *fresh1 = (*fresh1).wrapping_sub(1);
                         *fresh1;
                     } else {
-                        *((*txn).mt_spill_pgs).offset(x as isize)
-                            |= 1 as libc::c_int as MDB_ID;
+                        *((*txn).mt_spill_pgs).offset(x as isize) |= 1 as libc::c_int as MDB_ID;
                     }
                 }
                 mdb_page_dirty(txn, np);
@@ -1875,7 +1791,8 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
     let mut pgno: pgno_t = 0;
     let mut rc: libc::c_int = 0;
     if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x10 as libc::c_int == 0x10 as libc::c_int)
+        & 0x10 as libc::c_int
+        == 0x10 as libc::c_int)
     {
         if (*txn).mt_flags & MDB_TXN_SPILLS as libc::c_uint != 0 {
             np = NULL as *mut MDB_page;
@@ -1899,25 +1816,22 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                             &mut (*txn).mt_free_pgs,
                             1 as libc::c_int as libc::c_uint,
                         );
-                        if rc != 0
-                            || {
-                                rc = mdb_page_alloc(mc, 1 as libc::c_int, &mut np);
-                                rc != 0
-                            }
-                        {
+                        if rc != 0 || {
+                            rc = mdb_page_alloc(mc, 1 as libc::c_int, &mut np);
+                            rc != 0
+                        } {
                             current_block = 7813835194233133412;
                         } else {
                             pgno = (*np).mp_p.p_pgno;
-                            if (*mp).mp_p.p_pgno != pgno {} else {
+                            if (*mp).mp_p.p_pgno != pgno {
+                            } else {
                                 mdb_assert_fail(
                                     (*(*mc).mc_txn).mt_env,
-                                    b"mp->mp_pgno != pgno\0" as *const u8
-                                        as *const libc::c_char,
-                                    (*::core::mem::transmute::<
-                                        &[u8; 15],
-                                        &[libc::c_char; 15],
-                                    >(b"mdb_page_touch\0"))
-                                        .as_ptr(),
+                                    b"mp->mp_pgno != pgno\0" as *const u8 as *const libc::c_char,
+                                    (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(
+                                        b"mdb_page_touch\0",
+                                    ))
+                                    .as_ptr(),
                                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                                     2796 as libc::c_int,
                                 );
@@ -1928,19 +1842,20 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                             let mut xlen = *fresh2;
                             *xidl.offset(xlen as isize) = (*mp).mp_p.p_pgno;
                             if (*mc).mc_top != 0 {
-                                let mut parent = (*mc)
-                                    .mc_pg[((*mc).mc_top as libc::c_int - 1 as libc::c_int)
-                                    as usize];
+                                let mut parent = (*mc).mc_pg
+                                    [((*mc).mc_top as libc::c_int - 1 as libc::c_int) as usize];
                                 let mut node = (parent as *mut libc::c_char)
                                     .offset(
                                         *((*(parent as *mut libc::c_void as *mut MDB_page2))
                                             .mp2_ptrs)
                                             .as_mut_ptr()
                                             .offset(
-                                                (*mc)
-                                                    .mc_ki[((*mc).mc_top as libc::c_int - 1 as libc::c_int)
-                                                    as usize] as isize,
-                                            ) as libc::c_int as isize,
+                                                (*mc).mc_ki[((*mc).mc_top as libc::c_int
+                                                    - 1 as libc::c_int)
+                                                    as usize]
+                                                    as isize,
+                                            ) as libc::c_int
+                                            as isize,
                                     )
                                     .offset(
                                         (if 0 as libc::c_int != 0 {
@@ -1948,12 +1863,11 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                                         } else {
                                             0 as libc::c_int as libc::c_uint
                                         }) as isize,
-                                    ) as *mut MDB_node;
-                                (*node)
-                                    .mn_lo = (pgno & 0xffff as libc::c_int as pgno_t)
-                                    as libc::c_ushort;
-                                (*node)
-                                    .mn_hi = (pgno >> 16 as libc::c_int) as libc::c_ushort;
+                                    )
+                                    as *mut MDB_node;
+                                (*node).mn_lo =
+                                    (pgno & 0xffff as libc::c_int as pgno_t) as libc::c_ushort;
+                                (*node).mn_hi = (pgno >> 16 as libc::c_int) as libc::c_ushort;
                                 if if -(1 as libc::c_int) as pgno_t
                                     > 0xffffffff as libc::c_uint as pgno_t
                                 {
@@ -1962,15 +1876,15 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                                     0 as libc::c_int
                                 } != 0
                                 {
-                                    (*node)
-                                        .mn_flags = (pgno
+                                    (*node).mn_flags = (pgno
                                         >> (if -(1 as libc::c_int) as pgno_t
                                             > 0xffffffff as libc::c_uint as pgno_t
                                         {
                                             32 as libc::c_int
                                         } else {
                                             0 as libc::c_int
-                                        })) as libc::c_ushort;
+                                        }))
+                                        as libc::c_ushort;
                                 }
                             } else {
                                 (*(*mc).mc_db).md_root = pgno;
@@ -1992,7 +1906,8 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
     } else {
         if !((*txn).mt_parent).is_null()
             && !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-                & 0x40 as libc::c_int == 0x40 as libc::c_int)
+                & 0x40 as libc::c_int
+                == 0x40 as libc::c_int)
         {
             let mut mid = MDB_ID2 {
                 mid: 0,
@@ -2014,17 +1929,17 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                 }
             }
             if (*dl.offset(0 as libc::c_int as isize)).mid
-                < (((1 as libc::c_int) << 16 as libc::c_int + 1 as libc::c_int)
-                    - 1 as libc::c_int) as MDB_ID
-            {} else {
+                < (((1 as libc::c_int) << 16 as libc::c_int + 1 as libc::c_int) - 1 as libc::c_int)
+                    as MDB_ID
+            {
+            } else {
                 mdb_assert_fail(
                     (*(*mc).mc_txn).mt_env,
                     b"dl[0].mid < MDB_IDL_UM_MAX\0" as *const u8 as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 15],
-                        &[libc::c_char; 15],
-                    >(b"mdb_page_touch\0"))
-                        .as_ptr(),
+                    (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(
+                        b"mdb_page_touch\0",
+                    ))
+                    .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     2823 as libc::c_int,
                 );
@@ -2036,21 +1951,21 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
             mid.mid = pgno;
             mid.mptr = np as *mut libc::c_void;
             rc = mdb_mid2l_insert(dl, &mut mid);
-            if rc == 0 as libc::c_int {} else {
+            if rc == 0 as libc::c_int {
+            } else {
                 mdb_assert_fail(
                     (*(*mc).mc_txn).mt_env,
                     b"rc == 0\0" as *const u8 as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 15],
-                        &[libc::c_char; 15],
-                    >(b"mdb_page_touch\0"))
-                        .as_ptr(),
+                    (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(
+                        b"mdb_page_touch\0",
+                    ))
+                    .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     2831 as libc::c_int,
                 );
             };
         } else {
-            return 0 as libc::c_int
+            return 0 as libc::c_int;
         }
         current_block = 13131896068329595644;
     }
@@ -2080,27 +1995,27 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                 if !(m2 == mc) {
                     if (*m2).mc_pg[(*mc).mc_top as usize] == mp {
                         (*m2).mc_pg[(*mc).mc_top as usize] = np;
-                        if (*(np as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                            as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                        if (*(np as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                            & 0x2 as libc::c_int
+                            == 0x2 as libc::c_int
                         {
                             let mut xr_pg = np;
                             let mut xr_node = 0 as *mut MDB_node;
                             if !(!(!((*m2).mc_xcursor).is_null()
                                 && (*(*m2).mc_xcursor).mx_cursor.mc_flags
-                                    & C_INITIALIZED as libc::c_uint != 0)
+                                    & C_INITIALIZED as libc::c_uint
+                                    != 0)
                                 || (*m2).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-                                    >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                        .mp2_lower as libc::c_uint)
-                                        .wrapping_sub(
-                                            (PAGEHDRSZ as libc::c_uint)
-                                                .wrapping_sub(
-                                                    (if 0 as libc::c_int != 0 {
-                                                        PAGEHDRSZ as libc::c_uint
-                                                    } else {
-                                                        0 as libc::c_int as libc::c_uint
-                                                    }),
-                                                ),
-                                        ) >> 1 as libc::c_int)
+                                    >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                                        as libc::c_uint)
+                                        .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                            (if 0 as libc::c_int != 0 {
+                                                PAGEHDRSZ as libc::c_uint
+                                            } else {
+                                                0 as libc::c_int as libc::c_uint
+                                            }),
+                                        ))
+                                        >> 1 as libc::c_int)
                             {
                                 xr_node = (xr_pg as *mut libc::c_char)
                                     .offset(
@@ -2108,7 +2023,8 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                                             .mp2_ptrs)
                                             .as_mut_ptr()
                                             .offset((*m2).mc_ki[(*mc).mc_top as usize] as isize)
-                                            as libc::c_int as isize,
+                                            as libc::c_int
+                                            as isize,
                                     )
                                     .offset(
                                         (if 0 as libc::c_int != 0 {
@@ -2117,16 +2033,15 @@ unsafe extern "C" fn mdb_page_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
                                             0 as libc::c_int as libc::c_uint
                                         }) as isize,
                                     ) as *mut MDB_node;
-                                if (*xr_node).mn_flags as libc::c_int
-                                    & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
+                                if (*xr_node).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA)
+                                    == F_DUPDATA
                                 {
-                                    (*(*m2).mc_xcursor)
-                                        .mx_cursor
-                                        .mc_pg[0 as libc::c_int
-                                        as usize] = ((*xr_node).mn_data)
+                                    (*(*m2).mc_xcursor).mx_cursor.mc_pg
+                                        [0 as libc::c_int as usize] = ((*xr_node).mn_data)
                                         .as_mut_ptr()
                                         .offset((*xr_node).mn_ksize as libc::c_int as isize)
-                                        as *mut libc::c_void as *mut MDB_page;
+                                        as *mut libc::c_void
+                                        as *mut MDB_page;
                                 }
                             }
                         }
@@ -2150,9 +2065,7 @@ pub unsafe extern "C" fn mdb_env_sync0(
     }
     if force != 0 || (*env).me_flags & MDB_NOSYNC as uint32_t == 0 {
         if (*env).me_flags & MDB_WRITEMAP as uint32_t != 0 {
-            let mut flags = if (*env).me_flags & MDB_MAPASYNC as uint32_t != 0
-                && force == 0
-            {
+            let mut flags = if (*env).me_flags & MDB_MAPASYNC as uint32_t != 0 && force == 0 {
                 MS_ASYNC
             } else {
                 MS_SYNC
@@ -2215,9 +2128,8 @@ unsafe extern "C" fn mdb_cursor_shadow(
                 (*mc).mc_backup = bk;
                 (*mc).mc_db = &mut *((*dst).mt_dbs).offset(i as isize) as *mut MDB_db;
                 (*mc).mc_txn = dst;
-                (*mc)
-                    .mc_dbflag = &mut *((*dst).mt_dbflags).offset(i as isize)
-                    as *mut libc::c_uchar;
+                (*mc).mc_dbflag =
+                    &mut *((*dst).mt_dbflags).offset(i as isize) as *mut libc::c_uchar;
                 mx = (*mc).mc_xcursor;
                 if !mx.is_null() {
                     *(bk.offset(1 as libc::c_int as isize) as *mut MDB_xcursor) = *mx;
@@ -2264,8 +2176,7 @@ unsafe extern "C" fn mdb_cursors_close(mut txn: *mut MDB_txn, mut merge: libc::c
                     *mc = *bk;
                     mx = (*mc).mc_xcursor;
                     if !mx.is_null() {
-                        *mx = *(bk.offset(1 as libc::c_int as isize)
-                            as *mut MDB_xcursor);
+                        *mx = *(bk.offset(1 as libc::c_int as isize) as *mut MDB_xcursor);
                     }
                 }
                 mc = bk;
@@ -2275,7 +2186,7 @@ unsafe extern "C" fn mdb_cursors_close(mut txn: *mut MDB_txn, mut merge: libc::c
         }
         let ref mut fresh4 = *cursors.offset(i as isize);
         *fresh4 = NULL as *mut MDB_cursor;
-    };
+    }
 }
 unsafe extern "C" fn mdb_reader_pid(
     mut env: *mut MDB_env,
@@ -2300,7 +2211,11 @@ unsafe extern "C" fn mdb_reader_pid(
         lock_info.l_whence = SEEK_SET as libc::c_short;
         lock_info.l_start = pid as off_t;
         lock_info.l_len = 1 as libc::c_int as off_t;
-        rc = fcntl((*env).me_lfd, op as libc::c_int, &mut lock_info as *mut flock);
+        rc = fcntl(
+            (*env).me_lfd,
+            op as libc::c_int,
+            &mut lock_info as *mut flock,
+        );
         if rc == 0 as libc::c_int {
             if op as libc::c_uint == F_GETLK as libc::c_uint
                 && lock_info.l_type as libc::c_int != F_UNLCK
@@ -2314,7 +2229,7 @@ unsafe extern "C" fn mdb_reader_pid(
             }
         }
         return rc;
-    };
+    }
 }
 unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
     let mut env = (*txn).mt_env;
@@ -2356,12 +2271,10 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
                     (*env).me_live_reader = 1 as libc::c_int;
                 }
                 rc = mdb_sem_wait(rmutex);
-                if rc != 0
-                    && {
-                        rc = mdb_mutex_failed(env, rmutex, rc);
-                        rc != 0
-                    }
-                {
+                if rc != 0 && {
+                    rc = mdb_mutex_failed(env, rmutex, rc);
+                    rc != 0
+                } {
                     return rc;
                 }
                 nr = (*ti).mt1.mtb.mtb_numreaders;
@@ -2370,7 +2283,8 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
                     if (*((*ti).mti_readers).as_mut_ptr().offset(i as isize))
                         .mru
                         .mrx
-                        .mrb_pid == 0 as libc::c_int
+                        .mrb_pid
+                        == 0 as libc::c_int
                     {
                         break;
                     }
@@ -2391,8 +2305,7 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
                     semop((*rmutex).semid, &mut sb, 1 as libc::c_int as size_t);
                     return MDB_READERS_FULL;
                 }
-                r = &mut *((*ti).mti_readers).as_mut_ptr().offset(i as isize)
-                    as *mut MDB_reader;
+                r = &mut *((*ti).mti_readers).as_mut_ptr().offset(i as isize) as *mut MDB_reader;
                 ::core::ptr::write_volatile(
                     &mut (*r).mru.mrx.mrb_pid as *mut pid_t,
                     0 as libc::c_int,
@@ -2401,10 +2314,7 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
                     &mut (*r).mru.mrx.mrb_txnid as *mut txnid_t,
                     -(1 as libc::c_int) as txnid_t,
                 );
-                ::core::ptr::write_volatile(
-                    &mut (*r).mru.mrx.mrb_tid as *mut pthread_t,
-                    tid,
-                );
+                ::core::ptr::write_volatile(&mut (*r).mru.mrx.mrb_tid as *mut pthread_t, tid);
                 if i == nr {
                     nr = nr.wrapping_add(1);
                     ::core::ptr::write_volatile(
@@ -2416,10 +2326,7 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
                     &mut (*env).me_close_readers as *mut libc::c_int,
                     nr as libc::c_int,
                 );
-                ::core::ptr::write_volatile(
-                    &mut (*r).mru.mrx.mrb_pid as *mut pid_t,
-                    pid,
-                );
+                ::core::ptr::write_volatile(&mut (*r).mru.mrx.mrb_pid as *mut pid_t, pid);
                 let mut sb_0 = {
                     let mut init = sembuf {
                         sem_num: 0 as libc::c_int as libc::c_ushort,
@@ -2432,15 +2339,10 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
                 *(*rmutex).locked = 0 as libc::c_int;
                 semop((*rmutex).semid, &mut sb_0, 1 as libc::c_int as size_t);
                 new_notls = ((*env).me_flags & MDB_NOTLS as uint32_t) as libc::c_int;
-                if new_notls == 0
-                    && {
-                        rc = pthread_setspecific(
-                            (*env).me_txkey,
-                            r as *const libc::c_void,
-                        );
-                        rc != 0
-                    }
-                {
+                if new_notls == 0 && {
+                    rc = pthread_setspecific((*env).me_txkey, r as *const libc::c_void);
+                    rc != 0
+                } {
                     ::core::ptr::write_volatile(
                         &mut (*r).mru.mrx.mrb_pid as *mut pid_t,
                         0 as libc::c_int,
@@ -2457,18 +2359,15 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
                     break;
                 }
             }
-            if (*r).mru.mrx.mrb_txnid == 0
-                && (*env).me_flags & MDB_RDONLY as uint32_t != 0
-            {
+            if (*r).mru.mrx.mrb_txnid == 0 && (*env).me_flags & MDB_RDONLY as uint32_t != 0 {
                 meta = mdb_env_pick_meta(env);
                 ::core::ptr::write_volatile(
                     &mut (*r).mru.mrx.mrb_txnid as *mut txnid_t,
                     (*meta).mm_txnid,
                 );
             } else {
-                meta = (*env)
-                    .me_metas[((*r).mru.mrx.mrb_txnid & 1 as libc::c_int as txnid_t)
-                    as usize];
+                meta = (*env).me_metas
+                    [((*r).mru.mrx.mrb_txnid & 1 as libc::c_int as txnid_t) as usize];
             }
             (*txn).mt_txnid = (*r).mru.mrx.mrb_txnid;
             (*txn).mt_u.reader = r;
@@ -2476,17 +2375,14 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
     } else {
         if !ti.is_null() {
             rc = mdb_sem_wait(((*env).me_wmutex).as_mut_ptr());
-            if rc != 0
-                && {
-                    rc = mdb_mutex_failed(env, ((*env).me_wmutex).as_mut_ptr(), rc);
-                    rc != 0
-                }
-            {
+            if rc != 0 && {
+                rc = mdb_mutex_failed(env, ((*env).me_wmutex).as_mut_ptr(), rc);
+                rc != 0
+            } {
                 return rc;
             }
             (*txn).mt_txnid = (*ti).mt1.mtb.mtb_txnid;
-            meta = (*env)
-                .me_metas[((*txn).mt_txnid & 1 as libc::c_int as txnid_t) as usize];
+            meta = (*env).me_metas[((*txn).mt_txnid & 1 as libc::c_int as txnid_t) as usize];
         } else {
             meta = mdb_env_pick_meta(env);
             (*txn).mt_txnid = (*meta).mm_txnid;
@@ -2498,11 +2394,10 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
         (*txn).mt_loose_count = 0 as libc::c_int;
         (*txn).mt_dirty_room = MDB_IDL_UM_MAX as libc::c_uint;
         (*txn).mt_u.dirty_list = (*env).me_dirty_list;
-        (*((*txn).mt_u.dirty_list).offset(0 as libc::c_int as isize))
-            .mid = 0 as libc::c_int as MDB_ID;
+        (*((*txn).mt_u.dirty_list).offset(0 as libc::c_int as isize)).mid =
+            0 as libc::c_int as MDB_ID;
         (*txn).mt_free_pgs = (*env).me_free_pgs;
-        *((*txn).mt_free_pgs)
-            .offset(0 as libc::c_int as isize) = 0 as libc::c_int as MDB_ID;
+        *((*txn).mt_free_pgs).offset(0 as libc::c_int as isize) = 0 as libc::c_int as MDB_ID;
         (*txn).mt_spill_pgs = NULL as MDB_IDL;
         (*env).me_txn = txn;
         memcpy(
@@ -2515,8 +2410,7 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
     memcpy(
         (*txn).mt_dbs as *mut libc::c_void,
         ((*meta).mm_dbs).as_mut_ptr() as *const libc::c_void,
-        (CORE_DBS as libc::c_ulong)
-            .wrapping_mul(::core::mem::size_of::<MDB_db>() as libc::c_ulong),
+        (CORE_DBS as libc::c_ulong).wrapping_mul(::core::mem::size_of::<MDB_db>() as libc::c_ulong),
     );
     (*txn).mt_next_pgno = ((*meta).mm_last_pg).wrapping_add(1 as libc::c_int as pgno_t);
     (*txn).mt_flags = flags;
@@ -2524,12 +2418,9 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
     i = CORE_DBS as libc::c_uint;
     while i < (*txn).mt_numdbs {
         x = *((*env).me_dbflags).offset(i as isize);
-        (*((*txn).mt_dbs).offset(i as isize))
-            .md_flags = (x as libc::c_int & PERSISTENT_FLAGS) as uint16_t;
-        *((*txn).mt_dbflags)
-            .offset(
-                i as isize,
-            ) = (if x as libc::c_int & MDB_VALID != 0 {
+        (*((*txn).mt_dbs).offset(i as isize)).md_flags =
+            (x as libc::c_int & PERSISTENT_FLAGS) as uint16_t;
+        *((*txn).mt_dbflags).offset(i as isize) = (if x as libc::c_int & MDB_VALID != 0 {
             DB_VALID | DB_USRVALID | DB_STALE
         } else {
             0 as libc::c_int
@@ -2537,25 +2428,26 @@ unsafe extern "C" fn mdb_txn_renew0(mut txn: *mut MDB_txn) -> libc::c_int {
         i = i.wrapping_add(1);
         i;
     }
-    *((*txn).mt_dbflags)
-        .offset(MAIN_DBI as isize) = (DB_VALID | DB_USRVALID) as libc::c_uchar;
+    *((*txn).mt_dbflags).offset(MAIN_DBI as isize) = (DB_VALID | DB_USRVALID) as libc::c_uchar;
     *((*txn).mt_dbflags).offset(FREE_DBI as isize) = DB_VALID as libc::c_uchar;
     if (*env).me_flags & MDB_FATAL_ERROR != 0 {
         rc = MDB_PANIC;
     } else if (*env).me_maxpg < (*txn).mt_next_pgno {
         rc = MDB_MAP_RESIZED;
     } else {
-        return MDB_SUCCESS
+        return MDB_SUCCESS;
     }
-    mdb_txn_end(txn, (new_notls | MDB_END_FAIL_BEGIN as libc::c_int) as libc::c_uint);
+    mdb_txn_end(
+        txn,
+        (new_notls | MDB_END_FAIL_BEGIN as libc::c_int) as libc::c_uint,
+    );
     return rc;
 }
 #[no_mangle]
 pub unsafe extern "C" fn mdb_txn_renew(mut txn: *mut MDB_txn) -> libc::c_int {
     let mut rc: libc::c_int = 0;
     if txn.is_null()
-        || !((*txn).mt_flags
-            & (0x20000 as libc::c_int | 0x1 as libc::c_int) as libc::c_uint
+        || !((*txn).mt_flags & (0x20000 as libc::c_int | 0x1 as libc::c_int) as libc::c_uint
             == (0x20000 as libc::c_int | 0x1 as libc::c_int) as libc::c_uint)
     {
         return EINVAL;
@@ -2591,23 +2483,19 @@ pub unsafe extern "C" fn mdb_txn_begin(
                 MDB_BAD_TXN
             };
         }
-        size = ((*env).me_maxdbs as libc::c_ulong)
-            .wrapping_mul(
-                (::core::mem::size_of::<MDB_db>() as libc::c_ulong)
-                    .wrapping_add(
-                        ::core::mem::size_of::<*mut MDB_cursor>() as libc::c_ulong,
-                    )
-                    .wrapping_add(1 as libc::c_int as libc::c_ulong),
-            ) as libc::c_int;
+        size = ((*env).me_maxdbs as libc::c_ulong).wrapping_mul(
+            (::core::mem::size_of::<MDB_db>() as libc::c_ulong)
+                .wrapping_add(::core::mem::size_of::<*mut MDB_cursor>() as libc::c_ulong)
+                .wrapping_add(1 as libc::c_int as libc::c_ulong),
+        ) as libc::c_int;
         tsize = ::core::mem::size_of::<MDB_ntxn>() as libc::c_ulong as libc::c_int;
         size += tsize;
         current_block = 12800627514080957624;
     } else if flags & MDB_RDONLY as libc::c_uint != 0 {
-        size = ((*env).me_maxdbs as libc::c_ulong)
-            .wrapping_mul(
-                (::core::mem::size_of::<MDB_db>() as libc::c_ulong)
-                    .wrapping_add(1 as libc::c_int as libc::c_ulong),
-            ) as libc::c_int;
+        size = ((*env).me_maxdbs as libc::c_ulong).wrapping_mul(
+            (::core::mem::size_of::<MDB_db>() as libc::c_ulong)
+                .wrapping_add(1 as libc::c_int as libc::c_ulong),
+        ) as libc::c_int;
         tsize = ::core::mem::size_of::<MDB_txn>() as libc::c_ulong as libc::c_int;
         size += tsize;
         current_block = 12800627514080957624;
@@ -2617,47 +2505,38 @@ pub unsafe extern "C" fn mdb_txn_begin(
     }
     match current_block {
         12800627514080957624 => {
-            txn = calloc(1 as libc::c_int as libc::c_ulong, size as libc::c_ulong)
-                as *mut MDB_txn;
+            txn = calloc(1 as libc::c_int as libc::c_ulong, size as libc::c_ulong) as *mut MDB_txn;
             if txn.is_null() {
                 return ENOMEM;
             }
             (*txn).mt_dbxs = (*env).me_dbxs;
-            (*txn)
-                .mt_dbs = (txn as *mut libc::c_char).offset(tsize as isize)
-                as *mut MDB_db;
-            (*txn)
-                .mt_dbflags = (txn as *mut libc::c_uchar)
+            (*txn).mt_dbs = (txn as *mut libc::c_char).offset(tsize as isize) as *mut MDB_db;
+            (*txn).mt_dbflags = (txn as *mut libc::c_uchar)
                 .offset(size as isize)
                 .offset(-((*env).me_maxdbs as isize));
             (*txn).mt_flags = flags;
             (*txn).mt_env = env;
             if !parent.is_null() {
                 let mut i: libc::c_uint = 0;
-                (*txn)
-                    .mt_cursors = ((*txn).mt_dbs).offset((*env).me_maxdbs as isize)
-                    as *mut *mut MDB_cursor;
+                (*txn).mt_cursors =
+                    ((*txn).mt_dbs).offset((*env).me_maxdbs as isize) as *mut *mut MDB_cursor;
                 (*txn).mt_dbiseqs = (*parent).mt_dbiseqs;
-                (*txn)
-                    .mt_u
-                    .dirty_list = malloc(
+                (*txn).mt_u.dirty_list = malloc(
                     (::core::mem::size_of::<MDB_ID2>() as libc::c_ulong)
                         .wrapping_mul(MDB_IDL_UM_SIZE as libc::c_ulong),
                 ) as MDB_ID2L;
-                if ((*txn).mt_u.dirty_list).is_null()
-                    || {
-                        (*txn).mt_free_pgs = mdb_midl_alloc(MDB_IDL_UM_MAX);
-                        ((*txn).mt_free_pgs).is_null()
-                    }
-                {
+                if ((*txn).mt_u.dirty_list).is_null() || {
+                    (*txn).mt_free_pgs = mdb_midl_alloc(MDB_IDL_UM_MAX);
+                    ((*txn).mt_free_pgs).is_null()
+                } {
                     free((*txn).mt_u.dirty_list as *mut libc::c_void);
                     free(txn as *mut libc::c_void);
                     return ENOMEM;
                 }
                 (*txn).mt_txnid = (*parent).mt_txnid;
                 (*txn).mt_dirty_room = (*parent).mt_dirty_room;
-                (*((*txn).mt_u.dirty_list).offset(0 as libc::c_int as isize))
-                    .mid = 0 as libc::c_int as MDB_ID;
+                (*((*txn).mt_u.dirty_list).offset(0 as libc::c_int as isize)).mid =
+                    0 as libc::c_int as MDB_ID;
                 (*txn).mt_spill_pgs = NULL as MDB_IDL;
                 (*txn).mt_next_pgno = (*parent).mt_next_pgno;
                 (*parent).mt_flags |= MDB_TXN_HAS_CHILD as libc::c_uint;
@@ -2672,11 +2551,9 @@ pub unsafe extern "C" fn mdb_txn_begin(
                 );
                 i = 0 as libc::c_int as libc::c_uint;
                 while i < (*txn).mt_numdbs {
-                    *((*txn).mt_dbflags)
-                        .offset(
-                            i as isize,
-                        ) = (*((*parent).mt_dbflags).offset(i as isize) as libc::c_int
-                        & !DB_NEW) as libc::c_uchar;
+                    *((*txn).mt_dbflags).offset(i as isize) =
+                        (*((*parent).mt_dbflags).offset(i as isize) as libc::c_int & !DB_NEW)
+                            as libc::c_uchar;
                     i = i.wrapping_add(1);
                     i;
                 }
@@ -2684,14 +2561,11 @@ pub unsafe extern "C" fn mdb_txn_begin(
                 ntxn = txn as *mut MDB_ntxn;
                 (*ntxn).mnt_pgstate = (*env).me_pgstate;
                 if !((*env).me_pgstate.mf_pghead).is_null() {
-                    size = (*((*env).me_pgstate.mf_pghead)
-                        .offset(0 as libc::c_int as isize))
+                    size = (*((*env).me_pgstate.mf_pghead).offset(0 as libc::c_int as isize))
                         .wrapping_add(1 as libc::c_int as pgno_t)
                         .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong)
                         as libc::c_int;
-                    (*env)
-                        .me_pgstate
-                        .mf_pghead = mdb_midl_alloc(
+                    (*env).me_pgstate.mf_pghead = mdb_midl_alloc(
                         *((*env).me_pgstate.mf_pghead).offset(0 as libc::c_int as isize)
                             as libc::c_int,
                     );
@@ -2709,10 +2583,7 @@ pub unsafe extern "C" fn mdb_txn_begin(
                     rc = mdb_cursor_shadow(parent, txn);
                 }
                 if rc != 0 {
-                    mdb_txn_end(
-                        txn,
-                        MDB_END_FAIL_BEGINCHILD as libc::c_int as libc::c_uint,
-                    );
+                    mdb_txn_end(txn, MDB_END_FAIL_BEGINCHILD as libc::c_int as libc::c_uint);
                 }
                 current_block = 10150597327160359210;
             } else {
@@ -2765,24 +2636,18 @@ unsafe extern "C" fn mdb_dbis_update(mut txn: *mut MDB_txn, mut keep: libc::c_in
         }
         if *tdbflags.offset(i as isize) as libc::c_int & DB_NEW != 0 {
             if keep != 0 {
-                *((*env).me_dbflags)
-                    .offset(
-                        i as isize,
-                    ) = ((*((*txn).mt_dbs).offset(i as isize)).md_flags as libc::c_int
-                    | MDB_VALID) as uint16_t;
+                *((*env).me_dbflags).offset(i as isize) =
+                    ((*((*txn).mt_dbs).offset(i as isize)).md_flags as libc::c_int | MDB_VALID)
+                        as uint16_t;
             } else {
-                let mut ptr = (*((*env).me_dbxs).offset(i as isize)).md_name.mv_data
-                    as *mut libc::c_char;
+                let mut ptr =
+                    (*((*env).me_dbxs).offset(i as isize)).md_name.mv_data as *mut libc::c_char;
                 if !ptr.is_null() {
-                    let ref mut fresh5 = (*((*env).me_dbxs).offset(i as isize))
-                        .md_name
-                        .mv_data;
+                    let ref mut fresh5 = (*((*env).me_dbxs).offset(i as isize)).md_name.mv_data;
                     *fresh5 = NULL as *mut libc::c_void;
-                    (*((*env).me_dbxs).offset(i as isize))
-                        .md_name
-                        .mv_size = 0 as libc::c_int as size_t;
-                    *((*env).me_dbflags)
-                        .offset(i as isize) = 0 as libc::c_int as uint16_t;
+                    (*((*env).me_dbxs).offset(i as isize)).md_name.mv_size =
+                        0 as libc::c_int as size_t;
+                    *((*env).me_dbflags).offset(i as isize) = 0 as libc::c_int as uint16_t;
                     let ref mut fresh6 = *((*env).me_dbiseqs).offset(i as isize);
                     *fresh6 = (*fresh6).wrapping_add(1);
                     *fresh6;
@@ -2925,11 +2790,7 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
     let mut clean_limit: ssize_t = 0;
     mdb_cursor_init(&mut mc, txn, FREE_DBI as MDB_dbi, NULL as *mut MDB_xcursor);
     if !((*env).me_pgstate.mf_pghead).is_null() {
-        rc = mdb_page_search(
-            &mut mc,
-            NULL as *mut MDB_val,
-            MDB_PS_FIRST | MDB_PS_MODIFY,
-        );
+        rc = mdb_page_search(&mut mc, NULL as *mut MDB_val, MDB_PS_FIRST | MDB_PS_MODIFY);
         if rc != 0 && rc != MDB_NOTFOUND {
             return rc;
         }
@@ -2960,31 +2821,30 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
                     x = x.wrapping_add(1);
                     x;
                 }
-                if x as MDB_ID <= (*dl.offset(0 as libc::c_int as isize)).mid {} else {
+                if x as MDB_ID <= (*dl.offset(0 as libc::c_int as isize)).mid {
+                } else {
                     mdb_assert_fail(
                         (*txn).mt_env,
                         b"x <= dl[0].mid\0" as *const u8 as *const libc::c_char,
-                        (*::core::mem::transmute::<
-                            &[u8; 18],
-                            &[libc::c_char; 18],
-                        >(b"mdb_freelist_save\0"))
-                            .as_ptr(),
+                        (*::core::mem::transmute::<&[u8; 18], &[libc::c_char; 18]>(
+                            b"mdb_freelist_save\0",
+                        ))
+                        .as_ptr(),
                         b"mdb.c\0" as *const u8 as *const libc::c_char,
                         3544 as libc::c_int,
                     );
                 };
             } else {
                 x = mdb_mid2l_search(dl, (*mp).mp_p.p_pgno);
-                if (*dl.offset(x as isize)).mid == (*mp).mp_p.p_pgno {} else {
+                if (*dl.offset(x as isize)).mid == (*mp).mp_p.p_pgno {
+                } else {
                     mdb_assert_fail(
                         (*txn).mt_env,
-                        b"dl[x].mid == mp->mp_pgno\0" as *const u8
-                            as *const libc::c_char,
-                        (*::core::mem::transmute::<
-                            &[u8; 18],
-                            &[libc::c_char; 18],
-                        >(b"mdb_freelist_save\0"))
-                            .as_ptr(),
+                        b"dl[x].mid == mp->mp_pgno\0" as *const u8 as *const libc::c_char,
+                        (*::core::mem::transmute::<&[u8; 18], &[libc::c_char; 18]>(
+                            b"mdb_freelist_save\0",
+                        ))
+                        .as_ptr(),
                         b"mdb.c\0" as *const u8 as *const libc::c_char,
                         3547 as libc::c_int,
                     );
@@ -3023,8 +2883,8 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
                 x = x.wrapping_add(1);
                 *dl.offset(fresh10 as isize) = *dl.offset(fresh9 as isize);
             }
-            (*dl.offset(0 as libc::c_int as isize))
-                .mid = x.wrapping_sub(1 as libc::c_int as libc::c_uint) as MDB_ID;
+            (*dl.offset(0 as libc::c_int as isize)).mid =
+                x.wrapping_sub(1 as libc::c_int as libc::c_uint) as MDB_ID;
         } else {
             (*dl.offset(0 as libc::c_int as isize)).mid = 0 as libc::c_int as MDB_ID;
         }
@@ -3056,15 +2916,15 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
             pglast = head_id;
             head_room = 0 as libc::c_int as ssize_t;
             total_room = head_room;
-            if pglast <= (*env).me_pgstate.mf_pglast {} else {
+            if pglast <= (*env).me_pgstate.mf_pglast {
+            } else {
                 mdb_assert_fail(
                     (*txn).mt_env,
                     b"pglast <= env->me_pglast\0" as *const u8 as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 18],
-                        &[libc::c_char; 18],
-                    >(b"mdb_freelist_save\0"))
-                        .as_ptr(),
+                    (*::core::mem::transmute::<&[u8; 18], &[libc::c_char; 18]>(
+                        b"mdb_freelist_save\0",
+                    ))
+                    .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     3591 as libc::c_int,
                 );
@@ -3076,11 +2936,7 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
         }
         if freecnt < *((*txn).mt_free_pgs).offset(0 as libc::c_int as isize) {
             if freecnt == 0 {
-                rc = mdb_page_search(
-                    &mut mc,
-                    NULL as *mut MDB_val,
-                    MDB_PS_LAST | MDB_PS_MODIFY,
-                );
+                rc = mdb_page_search(&mut mc, NULL as *mut MDB_val, MDB_PS_LAST | MDB_PS_MODIFY);
                 if rc != 0 && rc != MDB_NOTFOUND {
                     return rc;
                 }
@@ -3090,16 +2946,10 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
             key.mv_data = &mut (*txn).mt_txnid as *mut txnid_t as *mut libc::c_void;
             loop {
                 freecnt = *free_pgs.offset(0 as libc::c_int as isize);
-                data
-                    .mv_size = (*free_pgs.offset(0 as libc::c_int as isize))
+                data.mv_size = (*free_pgs.offset(0 as libc::c_int as isize))
                     .wrapping_add(1 as libc::c_int as pgno_t)
                     .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong);
-                rc = _mdb_cursor_put(
-                    &mut mc,
-                    &mut key,
-                    &mut data,
-                    MDB_RESERVE as libc::c_uint,
-                );
+                rc = _mdb_cursor_put(&mut mc, &mut key, &mut data, MDB_RESERVE as libc::c_uint);
                 if rc != 0 {
                     return rc;
                 }
@@ -3117,46 +2967,33 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
             } else {
                 0 as libc::c_int as pgno_t
             })
-                .wrapping_add((*txn).mt_loose_count as pgno_t) as ssize_t;
+            .wrapping_add((*txn).mt_loose_count as pgno_t) as ssize_t;
             if total_room >= mop_len {
-                if total_room == mop_len
-                    || {
-                        more -= 1;
-                        more < 0 as libc::c_int
-                    }
-                {
+                if total_room == mop_len || {
+                    more -= 1;
+                    more < 0 as libc::c_int
+                } {
                     break;
                 }
-            } else if head_room >= maxfree_1pg as ssize_t
-                && head_id > 1 as libc::c_int as txnid_t
-            {
+            } else if head_room >= maxfree_1pg as ssize_t && head_id > 1 as libc::c_int as txnid_t {
                 head_id = head_id.wrapping_sub(1);
                 head_id;
                 head_room = 0 as libc::c_int as ssize_t;
             }
             total_room -= head_room;
             head_room = mop_len - total_room;
-            if head_room > maxfree_1pg as ssize_t
-                && head_id > 1 as libc::c_int as txnid_t
-            {
+            if head_room > maxfree_1pg as ssize_t && head_id > 1 as libc::c_int as txnid_t {
                 head_room = (head_room as txnid_t / head_id) as ssize_t as ssize_t;
-                head_room
-                    += maxfree_1pg as ssize_t
-                        - head_room % (maxfree_1pg + 1 as libc::c_int) as ssize_t;
+                head_room += maxfree_1pg as ssize_t
+                    - head_room % (maxfree_1pg + 1 as libc::c_int) as ssize_t;
             } else if head_room < 0 as libc::c_int as ssize_t {
                 head_room = 0 as libc::c_int as ssize_t;
             }
             key.mv_size = ::core::mem::size_of::<txnid_t>() as libc::c_ulong;
             key.mv_data = &mut head_id as *mut txnid_t as *mut libc::c_void;
-            data
-                .mv_size = ((head_room + 1 as libc::c_int as ssize_t) as libc::c_ulong)
+            data.mv_size = ((head_room + 1 as libc::c_int as ssize_t) as libc::c_ulong)
                 .wrapping_mul(::core::mem::size_of::<pgno_t>() as libc::c_ulong);
-            rc = _mdb_cursor_put(
-                &mut mc,
-                &mut key,
-                &mut data,
-                MDB_RESERVE as libc::c_uint,
-            );
+            rc = _mdb_cursor_put(&mut mc, &mut key, &mut data, MDB_RESERVE as libc::c_uint);
             if rc != 0 {
                 return rc;
             }
@@ -3222,19 +3059,18 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
             let mut id = *(key_0.mv_data as *mut txnid_t);
             let mut len = (data_0.mv_size)
                 .wrapping_div(::core::mem::size_of::<MDB_ID>() as libc::c_ulong)
-                as ssize_t - 1 as libc::c_int as ssize_t;
+                as ssize_t
+                - 1 as libc::c_int as ssize_t;
             let mut save: MDB_ID = 0;
-            if len >= 0 as libc::c_int as ssize_t && id <= (*env).me_pgstate.mf_pglast
-            {} else {
+            if len >= 0 as libc::c_int as ssize_t && id <= (*env).me_pgstate.mf_pglast {
+            } else {
                 mdb_assert_fail(
                     (*txn).mt_env,
-                    b"len >= 0 && id <= env->me_pglast\0" as *const u8
-                        as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 18],
-                        &[libc::c_char; 18],
-                    >(b"mdb_freelist_save\0"))
-                        .as_ptr(),
+                    b"len >= 0 && id <= env->me_pglast\0" as *const u8 as *const libc::c_char,
+                    (*::core::mem::transmute::<&[u8; 18], &[libc::c_char; 18]>(
+                        b"mdb_freelist_save\0",
+                    ))
+                    .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     3707 as libc::c_int,
                 );
@@ -3242,8 +3078,7 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
             key_0.mv_data = &mut id as *mut txnid_t as *mut libc::c_void;
             if len > mop_len {
                 len = mop_len;
-                data_0
-                    .mv_size = ((len + 1 as libc::c_int as ssize_t) as libc::c_ulong)
+                data_0.mv_size = ((len + 1 as libc::c_int as ssize_t) as libc::c_ulong)
                     .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong);
             }
             mop = mop.offset(-(len as isize));
@@ -3257,12 +3092,10 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
                 MDB_CURRENT as libc::c_uint,
             );
             *mop.offset(0 as libc::c_int as isize) = save;
-            if rc != 0
-                || {
-                    mop_len -= len;
-                    mop_len == 0
-                }
-            {
+            if rc != 0 || {
+                mop_len -= len;
+                mop_len == 0
+            } {
                 break;
             }
             rc = mdb_cursor_next(&mut mc, &mut key_0, &mut data_0, MDB_NEXT);
@@ -3270,10 +3103,7 @@ unsafe extern "C" fn mdb_freelist_save(mut txn: *mut MDB_txn) -> libc::c_int {
     }
     return rc;
 }
-unsafe extern "C" fn mdb_page_flush(
-    mut txn: *mut MDB_txn,
-    mut keep: libc::c_int,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_page_flush(mut txn: *mut MDB_txn, mut keep: libc::c_int) -> libc::c_int {
     let mut env = (*txn).mt_env;
     let mut dl = (*txn).mt_u.dirty_list;
     let mut psize = (*env).me_psize;
@@ -3318,26 +3148,24 @@ unsafe extern "C" fn mdb_page_flush(
             if i <= pagecount {
                 dp = (*dl.offset(i as isize)).mptr as *mut MDB_page;
                 if (*dp).mp_flags as libc::c_int & (P_LOOSE | P_KEEP) != 0 {
-                    (*dp)
-                        .mp_flags = ((*dp).mp_flags as libc::c_int & !P_KEEP)
-                        as uint16_t;
+                    (*dp).mp_flags = ((*dp).mp_flags as libc::c_int & !P_KEEP) as uint16_t;
                     (*dl.offset(i as isize)).mid = 0 as libc::c_int as MDB_ID;
                     continue;
                 } else {
                     pgno = (*dl.offset(i as isize)).mid;
-                    (*dp)
-                        .mp_flags = ((*dp).mp_flags as libc::c_int & !P_DIRTY)
-                        as uint16_t;
+                    (*dp).mp_flags = ((*dp).mp_flags as libc::c_int & !P_DIRTY) as uint16_t;
                     pos = (pgno * psize as pgno_t) as off_t;
                     size = psize as size_t;
-                    if (*(dp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                        as libc::c_int & 0x4 as libc::c_int == 0x4 as libc::c_int
+                    if (*(dp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                        & 0x4 as libc::c_int
+                        == 0x4 as libc::c_int
                     {
                         size = size * (*dp).mp_pb.pb_pages as size_t;
                     }
                 }
             }
-            if pos != next_pos || n == MDB_COMMIT_PAGES
+            if pos != next_pos
+                || n == MDB_COMMIT_PAGES
                 || (wsize as size_t).wrapping_add(size) > MAX_WRITE as size_t
             {
                 if n != 0 {
@@ -3393,8 +3221,7 @@ unsafe extern "C" fn mdb_page_flush(
             }
             iov[n as usize].iov_len = size;
             iov[n as usize].iov_base = dp as *mut libc::c_char as *mut libc::c_void;
-            next_pos = (pos as libc::c_ulonglong).wrapping_add(size as libc::c_ulonglong)
-                as off_t;
+            next_pos = (pos as libc::c_ulonglong).wrapping_add(size as libc::c_ulonglong) as off_t;
             wsize = (wsize as size_t).wrapping_add(size) as ssize_t as ssize_t;
             n += 1;
             n;
@@ -3419,9 +3246,7 @@ unsafe extern "C" fn mdb_page_flush(
     }
     i -= 1;
     i;
-    (*txn)
-        .mt_dirty_room = ((*txn).mt_dirty_room)
-        .wrapping_add((i as libc::c_uint).wrapping_sub(j));
+    (*txn).mt_dirty_room = ((*txn).mt_dirty_room).wrapping_add((i as libc::c_uint).wrapping_sub(j));
     (*dl.offset(0 as libc::c_int as isize)).mid = j as MDB_ID;
     return MDB_SUCCESS;
 }
@@ -3434,8 +3259,8 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
     if txn.is_null() {
         return EINVAL;
     }
-    end_mode = (MDB_END_EMPTY_COMMIT as libc::c_int | MDB_END_UPDATE | MDB_END_SLOT
-        | MDB_END_FREE) as libc::c_uint;
+    end_mode = (MDB_END_EMPTY_COMMIT as libc::c_int | MDB_END_UPDATE | MDB_END_SLOT | MDB_END_FREE)
+        as libc::c_uint;
     if !((*txn).mt_child).is_null() {
         rc = _mdb_txn_commit((*txn).mt_child);
         if rc != 0 {
@@ -3453,9 +3278,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                 == 0x20000 as libc::c_int as libc::c_uint
             {
                 current_block = 13661098578361514953;
-            } else if (*txn).mt_flags
-                & (MDB_TXN_FINISHED | MDB_TXN_ERROR) as libc::c_uint != 0
-            {
+            } else if (*txn).mt_flags & (MDB_TXN_FINISHED | MDB_TXN_ERROR) as libc::c_uint != 0 {
                 if !((*txn).mt_parent).is_null() {
                     (*(*txn).mt_parent).mt_flags |= MDB_TXN_ERROR as libc::c_uint;
                 }
@@ -3471,10 +3294,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                 let mut y: libc::c_uint = 0;
                 let mut len: libc::c_uint = 0;
                 let mut ps_len: libc::c_uint = 0;
-                rc = mdb_midl_append_list(
-                    &mut (*parent).mt_free_pgs,
-                    (*txn).mt_free_pgs,
-                );
+                rc = mdb_midl_append_list(&mut (*parent).mt_free_pgs, (*txn).mt_free_pgs);
                 if rc != 0 {
                     current_block = 16403181400158345396;
                 } else {
@@ -3486,57 +3306,41 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                         (*parent).mt_dbs as *mut libc::c_void,
                         (*txn).mt_dbs as *const libc::c_void,
                         ((*txn).mt_numdbs as libc::c_ulong)
-                            .wrapping_mul(
-                                ::core::mem::size_of::<MDB_db>() as libc::c_ulong,
-                            ),
+                            .wrapping_mul(::core::mem::size_of::<MDB_db>() as libc::c_ulong),
                     );
                     (*parent).mt_numdbs = (*txn).mt_numdbs;
-                    *((*parent).mt_dbflags)
-                        .offset(
-                            FREE_DBI as isize,
-                        ) = *((*txn).mt_dbflags).offset(FREE_DBI as isize);
-                    *((*parent).mt_dbflags)
-                        .offset(
-                            MAIN_DBI as isize,
-                        ) = *((*txn).mt_dbflags).offset(MAIN_DBI as isize);
+                    *((*parent).mt_dbflags).offset(FREE_DBI as isize) =
+                        *((*txn).mt_dbflags).offset(FREE_DBI as isize);
+                    *((*parent).mt_dbflags).offset(MAIN_DBI as isize) =
+                        *((*txn).mt_dbflags).offset(MAIN_DBI as isize);
                     i = CORE_DBS as libc::c_uint;
                     while i < (*txn).mt_numdbs {
-                        x = (*((*parent).mt_dbflags).offset(i as isize) as libc::c_int
-                            & DB_NEW) as libc::c_uint;
-                        *((*parent).mt_dbflags)
-                            .offset(
-                                i as isize,
-                            ) = (*((*txn).mt_dbflags).offset(i as isize) as libc::c_uint
-                            | x) as libc::c_uchar;
+                        x = (*((*parent).mt_dbflags).offset(i as isize) as libc::c_int & DB_NEW)
+                            as libc::c_uint;
+                        *((*parent).mt_dbflags).offset(i as isize) =
+                            (*((*txn).mt_dbflags).offset(i as isize) as libc::c_uint | x)
+                                as libc::c_uchar;
                         i = i.wrapping_add(1);
                         i;
                     }
                     dst = (*parent).mt_u.dirty_list;
                     src = (*txn).mt_u.dirty_list;
                     pspill = (*parent).mt_spill_pgs;
-                    if !pspill.is_null()
-                        && {
-                            ps_len = *pspill.offset(0 as libc::c_int as isize)
-                                as libc::c_uint;
-                            ps_len != 0
-                        }
-                    {
+                    if !pspill.is_null() && {
+                        ps_len = *pspill.offset(0 as libc::c_int as isize) as libc::c_uint;
+                        ps_len != 0
+                    } {
                         y = ps_len;
                         x = y;
-                        *pspill
-                            .offset(
-                                0 as libc::c_int as isize,
-                            ) = -(1 as libc::c_int) as pgno_t;
+                        *pspill.offset(0 as libc::c_int as isize) = -(1 as libc::c_int) as pgno_t;
                         i = 0 as libc::c_int as libc::c_uint;
-                        len = (*src.offset(0 as libc::c_int as isize)).mid
-                            as libc::c_uint;
+                        len = (*src.offset(0 as libc::c_int as isize)).mid as libc::c_uint;
                         loop {
                             i = i.wrapping_add(1);
                             if !(i <= len) {
                                 break;
                             }
-                            let mut pn = (*src.offset(i as isize)).mid
-                                << 1 as libc::c_int;
+                            let mut pn = (*src.offset(i as isize)).mid << 1 as libc::c_int;
                             while pn > *pspill.offset(x as isize) {
                                 x = x.wrapping_sub(1);
                                 x;
@@ -3553,9 +3357,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                             if !(x <= ps_len) {
                                 break;
                             }
-                            if *pspill.offset(x as isize) & 1 as libc::c_int as MDB_ID
-                                == 0
-                            {
+                            if *pspill.offset(x as isize) & 1 as libc::c_int as MDB_ID == 0 {
                                 y = y.wrapping_add(1);
                                 *pspill.offset(y as isize) = *pspill.offset(x as isize);
                             }
@@ -3573,27 +3375,22 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                             if !(pn_0 & 1 as libc::c_int as MDB_ID != 0) {
                                 pn_0 >>= 1 as libc::c_int;
                                 y = mdb_mid2l_search(dst, pn_0);
-                                if y as MDB_ID
-                                    <= (*dst.offset(0 as libc::c_int as isize)).mid
+                                if y as MDB_ID <= (*dst.offset(0 as libc::c_int as isize)).mid
                                     && (*dst.offset(y as isize)).mid == pn_0
                                 {
                                     free((*dst.offset(y as isize)).mptr);
                                     while (y as MDB_ID)
                                         < (*dst.offset(0 as libc::c_int as isize)).mid
                                     {
-                                        *dst
-                                            .offset(
-                                                y as isize,
-                                            ) = *dst
-                                            .offset(
-                                                y.wrapping_add(1 as libc::c_int as libc::c_uint) as isize,
-                                            );
+                                        *dst.offset(y as isize) = *dst.offset(
+                                            y.wrapping_add(1 as libc::c_int as libc::c_uint)
+                                                as isize,
+                                        );
                                         y = y.wrapping_add(1);
                                         y;
                                     }
-                                    let ref mut fresh11 = (*dst
-                                        .offset(0 as libc::c_int as isize))
-                                        .mid;
+                                    let ref mut fresh11 =
+                                        (*dst.offset(0 as libc::c_int as isize)).mid;
                                     *fresh11 = (*fresh11).wrapping_sub(1);
                                     *fresh11;
                                 }
@@ -3603,8 +3400,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                         }
                     }
                     x = (*dst.offset(0 as libc::c_int as isize)).mid as libc::c_uint;
-                    (*dst.offset(0 as libc::c_int as isize))
-                        .mid = 0 as libc::c_int as MDB_ID;
+                    (*dst.offset(0 as libc::c_int as isize)).mid = 0 as libc::c_int as MDB_ID;
                     if !((*parent).mt_parent).is_null() {
                         len = (x as MDB_ID)
                             .wrapping_add((*src.offset(0 as libc::c_int as isize)).mid)
@@ -3614,7 +3410,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                             ((*dst.offset(x as isize)).mid)
                                 .wrapping_add(1 as libc::c_int as MDB_ID),
                         ))
-                            .wrapping_sub(1 as libc::c_int as libc::c_uint);
+                        .wrapping_sub(1 as libc::c_int as libc::c_uint);
                         i = x;
                         while y != 0 && i != 0 {
                             let mut yp = (*src.offset(y as isize)).mid;
@@ -3632,8 +3428,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                             y;
                         }
                     } else {
-                        len = (MDB_IDL_UM_MAX as libc::c_uint)
-                            .wrapping_sub((*txn).mt_dirty_room);
+                        len = (MDB_IDL_UM_MAX as libc::c_uint).wrapping_sub((*txn).mt_dirty_room);
                     }
                     y = (*src.offset(0 as libc::c_int as isize)).mid as libc::c_uint;
                     i = len;
@@ -3644,8 +3439,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                             x = x.wrapping_sub(1);
                             let fresh13 = i;
                             i = i.wrapping_sub(1);
-                            *dst
-                                .offset(fresh13 as isize) = *dst.offset(fresh12 as isize);
+                            *dst.offset(fresh13 as isize) = *dst.offset(fresh12 as isize);
                         }
                         if yp_0 == (*dst.offset(x as isize)).mid {
                             let fresh14 = x;
@@ -3658,15 +3452,15 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                         i = i.wrapping_sub(1);
                         *dst.offset(fresh16 as isize) = *src.offset(fresh15 as isize);
                     }
-                    if i == x {} else {
+                    if i == x {
+                    } else {
                         mdb_assert_fail(
                             (*txn).mt_env,
                             b"i == x\0" as *const u8 as *const libc::c_char,
-                            (*::core::mem::transmute::<
-                                &[u8; 16],
-                                &[libc::c_char; 16],
-                            >(b"_mdb_txn_commit\0"))
-                                .as_ptr(),
+                            (*::core::mem::transmute::<&[u8; 16], &[libc::c_char; 16]>(
+                                b"_mdb_txn_commit\0",
+                            ))
+                            .as_ptr(),
                             b"mdb.c\0" as *const u8 as *const libc::c_char,
                             4098 as libc::c_int,
                         );
@@ -3691,8 +3485,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                     }
                     lp = &mut (*parent).mt_loose_pgs;
                     while !(*lp).is_null() {
-                        lp = (*lp).offset(2 as libc::c_int as isize)
-                            as *mut *mut MDB_page;
+                        lp = (*lp).offset(2 as libc::c_int as isize) as *mut *mut MDB_page;
                     }
                     *lp = (*txn).mt_loose_pgs;
                     (*parent).mt_loose_count += (*txn).mt_loose_count;
@@ -3707,8 +3500,7 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
             } else {
                 mdb_cursors_close(txn, 0 as libc::c_int as libc::c_uint);
                 if (*((*txn).mt_u.dirty_list).offset(0 as libc::c_int as isize)).mid == 0
-                    && (*txn).mt_flags & (MDB_TXN_DIRTY | MDB_TXN_SPILLS) as libc::c_uint
-                        == 0
+                    && (*txn).mt_flags & (MDB_TXN_DIRTY | MDB_TXN_SPILLS) as libc::c_uint == 0
                 {
                     current_block = 13661098578361514953;
                 } else {
@@ -3746,8 +3538,8 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                                 current_block = 8656139126282042408;
                                 break;
                             }
-                            if *((*txn).mt_dbflags).offset(i_0 as isize) as libc::c_int
-                                & DB_DIRTY != 0
+                            if *((*txn).mt_dbflags).offset(i_0 as isize) as libc::c_int & DB_DIRTY
+                                != 0
                             {
                                 if *((*txn).mt_dbiseqs).offset(i_0 as isize)
                                     != *((*(*txn).mt_env).me_dbiseqs).offset(i_0 as isize)
@@ -3756,9 +3548,9 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                                     current_block = 16403181400158345396;
                                     break;
                                 } else {
-                                    data
-                                        .mv_data = &mut *((*txn).mt_dbs).offset(i_0 as isize)
-                                        as *mut MDB_db as *mut libc::c_void;
+                                    data.mv_data = &mut *((*txn).mt_dbs).offset(i_0 as isize)
+                                        as *mut MDB_db
+                                        as *mut libc::c_void;
                                     rc = _mdb_cursor_put(
                                         &mut mc,
                                         &mut (*((*txn).mt_dbxs).offset(i_0 as isize)).md_name,
@@ -3809,7 +3601,8 @@ unsafe extern "C" fn _mdb_txn_commit(mut txn: *mut MDB_txn) -> libc::c_int {
                                         current_block = 16403181400158345396;
                                     } else {
                                         end_mode = (MDB_END_COMMITTED as libc::c_int
-                                            | MDB_END_UPDATE) as libc::c_uint;
+                                            | MDB_END_UPDATE)
+                                            as libc::c_uint;
                                         if (*env).me_flags & MDB_PREVSNAPSHOT as uint32_t != 0 {
                                             if (*env).me_flags & MDB_NOLOCK as uint32_t == 0 {
                                                 let mut excl: libc::c_int = 0;
@@ -3894,15 +3687,19 @@ unsafe extern "C" fn mdb_env_read_header(
             if rc == 0 as libc::c_int && off == 0 as libc::c_int {
                 return ENOENT;
             }
-            rc = if rc < 0 as libc::c_int { *__error() } else { MDB_INVALID };
+            rc = if rc < 0 as libc::c_int {
+                *__error()
+            } else {
+                MDB_INVALID
+            };
             return rc;
         }
         p = &mut pbuf as *mut MDB_metabuf as *mut MDB_page;
         if !((*p).mp_flags as libc::c_int & 0x8 as libc::c_int == 0x8 as libc::c_int) {
             return MDB_INVALID;
         }
-        m = (p as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
-            as *mut libc::c_void as *mut MDB_meta;
+        m = (p as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void
+            as *mut MDB_meta;
         if (*m).mm_magic != MDB_MAGIC {
             return MDB_INVALID;
         }
@@ -3934,8 +3731,7 @@ unsafe extern "C" fn mdb_env_read_header(
 #[cold]
 unsafe extern "C" fn mdb_env_init_meta0(mut env: *mut MDB_env, mut meta: *mut MDB_meta) {
     (*meta).mm_magic = MDB_MAGIC;
-    (*meta)
-        .mm_version = (if 0 as libc::c_int != 0 {
+    (*meta).mm_version = (if 0 as libc::c_int != 0 {
         999 as libc::c_int
     } else {
         1 as libc::c_int
@@ -3943,13 +3739,10 @@ unsafe extern "C" fn mdb_env_init_meta0(mut env: *mut MDB_env, mut meta: *mut MD
     (*meta).mm_mapsize = (*env).me_mapsize;
     (*meta).mm_dbs[FREE_DBI as usize].md_pad = (*env).me_psize;
     (*meta).mm_last_pg = (NUM_METAS - 1 as libc::c_int) as pgno_t;
-    (*meta)
-        .mm_dbs[FREE_DBI as usize]
-        .md_flags = ((*env).me_flags & 0xffff as libc::c_int as uint32_t) as uint16_t;
-    (*meta)
-        .mm_dbs[FREE_DBI as usize]
-        .md_flags = ((*meta).mm_dbs[FREE_DBI as usize].md_flags as libc::c_int
-        | MDB_INTEGERKEY) as uint16_t;
+    (*meta).mm_dbs[FREE_DBI as usize].md_flags =
+        ((*env).me_flags & 0xffff as libc::c_int as uint32_t) as uint16_t;
+    (*meta).mm_dbs[FREE_DBI as usize].md_flags =
+        ((*meta).mm_dbs[FREE_DBI as usize].md_flags as libc::c_int | MDB_INTEGERKEY) as uint16_t;
     (*meta).mm_dbs[FREE_DBI as usize].md_root = P_INVALID;
     (*meta).mm_dbs[MAIN_DBI as usize].md_root = P_INVALID;
 }
@@ -3970,13 +3763,13 @@ unsafe extern "C" fn mdb_env_init_meta(
     }
     (*p).mp_p.p_pgno = 0 as libc::c_int as pgno_t;
     (*p).mp_flags = P_META as uint16_t;
-    *((p as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
-        as *mut libc::c_void as *mut MDB_meta) = *meta;
+    *((p as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void
+        as *mut MDB_meta) = *meta;
     q = (p as *mut libc::c_char).offset(psize as isize) as *mut MDB_page;
     (*q).mp_p.p_pgno = 1 as libc::c_int as pgno_t;
     (*q).mp_flags = P_META as uint16_t;
-    *((q as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
-        as *mut libc::c_void as *mut MDB_meta) = *meta;
+    *((q as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void
+        as *mut MDB_meta) = *meta;
     loop {
         len = pwrite(
             (*env).me_fd,
@@ -4061,12 +3854,8 @@ unsafe extern "C" fn mdb_env_write_meta(mut txn: *mut MDB_txn) -> libc::c_int {
         (*mp).mm_mapsize = mapsize;
         (*mp).mm_dbs[FREE_DBI as usize] = *((*txn).mt_dbs).offset(FREE_DBI as isize);
         (*mp).mm_dbs[MAIN_DBI as usize] = *((*txn).mt_dbs).offset(MAIN_DBI as isize);
-        (*mp)
-            .mm_last_pg = ((*txn).mt_next_pgno).wrapping_sub(1 as libc::c_int as pgno_t);
-        ::core::ptr::write_volatile(
-            &mut (*mp).mm_txnid as *mut txnid_t,
-            (*txn).mt_txnid,
-        );
+        (*mp).mm_last_pg = ((*txn).mt_next_pgno).wrapping_sub(1 as libc::c_int as pgno_t);
+        ::core::ptr::write_volatile(&mut (*mp).mm_txnid as *mut txnid_t, (*txn).mt_txnid);
         if flags & (MDB_NOMETASYNC | MDB_NOSYNC) as libc::c_uint == 0 {
             let mut meta_size = (*env).me_psize;
             rc = if (*env).me_flags & MDB_MAPASYNC as uint32_t != 0 {
@@ -4074,8 +3863,7 @@ unsafe extern "C" fn mdb_env_write_meta(mut txn: *mut MDB_txn) -> libc::c_int {
             } else {
                 MS_SYNC
             };
-            ptr = (mp as *mut libc::c_char)
-                .offset(-(PAGEHDRSZ as libc::c_uint as isize));
+            ptr = (mp as *mut libc::c_char).offset(-(PAGEHDRSZ as libc::c_uint as isize));
             r2 = (ptr.offset_from((*env).me_map) as libc::c_long
                 & ((*env).me_os_psize).wrapping_sub(1 as libc::c_int as libc::c_uint)
                     as libc::c_long) as libc::c_int;
@@ -4102,32 +3890,30 @@ unsafe extern "C" fn mdb_env_write_meta(mut txn: *mut MDB_txn) -> libc::c_int {
         ptr = (&mut meta as *mut MDB_meta as *mut libc::c_char).offset(off as isize);
         len = (::core::mem::size_of::<MDB_meta>() as libc::c_ulong as libc::c_ulonglong)
             .wrapping_sub(off as libc::c_ulonglong) as libc::c_int;
-        off
-            += (mp as *mut libc::c_char).offset_from((*env).me_map) as libc::c_long
-                as off_t;
+        off += (mp as *mut libc::c_char).offset_from((*env).me_map) as libc::c_long as off_t;
         mfd = if flags & (MDB_NOSYNC | MDB_NOMETASYNC) as libc::c_uint != 0 {
             (*env).me_fd
         } else {
             (*env).me_mfd
         };
         loop {
-            rc = pwrite(mfd, ptr as *const libc::c_void, len as size_t, off)
-                as libc::c_int;
+            rc = pwrite(mfd, ptr as *const libc::c_void, len as size_t, off) as libc::c_int;
             if !(rc != len) {
                 current_block = 17040666968784172583;
                 break;
             }
-            rc = if rc < 0 as libc::c_int { *__error() } else { EIO };
+            rc = if rc < 0 as libc::c_int {
+                *__error()
+            } else {
+                EIO
+            };
             if rc == EINTR {
                 continue;
             }
             meta.mm_last_pg = metab.mm_last_pg;
-            ::core::ptr::write_volatile(
-                &mut meta.mm_txnid as *mut txnid_t,
-                metab.mm_txnid,
-            );
-            r2 = pwrite((*env).me_fd, ptr as *const libc::c_void, len as size_t, off)
-                as libc::c_int;
+            ::core::ptr::write_volatile(&mut meta.mm_txnid as *mut txnid_t, metab.mm_txnid);
+            r2 =
+                pwrite((*env).me_fd, ptr as *const libc::c_void, len as size_t, off) as libc::c_int;
             current_block = 6372744105825038606;
             break;
         }
@@ -4150,13 +3936,12 @@ unsafe extern "C" fn mdb_env_write_meta(mut txn: *mut MDB_txn) -> libc::c_int {
 }
 unsafe extern "C" fn mdb_env_pick_meta(mut env: *const MDB_env) -> *mut MDB_meta {
     let mut metas = ((*env).me_metas).as_ptr();
-    return *metas
-        .offset(
-            (((**metas.offset(0 as libc::c_int as isize)).mm_txnid
-                < (**metas.offset(1 as libc::c_int as isize)).mm_txnid) as libc::c_int
-                ^ ((*env).me_flags & MDB_PREVSNAPSHOT as uint32_t
-                    != 0 as libc::c_int as uint32_t) as libc::c_int) as isize,
-        );
+    return *metas.offset(
+        (((**metas.offset(0 as libc::c_int as isize)).mm_txnid
+            < (**metas.offset(1 as libc::c_int as isize)).mm_txnid) as libc::c_int
+            ^ ((*env).me_flags & MDB_PREVSNAPSHOT as uint32_t != 0 as libc::c_int as uint32_t)
+                as libc::c_int) as isize,
+    );
 }
 #[no_mangle]
 #[cold]
@@ -4197,8 +3982,7 @@ unsafe extern "C" fn mdb_env_map(
             return *__error();
         }
     }
-    (*env)
-        .me_map = mmap(
+    (*env).me_map = mmap(
         addr,
         (*env).me_mapsize,
         prot,
@@ -4211,20 +3995,22 @@ unsafe extern "C" fn mdb_env_map(
         return *__error();
     }
     if flags & MDB_NORDAHEAD as libc::c_uint != 0 {
-        madvise((*env).me_map as *mut libc::c_void, (*env).me_mapsize, MADV_RANDOM);
+        madvise(
+            (*env).me_map as *mut libc::c_void,
+            (*env).me_mapsize,
+            MADV_RANDOM,
+        );
     }
     if !addr.is_null() && (*env).me_map != addr as *mut libc::c_char {
         return EBUSY;
     }
     p = (*env).me_map as *mut MDB_page;
-    (*env)
-        .me_metas[0 as libc::c_int
-        as usize] = (p as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
+    (*env).me_metas[0 as libc::c_int as usize] = (p as *mut libc::c_char)
+        .offset(PAGEHDRSZ as libc::c_uint as isize)
         as *mut libc::c_void as *mut MDB_meta;
-    (*env)
-        .me_metas[1 as libc::c_int
-        as usize] = ((*env).me_metas[0 as libc::c_int as usize] as *mut libc::c_char)
-        .offset((*env).me_psize as isize) as *mut MDB_meta;
+    (*env).me_metas[1 as libc::c_int as usize] =
+        ((*env).me_metas[0 as libc::c_int as usize] as *mut libc::c_char)
+            .offset((*env).me_psize as isize) as *mut MDB_meta;
     return MDB_SUCCESS;
 }
 #[no_mangle]
@@ -4304,10 +4090,7 @@ pub unsafe extern "C" fn mdb_env_get_maxreaders(
     return MDB_SUCCESS;
 }
 #[cold]
-unsafe extern "C" fn mdb_fsize(
-    mut fd: libc::c_int,
-    mut size: *mut mdb_size_t,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_fsize(mut fd: libc::c_int, mut size: *mut mdb_size_t) -> libc::c_int {
     let mut st = stat {
         st_dev: 0,
         st_mode: 0,
@@ -4316,10 +4099,22 @@ unsafe extern "C" fn mdb_fsize(
         st_uid: 0,
         st_gid: 0,
         st_rdev: 0,
-        st_atimespec: timespec { tv_sec: 0, tv_nsec: 0 },
-        st_mtimespec: timespec { tv_sec: 0, tv_nsec: 0 },
-        st_ctimespec: timespec { tv_sec: 0, tv_nsec: 0 },
-        st_birthtimespec: timespec { tv_sec: 0, tv_nsec: 0 },
+        st_atimespec: timespec {
+            tv_sec: 0,
+            tv_nsec: 0,
+        },
+        st_mtimespec: timespec {
+            tv_sec: 0,
+            tv_nsec: 0,
+        },
+        st_ctimespec: timespec {
+            tv_sec: 0,
+            tv_nsec: 0,
+        },
+        st_birthtimespec: timespec {
+            tv_sec: 0,
+            tv_nsec: 0,
+        },
         st_size: 0,
         st_blocks: 0,
         st_blksize: 0,
@@ -4364,15 +4159,14 @@ unsafe extern "C" fn mdb_fname_init(
     if no_suffix != 0 {
         (*fname).mn_val = path as *mut libc::c_char;
     } else {
-        (*fname)
-            .mn_val = malloc(
-            ((*fname).mn_len + MDB_SUFFLEN + 1 as libc::c_int) as libc::c_ulong,
-        ) as *mut mdb_nchar_t;
+        (*fname).mn_val =
+            malloc(((*fname).mn_len + MDB_SUFFLEN + 1 as libc::c_int) as libc::c_ulong)
+                as *mut mdb_nchar_t;
         if !((*fname).mn_val).is_null() {
             (*fname).mn_alloced = 1 as libc::c_int;
             strcpy((*fname).mn_val, path);
         } else {
-            return ENOMEM
+            return ENOMEM;
         }
     }
     return MDB_SUCCESS;
@@ -4392,16 +4186,16 @@ unsafe extern "C" fn mdb_fopen(
     if (*fname).mn_alloced != 0 {
         strcpy(
             ((*fname).mn_val).offset((*fname).mn_len as isize),
-            mdb_suffixes[(which as libc::c_uint
-                == MDB_O_LOCKS as libc::c_int as libc::c_uint) as libc::c_int
-                as usize][((*env).me_flags & 0x4000 as libc::c_int as uint32_t
-                == 0x4000 as libc::c_int as uint32_t) as libc::c_int as usize],
+            mdb_suffixes[(which as libc::c_uint == MDB_O_LOCKS as libc::c_int as libc::c_uint)
+                as libc::c_int as usize][((*env).me_flags
+                & 0x4000 as libc::c_int as uint32_t
+                == 0x4000 as libc::c_int as uint32_t)
+                as libc::c_int as usize],
         );
     }
     fd = open(
         (*fname).mn_val,
-        (which as libc::c_uint & MDB_O_MASK as libc::c_int as libc::c_uint)
-            as libc::c_int,
+        (which as libc::c_uint & MDB_O_MASK as libc::c_int as libc::c_uint) as libc::c_int,
         mode as libc::c_int,
     );
     if fd == INVALID_HANDLE_VALUE {
@@ -4410,12 +4204,10 @@ unsafe extern "C" fn mdb_fopen(
         if which as libc::c_uint != MDB_O_RDONLY as libc::c_int as libc::c_uint
             && which as libc::c_uint != MDB_O_RDWR as libc::c_int as libc::c_uint
         {
-            if MDB_CLOEXEC == 0
-                && {
-                    flags = fcntl(fd, F_GETFD);
-                    flags != -(1 as libc::c_int)
-                }
-            {
+            if MDB_CLOEXEC == 0 && {
+                flags = fcntl(fd, F_GETFD);
+                flags != -(1 as libc::c_int)
+            } {
                 fcntl(fd, F_SETFD, flags | FD_CLOEXEC);
             }
         }
@@ -4429,10 +4221,7 @@ unsafe extern "C" fn mdb_fopen(
     return rc;
 }
 #[cold]
-unsafe extern "C" fn mdb_env_open2(
-    mut env: *mut MDB_env,
-    mut prev: libc::c_int,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_env_open2(mut env: *mut MDB_env, mut prev: libc::c_int) -> libc::c_int {
     let mut flags = (*env).me_flags;
     let mut i: libc::c_int = 0;
     let mut newenv = 0 as libc::c_int;
@@ -4474,8 +4263,7 @@ unsafe extern "C" fn mdb_env_open2(
                 0x8000 as libc::c_int
             }) as libc::c_uint
         {
-            (*env)
-                .me_psize = (if if 0 as libc::c_int != 0 {
+            (*env).me_psize = (if if 0 as libc::c_int != 0 {
                 PAGEHDRSZ as libc::c_uint
             } else {
                 0 as libc::c_int as libc::c_uint
@@ -4532,17 +4320,16 @@ unsafe extern "C" fn mdb_env_open2(
             return i;
         }
     }
-    (*env)
-        .me_maxfree_1pg = (((*env).me_psize).wrapping_sub(PAGEHDRSZ as libc::c_uint)
+    (*env).me_maxfree_1pg = (((*env).me_psize).wrapping_sub(PAGEHDRSZ as libc::c_uint)
         as libc::c_ulong)
         .wrapping_div(::core::mem::size_of::<pgno_t>() as libc::c_ulong)
         .wrapping_sub(1 as libc::c_int as libc::c_ulong) as libc::c_int;
-    (*env)
-        .me_nodemax = ((((*env).me_psize)
+    (*env).me_nodemax = ((((*env).me_psize)
         .wrapping_sub(PAGEHDRSZ as libc::c_uint)
-        .wrapping_div(MDB_MINKEYS as libc::c_uint) & -(2 as libc::c_int) as libc::c_uint)
-        as libc::c_ulong)
-        .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong) as libc::c_uint;
+        .wrapping_div(MDB_MINKEYS as libc::c_uint)
+        & -(2 as libc::c_int) as libc::c_uint) as libc::c_ulong)
+        .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong)
+        as libc::c_uint;
     (*env).me_maxpg = (*env).me_mapsize / (*env).me_psize as mdb_size_t;
     return MDB_SUCCESS;
 }
@@ -4584,16 +4371,18 @@ unsafe extern "C" fn mdb_env_share_locks(
     lock_info.l_len = 1 as libc::c_int as off_t;
     loop {
         rc = fcntl((*env).me_lfd, F_SETLK, &mut lock_info as *mut flock);
-        if !(rc != 0
-            && {
-                rc = *__error();
-                rc == EINTR
-            })
-        {
+        if !(rc != 0 && {
+            rc = *__error();
+            rc == EINTR
+        }) {
             break;
         }
     }
-    *excl = if rc != 0 { -(1 as libc::c_int) } else { 0 as libc::c_int };
+    *excl = if rc != 0 {
+        -(1 as libc::c_int)
+    } else {
+        0 as libc::c_int
+    };
     return rc;
 }
 #[cold]
@@ -4620,12 +4409,10 @@ unsafe extern "C" fn mdb_env_excl_lock(
     lock_info.l_len = 1 as libc::c_int as off_t;
     loop {
         rc = fcntl((*env).me_lfd, F_SETLK, &mut lock_info as *mut flock);
-        if !(rc != 0
-            && {
-                rc = *__error();
-                rc == EINTR
-            })
-        {
+        if !(rc != 0 && {
+            rc = *__error();
+            rc == EINTR
+        }) {
             break;
         }
     }
@@ -4635,12 +4422,10 @@ unsafe extern "C" fn mdb_env_excl_lock(
         lock_info.l_type = F_RDLCK as libc::c_short;
         loop {
             rc = fcntl((*env).me_lfd, F_SETLKW, &mut lock_info as *mut flock);
-            if !(rc != 0
-                && {
-                    rc = *__error();
-                    rc == EINTR
-                })
-            {
+            if !(rc != 0 && {
+                rc = *__error();
+                rc == EINTR
+            }) {
                 break;
             }
         }
@@ -4663,7 +4448,13 @@ unsafe extern "C" fn mdb_env_setup_locks(
     let mut rc: libc::c_int = 0;
     let mut size: off_t = 0;
     let mut rsize: off_t = 0;
-    rc = mdb_fopen(env, fname, MDB_O_LOCKS, mode as mdb_mode_t, &mut (*env).me_lfd);
+    rc = mdb_fopen(
+        env,
+        fname,
+        MDB_O_LOCKS,
+        mode as mdb_mode_t,
+        &mut (*env).me_lfd,
+    );
     if rc != 0 {
         if rc == MDB_ERRCODE_ROFS && (*env).me_flags & MDB_RDONLY as uint32_t != 0 {
             return MDB_SUCCESS;
@@ -4672,9 +4463,7 @@ unsafe extern "C" fn mdb_env_setup_locks(
         if (*env).me_flags & MDB_NOTLS as uint32_t == 0 {
             rc = pthread_key_create(
                 &mut (*env).me_txkey,
-                Some(
-                    mdb_env_reader_dest as unsafe extern "C" fn(*mut libc::c_void) -> (),
-                ),
+                Some(mdb_env_reader_dest as unsafe extern "C" fn(*mut libc::c_void) -> ()),
             );
             if rc != 0 {
                 current_block = 10166034227075777411;
@@ -4697,12 +4486,9 @@ unsafe extern "C" fn mdb_env_setup_locks(
                         rsize = (((*env).me_maxreaders)
                             .wrapping_sub(1 as libc::c_int as libc::c_uint)
                             as libc::c_ulong)
-                            .wrapping_mul(
-                                ::core::mem::size_of::<MDB_reader>() as libc::c_ulong,
-                            )
-                            .wrapping_add(
-                                ::core::mem::size_of::<MDB_txninfo>() as libc::c_ulong,
-                            ) as off_t;
+                            .wrapping_mul(::core::mem::size_of::<MDB_reader>() as libc::c_ulong)
+                            .wrapping_add(::core::mem::size_of::<MDB_txninfo>() as libc::c_ulong)
+                            as off_t;
                         if size < rsize && *excl > 0 as libc::c_int {
                             if ftruncate((*env).me_lfd, rsize) != 0 as libc::c_int {
                                 current_block = 7057229242290363491;
@@ -4711,17 +4497,16 @@ unsafe extern "C" fn mdb_env_setup_locks(
                             }
                         } else {
                             rsize = size;
-                            size = (rsize as libc::c_ulonglong)
-                                .wrapping_sub(
-                                    ::core::mem::size_of::<MDB_txninfo>() as libc::c_ulong
-                                        as libc::c_ulonglong,
-                                ) as off_t;
-                            (*env)
-                                .me_maxreaders = (size as libc::c_ulonglong)
-                                .wrapping_div(
-                                    ::core::mem::size_of::<MDB_reader>() as libc::c_ulong
-                                        as libc::c_ulonglong,
+                            size =
+                                (rsize as libc::c_ulonglong).wrapping_sub(::core::mem::size_of::<
+                                    MDB_txninfo,
+                                >(
                                 )
+                                    as libc::c_ulong
+                                    as libc::c_ulonglong) as off_t;
+                            (*env).me_maxreaders = (size as libc::c_ulonglong)
+                                .wrapping_div(::core::mem::size_of::<MDB_reader>() as libc::c_ulong
+                                    as libc::c_ulonglong)
                                 .wrapping_add(1 as libc::c_int as libc::c_ulonglong)
                                 as libc::c_uint;
                             current_block = 17833034027772472439;
@@ -4765,28 +4550,42 @@ unsafe extern "C" fn mdb_env_setup_locks(
                                                     current_block = 7057229242290363491;
                                                 } else {
                                                     (*(*env).me_txns).mt1.mtb.mtb_semid = semid;
-                                                    (*(*env).me_txns).mt1.mtb.mtb_rlocked = 0 as libc::c_int;
-                                                    (*(*env).me_txns).mt2.mt2_wlocked = 0 as libc::c_int;
+                                                    (*(*env).me_txns).mt1.mtb.mtb_rlocked =
+                                                        0 as libc::c_int;
+                                                    (*(*env).me_txns).mt2.mt2_wlocked =
+                                                        0 as libc::c_int;
                                                     (*(*env).me_txns).mt1.mtb.mtb_magic = MDB_MAGIC;
-                                                    (*(*env).me_txns)
-                                                        .mt1
-                                                        .mtb
-                                                        .mtb_format = ((if 0 as libc::c_int != 0 {
+                                                    (*(*env).me_txns).mt1.mtb.mtb_format = ((if 0
+                                                        as libc::c_int
+                                                        != 0
+                                                    {
                                                         999 as libc::c_int
                                                     } else {
                                                         2 as libc::c_int
-                                                    }) as libc::c_uint)
-                                                        .wrapping_rem((1 as libc::c_uint) << MDB_LOCK_VERSION_BITS)
+                                                    })
+                                                        as libc::c_uint)
+                                                        .wrapping_rem(
+                                                            (1 as libc::c_uint)
+                                                                << MDB_LOCK_VERSION_BITS,
+                                                        )
                                                         .wrapping_add(
-                                                            (MDB_lock_desc as libc::c_int as libc::c_uint)
-                                                                .wrapping_mul((1 as libc::c_uint) << MDB_LOCK_VERSION_BITS),
+                                                            (MDB_lock_desc as libc::c_int
+                                                                as libc::c_uint)
+                                                                .wrapping_mul(
+                                                                    (1 as libc::c_uint)
+                                                                        << MDB_LOCK_VERSION_BITS,
+                                                                ),
                                                         );
                                                     ::core::ptr::write_volatile(
-                                                        &mut (*(*env).me_txns).mt1.mtb.mtb_txnid as *mut txnid_t,
+                                                        &mut (*(*env).me_txns).mt1.mtb.mtb_txnid
+                                                            as *mut txnid_t,
                                                         0 as libc::c_int as txnid_t,
                                                     );
                                                     ::core::ptr::write_volatile(
-                                                        &mut (*(*env).me_txns).mt1.mtb.mtb_numreaders
+                                                        &mut (*(*env).me_txns)
+                                                            .mt1
+                                                            .mtb
+                                                            .mtb_numreaders
                                                             as *mut libc::c_uint,
                                                         0 as libc::c_int as libc::c_uint,
                                                     );
@@ -4821,11 +4620,17 @@ unsafe extern "C" fn mdb_env_setup_locks(
                                                 999 as libc::c_int
                                             } else {
                                                 2 as libc::c_int
-                                            }) as libc::c_uint)
-                                                .wrapping_rem((1 as libc::c_uint) << MDB_LOCK_VERSION_BITS)
+                                            })
+                                                as libc::c_uint)
+                                                .wrapping_rem(
+                                                    (1 as libc::c_uint) << MDB_LOCK_VERSION_BITS,
+                                                )
                                                 .wrapping_add(
                                                     (MDB_lock_desc as libc::c_int as libc::c_uint)
-                                                        .wrapping_mul((1 as libc::c_uint) << MDB_LOCK_VERSION_BITS),
+                                                        .wrapping_mul(
+                                                            (1 as libc::c_uint)
+                                                                << MDB_LOCK_VERSION_BITS,
+                                                        ),
                                                 )
                                         {
                                             rc = MDB_VERSION_MISMATCH;
@@ -4841,8 +4646,12 @@ unsafe extern "C" fn mdb_env_setup_locks(
                                                     < 0 as libc::c_int
                                                 {
                                                     current_block = 7057229242290363491;
-                                                } else if semctl(semid, 0 as libc::c_int, IPC_SET, semu)
-                                                    < 0 as libc::c_int
+                                                } else if semctl(
+                                                    semid,
+                                                    0 as libc::c_int,
+                                                    IPC_SET,
+                                                    semu,
+                                                ) < 0 as libc::c_int
                                                 {
                                                     current_block = 7057229242290363491;
                                                 } else {
@@ -4857,15 +4666,15 @@ unsafe extern "C" fn mdb_env_setup_locks(
                                         _ => {
                                             (*((*env).me_rmutex).as_mut_ptr()).semid = semid;
                                             (*((*env).me_wmutex).as_mut_ptr()).semid = semid;
-                                            (*((*env).me_rmutex).as_mut_ptr())
-                                                .semnum = 0 as libc::c_int;
-                                            (*((*env).me_wmutex).as_mut_ptr())
-                                                .semnum = 1 as libc::c_int;
-                                            let ref mut fresh17 = (*((*env).me_rmutex).as_mut_ptr())
-                                                .locked;
+                                            (*((*env).me_rmutex).as_mut_ptr()).semnum =
+                                                0 as libc::c_int;
+                                            (*((*env).me_wmutex).as_mut_ptr()).semnum =
+                                                1 as libc::c_int;
+                                            let ref mut fresh17 =
+                                                (*((*env).me_rmutex).as_mut_ptr()).locked;
                                             *fresh17 = &mut (*(*env).me_txns).mt1.mtb.mtb_rlocked;
-                                            let ref mut fresh18 = (*((*env).me_wmutex).as_mut_ptr())
-                                                .locked;
+                                            let ref mut fresh18 =
+                                                (*((*env).me_wmutex).as_mut_ptr()).locked;
                                             *fresh18 = &mut (*(*env).me_txns).mt2.mt2_wlocked;
                                             return MDB_SUCCESS;
                                         }
@@ -4887,10 +4696,15 @@ unsafe extern "C" fn mdb_env_setup_locks(
     return rc;
 }
 pub const MDB_ERRCODE_ROFS: libc::c_int = EROFS;
-pub const CHANGEABLE: libc::c_int = MDB_NOSYNC | MDB_NOMETASYNC | MDB_MAPASYNC
-    | MDB_NOMEMINIT;
-pub const CHANGELESS: libc::c_int = MDB_FIXEDMAP | MDB_NOSUBDIR | MDB_RDONLY
-    | MDB_WRITEMAP | MDB_NOTLS | MDB_NOLOCK | MDB_NORDAHEAD | MDB_PREVSNAPSHOT;
+pub const CHANGEABLE: libc::c_int = MDB_NOSYNC | MDB_NOMETASYNC | MDB_MAPASYNC | MDB_NOMEMINIT;
+pub const CHANGELESS: libc::c_int = MDB_FIXEDMAP
+    | MDB_NOSUBDIR
+    | MDB_RDONLY
+    | MDB_WRITEMAP
+    | MDB_NOTLS
+    | MDB_NOLOCK
+    | MDB_NORDAHEAD
+    | MDB_PREVSNAPSHOT;
 
 #[no_mangle]
 #[cold]
@@ -4923,51 +4737,42 @@ pub unsafe extern "C" fn mdb_env_open(
         flags &= !MDB_WRITEMAP as libc::c_uint;
     } else {
         (*env).me_free_pgs = mdb_midl_alloc(MDB_IDL_UM_MAX);
-        if !(!((*env).me_free_pgs).is_null()
-            && {
-                (*env)
-                    .me_dirty_list = calloc(
-                    MDB_IDL_UM_SIZE as libc::c_ulong,
-                    ::core::mem::size_of::<MDB_ID2>() as libc::c_ulong,
-                ) as MDB_ID2L;
-                !((*env).me_dirty_list).is_null()
-            })
-        {
+        if !(!((*env).me_free_pgs).is_null() && {
+            (*env).me_dirty_list = calloc(
+                MDB_IDL_UM_SIZE as libc::c_ulong,
+                ::core::mem::size_of::<MDB_ID2>() as libc::c_ulong,
+            ) as MDB_ID2L;
+            !((*env).me_dirty_list).is_null()
+        }) {
             rc = ENOMEM;
         }
     }
     (*env).me_flags = flags;
     if !(rc != 0) {
         (*env).me_path = strdup(path);
-        (*env)
-            .me_dbxs = calloc(
+        (*env).me_dbxs = calloc(
             (*env).me_maxdbs as libc::c_ulong,
             ::core::mem::size_of::<MDB_dbx>() as libc::c_ulong,
         ) as *mut MDB_dbx;
-        (*env)
-            .me_dbflags = calloc(
+        (*env).me_dbflags = calloc(
             (*env).me_maxdbs as libc::c_ulong,
             ::core::mem::size_of::<uint16_t>() as libc::c_ulong,
         ) as *mut uint16_t;
-        (*env)
-            .me_dbiseqs = calloc(
+        (*env).me_dbiseqs = calloc(
             (*env).me_maxdbs as libc::c_ulong,
             ::core::mem::size_of::<libc::c_uint>() as libc::c_ulong,
         ) as *mut libc::c_uint;
-        if !(!((*env).me_dbxs).is_null() && !((*env).me_path).is_null()
-            && !((*env).me_dbflags).is_null() && !((*env).me_dbiseqs).is_null())
+        if !(!((*env).me_dbxs).is_null()
+            && !((*env).me_path).is_null()
+            && !((*env).me_dbflags).is_null()
+            && !((*env).me_dbiseqs).is_null())
         {
             rc = ENOMEM;
         } else {
             let ref mut fresh19 = (*((*env).me_dbxs).offset(FREE_DBI as isize)).md_cmp;
             *fresh19 = Some(mdb_cmp_long as MDB_cmp_func);
             if flags & (MDB_RDONLY | MDB_NOLOCK) as libc::c_uint == 0 {
-                rc = mdb_env_setup_locks(
-                    env,
-                    &mut fname,
-                    mode as libc::c_int,
-                    &mut excl,
-                );
+                rc = mdb_env_setup_locks(env, &mut fname, mode as libc::c_int, &mut excl);
                 if rc != 0 {
                     current_block = 2122094917359643297;
                 } else if flags & MDB_PREVSNAPSHOT as libc::c_uint != 0 && excl == 0 {
@@ -5019,8 +4824,7 @@ pub unsafe extern "C" fn mdb_env_open(
                                     (flags & MDB_PREVSNAPSHOT as libc::c_uint) as libc::c_int,
                                 );
                                 if rc == MDB_SUCCESS {
-                                    if flags & (MDB_RDONLY | MDB_WRITEMAP) as libc::c_uint == 0
-                                    {
+                                    if flags & (MDB_RDONLY | MDB_WRITEMAP) as libc::c_uint == 0 {
                                         rc = mdb_fopen(
                                             env,
                                             &mut fname,
@@ -5056,51 +4860,66 @@ pub unsafe extern "C" fn mdb_env_open(
                                                 _ => {
                                                     if flags & MDB_RDONLY as libc::c_uint == 0 {
                                                         let mut txn = 0 as *mut MDB_txn;
-                                                        let mut tsize = ::core::mem::size_of::<MDB_txn>()
-                                                            as libc::c_ulong as libc::c_int;
+                                                        let mut tsize =
+                                                            ::core::mem::size_of::<MDB_txn>()
+                                                                as libc::c_ulong
+                                                                as libc::c_int;
                                                         let mut size = (tsize as libc::c_ulong)
                                                             .wrapping_add(
-                                                                ((*env).me_maxdbs as libc::c_ulong)
-                                                                    .wrapping_mul(
-                                                                        (::core::mem::size_of::<MDB_db>() as libc::c_ulong)
-                                                                            .wrapping_add(
-                                                                                ::core::mem::size_of::<*mut MDB_cursor>() as libc::c_ulong,
-                                                                            )
-                                                                            .wrapping_add(
-                                                                                ::core::mem::size_of::<libc::c_uint>() as libc::c_ulong,
-                                                                            )
-                                                                            .wrapping_add(1 as libc::c_int as libc::c_ulong),
+                                                            ((*env).me_maxdbs as libc::c_ulong)
+                                                                .wrapping_mul(
+                                                                (::core::mem::size_of::<MDB_db>()
+                                                                    as libc::c_ulong)
+                                                                    .wrapping_add(
+                                                                        ::core::mem::size_of::<
+                                                                            *mut MDB_cursor,
+                                                                        >(
+                                                                        )
+                                                                            as libc::c_ulong,
+                                                                    )
+                                                                    .wrapping_add(
+                                                                        ::core::mem::size_of::<
+                                                                            libc::c_uint,
+                                                                        >(
+                                                                        )
+                                                                            as libc::c_ulong,
+                                                                    )
+                                                                    .wrapping_add(
+                                                                        1 as libc::c_int
+                                                                            as libc::c_ulong,
                                                                     ),
-                                                            ) as libc::c_int;
-                                                        (*env)
-                                                            .me_pbuf = calloc(
+                                                            ),
+                                                        )
+                                                            as libc::c_int;
+                                                        (*env).me_pbuf = calloc(
                                                             1 as libc::c_int as libc::c_ulong,
                                                             (*env).me_psize as libc::c_ulong,
                                                         );
-                                                        if !((*env).me_pbuf).is_null()
-                                                            && {
-                                                                txn = calloc(
-                                                                    1 as libc::c_int as libc::c_ulong,
-                                                                    size as libc::c_ulong,
-                                                                ) as *mut MDB_txn;
-                                                                !txn.is_null()
-                                                            }
-                                                        {
-                                                            (*txn)
-                                                                .mt_dbs = (txn as *mut libc::c_char).offset(tsize as isize)
+                                                        if !((*env).me_pbuf).is_null() && {
+                                                            txn = calloc(
+                                                                1 as libc::c_int as libc::c_ulong,
+                                                                size as libc::c_ulong,
+                                                            )
+                                                                as *mut MDB_txn;
+                                                            !txn.is_null()
+                                                        } {
+                                                            (*txn).mt_dbs = (txn
+                                                                as *mut libc::c_char)
+                                                                .offset(tsize as isize)
                                                                 as *mut MDB_db;
-                                                            (*txn)
-                                                                .mt_cursors = ((*txn).mt_dbs)
-                                                                .offset((*env).me_maxdbs as isize) as *mut *mut MDB_cursor;
-                                                            (*txn)
-                                                                .mt_dbiseqs = ((*txn).mt_cursors)
-                                                                .offset((*env).me_maxdbs as isize) as *mut libc::c_uint;
-                                                            (*txn)
-                                                                .mt_dbflags = ((*txn).mt_dbiseqs)
-                                                                .offset((*env).me_maxdbs as isize) as *mut libc::c_uchar;
+                                                            (*txn).mt_cursors = ((*txn).mt_dbs)
+                                                                .offset((*env).me_maxdbs as isize)
+                                                                as *mut *mut MDB_cursor;
+                                                            (*txn).mt_dbiseqs = ((*txn).mt_cursors)
+                                                                .offset((*env).me_maxdbs as isize)
+                                                                as *mut libc::c_uint;
+                                                            (*txn).mt_dbflags = ((*txn).mt_dbiseqs)
+                                                                .offset((*env).me_maxdbs as isize)
+                                                                as *mut libc::c_uchar;
                                                             (*txn).mt_env = env;
                                                             (*txn).mt_dbxs = (*env).me_dbxs;
-                                                            (*txn).mt_flags = MDB_TXN_FINISHED as libc::c_uint;
+                                                            (*txn).mt_flags =
+                                                                MDB_TXN_FINISHED as libc::c_uint;
                                                             (*env).me_txn0 = txn;
                                                         } else {
                                                             rc = ENOMEM;
@@ -5170,18 +4989,21 @@ unsafe extern "C" fn mdb_env_close0(mut env: *mut MDB_env, mut excl: libc::c_int
             if !(i >= 0 as libc::c_int) {
                 break;
             }
-            if (*((*(*env).me_txns).mti_readers).as_mut_ptr().offset(i as isize))
-                .mru
-                .mrx
-                .mrb_pid == pid
+            if (*((*(*env).me_txns).mti_readers)
+                .as_mut_ptr()
+                .offset(i as isize))
+            .mru
+            .mrx
+            .mrb_pid
+                == pid
             {
                 ::core::ptr::write_volatile(
                     &mut (*((*(*env).me_txns).mti_readers)
                         .as_mut_ptr()
                         .offset(i as isize))
-                        .mru
-                        .mrx
-                        .mrb_pid as *mut pid_t,
+                    .mru
+                    .mrx
+                    .mrb_pid as *mut pid_t,
                     0 as libc::c_int,
                 );
             }
@@ -5229,40 +5051,26 @@ pub unsafe extern "C" fn mdb_env_close(mut env: *mut MDB_env) {
     mdb_env_close0(env, 0 as libc::c_int);
     free(env as *mut libc::c_void);
 }
-unsafe extern "C" fn mdb_cmp_long(
-    mut a: *const MDB_val,
-    mut b: *const MDB_val,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_cmp_long(mut a: *const MDB_val, mut b: *const MDB_val) -> libc::c_int {
     return if *((*a).mv_data as *mut mdb_size_t) < *((*b).mv_data as *mut mdb_size_t) {
         -(1 as libc::c_int)
     } else {
-        (*((*a).mv_data as *mut mdb_size_t) > *((*b).mv_data as *mut mdb_size_t))
-            as libc::c_int
+        (*((*a).mv_data as *mut mdb_size_t) > *((*b).mv_data as *mut mdb_size_t)) as libc::c_int
     };
 }
-unsafe extern "C" fn mdb_cmp_int(
-    mut a: *const MDB_val,
-    mut b: *const MDB_val,
-) -> libc::c_int {
-    return if *((*a).mv_data as *mut libc::c_uint) < *((*b).mv_data as *mut libc::c_uint)
-    {
+unsafe extern "C" fn mdb_cmp_int(mut a: *const MDB_val, mut b: *const MDB_val) -> libc::c_int {
+    return if *((*a).mv_data as *mut libc::c_uint) < *((*b).mv_data as *mut libc::c_uint) {
         -(1 as libc::c_int)
     } else {
-        (*((*a).mv_data as *mut libc::c_uint) > *((*b).mv_data as *mut libc::c_uint))
-            as libc::c_int
+        (*((*a).mv_data as *mut libc::c_uint) > *((*b).mv_data as *mut libc::c_uint)) as libc::c_int
     };
 }
-unsafe extern "C" fn mdb_cmp_cint(
-    mut a: *const MDB_val,
-    mut b: *const MDB_val,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_cmp_cint(mut a: *const MDB_val, mut b: *const MDB_val) -> libc::c_int {
     let mut u = 0 as *mut libc::c_ushort;
     let mut c = 0 as *mut libc::c_ushort;
     let mut x: libc::c_int = 0;
-    u = ((*a).mv_data as *mut libc::c_char).offset((*a).mv_size as isize)
-        as *mut libc::c_ushort;
-    c = ((*b).mv_data as *mut libc::c_char).offset((*a).mv_size as isize)
-        as *mut libc::c_ushort;
+    u = ((*a).mv_data as *mut libc::c_char).offset((*a).mv_size as isize) as *mut libc::c_ushort;
+    c = ((*b).mv_data as *mut libc::c_char).offset((*a).mv_size as isize) as *mut libc::c_ushort;
     loop {
         u = u.offset(-1);
         c = c.offset(-1);
@@ -5273,10 +5081,7 @@ unsafe extern "C" fn mdb_cmp_cint(
     }
     return x;
 }
-unsafe extern "C" fn mdb_cmp_memn(
-    mut a: *const MDB_val,
-    mut b: *const MDB_val,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_cmp_memn(mut a: *const MDB_val, mut b: *const MDB_val) -> libc::c_int {
     let mut diff: libc::c_int = 0;
     let mut len_diff: ssize_t = 0;
     let mut len: libc::c_uint = 0;
@@ -5295,10 +5100,7 @@ unsafe extern "C" fn mdb_cmp_memn(
         len_diff
     }) as libc::c_int;
 }
-unsafe extern "C" fn mdb_cmp_memnr(
-    mut a: *const MDB_val,
-    mut b: *const MDB_val,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_cmp_memnr(mut a: *const MDB_val, mut b: *const MDB_val) -> libc::c_int {
     let mut p1 = 0 as *const libc::c_uchar;
     let mut p2 = 0 as *const libc::c_uchar;
     let mut p1_lim = 0 as *const libc::c_uchar;
@@ -5342,20 +5144,19 @@ unsafe extern "C" fn mdb_node_search(
         mv_size: 0,
         mv_data: 0 as *mut libc::c_void,
     };
-    let mut cmp: Option::<MDB_cmp_func> = None;
+    let mut cmp: Option<MDB_cmp_func> = None;
     nkeys = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-        .wrapping_sub(
-            (PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(
-                    (if 0 as libc::c_int != 0 {
-                        PAGEHDRSZ as libc::c_uint
-                    } else {
-                        0 as libc::c_int as libc::c_uint
-                    }),
-                ),
-        ) >> 1 as libc::c_int;
+        .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+            (if 0 as libc::c_int != 0 {
+                PAGEHDRSZ as libc::c_uint
+            } else {
+                0 as libc::c_int as libc::c_uint
+            }),
+        ))
+        >> 1 as libc::c_int;
     low = if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
     {
         0 as libc::c_int
     } else {
@@ -5365,7 +5166,8 @@ unsafe extern "C" fn mdb_node_search(
     cmp = (*(*mc).mc_dbx).md_cmp;
     if cmp == Some(mdb_cmp_cint as MDB_cmp_func)
         && (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-            & 0x1 as libc::c_int == 0x1 as libc::c_int
+            & 0x1 as libc::c_int
+            == 0x1 as libc::c_int
     {
         if (*((mp as *mut libc::c_char)
             .offset(
@@ -5388,8 +5190,8 @@ unsafe extern "C" fn mdb_node_search(
             cmp = Some(mdb_cmp_int as MDB_cmp_func);
         }
     }
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         nodekey.mv_size = (*(*mc).mc_db).md_pad as size_t;
         node = (mp as *mut libc::c_char)
@@ -5407,10 +5209,10 @@ unsafe extern "C" fn mdb_node_search(
             ) as *mut MDB_node;
         while low <= high {
             i = (low + high >> 1 as libc::c_int) as libc::c_uint;
-            nodekey
-                .mv_data = (mp as *mut libc::c_char)
+            nodekey.mv_data = (mp as *mut libc::c_char)
                 .offset(PAGEHDRSZ as libc::c_uint as isize)
-                .offset((i as size_t * nodekey.mv_size) as isize) as *mut libc::c_void;
+                .offset((i as size_t * nodekey.mv_size) as isize)
+                as *mut libc::c_void;
             rc = cmp.expect("non-null function pointer")(key, &mut nodekey);
             if rc == 0 as libc::c_int {
                 break;
@@ -5454,7 +5256,8 @@ unsafe extern "C" fn mdb_node_search(
         i = i.wrapping_add(1);
         i;
         if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-            & 0x20 as libc::c_int == 0x20 as libc::c_int)
+            & 0x20 as libc::c_int
+            == 0x20 as libc::c_int)
         {
             node = (mp as *mut libc::c_char)
                 .offset(
@@ -5472,8 +5275,8 @@ unsafe extern "C" fn mdb_node_search(
         }
     }
     if !exactp.is_null() {
-        *exactp = (rc == 0 as libc::c_int && nkeys > 0 as libc::c_int as libc::c_uint)
-            as libc::c_int;
+        *exactp =
+            (rc == 0 as libc::c_int && nkeys > 0 as libc::c_int as libc::c_uint) as libc::c_int;
     }
     (*mc).mc_ki[(*mc).mc_top as usize] = i as indx_t;
     if i >= nkeys {
@@ -5527,8 +5330,7 @@ unsafe extern "C" fn mdb_page_get(
             if !((*tx2).mt_spill_pgs).is_null() {
                 let mut pn = pgno << 1 as libc::c_int;
                 x = mdb_midl_search((*tx2).mt_spill_pgs, pn);
-                if x as MDB_ID
-                    <= *((*tx2).mt_spill_pgs).offset(0 as libc::c_int as isize)
+                if x as MDB_ID <= *((*tx2).mt_spill_pgs).offset(0 as libc::c_int as isize)
                     && *((*tx2).mt_spill_pgs).offset(x as isize) == pn
                 {
                     current_block = 5159274329597579145;
@@ -5589,32 +5391,32 @@ unsafe extern "C" fn mdb_page_search_root(
     let mut mp = (*mc).mc_pg[(*mc).mc_top as usize];
     let mut rc: libc::c_int = 0;
     while (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x1 as libc::c_int == 0x1 as libc::c_int
+        & 0x1 as libc::c_int
+        == 0x1 as libc::c_int
     {
         let mut current_block_30: u64;
         let mut node = 0 as *mut MDB_node;
         let mut i: indx_t = 0;
         if (*mc).mc_dbi == 0
             || ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-                .wrapping_sub(
-                    (16 as libc::c_ulong as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                16 as libc::c_ulong as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int > 1 as libc::c_int as libc::c_uint
-        {} else {
+                .wrapping_sub((16 as libc::c_ulong as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        16 as libc::c_ulong as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int
+                > 1 as libc::c_int as libc::c_uint
+        {
+        } else {
             mdb_assert_fail(
                 (*(*mc).mc_txn).mt_env,
                 b"!mc->mc_dbi || NUMKEYS(mp) > 1\0" as *const u8 as *const libc::c_char,
-                (*::core::mem::transmute::<
-                    &[u8; 21],
-                    &[libc::c_char; 21],
-                >(b"mdb_page_search_root\0"))
-                    .as_ptr(),
+                (*::core::mem::transmute::<&[u8; 21], &[libc::c_char; 21]>(
+                    b"mdb_page_search_root\0",
+                ))
+                .as_ptr(),
                 b"mdb.c\0" as *const u8 as *const libc::c_char,
                 6554 as libc::c_int,
             );
@@ -5622,23 +5424,18 @@ unsafe extern "C" fn mdb_page_search_root(
         if flags & (MDB_PS_FIRST | MDB_PS_LAST) != 0 {
             i = 0 as libc::c_int as indx_t;
             if flags & MDB_PS_LAST != 0 {
-                i = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                    as libc::c_uint)
-                    .wrapping_sub(
-                        (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ),
-                    ) >> 1 as libc::c_int)
+                i = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int)
                     .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
                 if (*mc).mc_flags & C_INITIALIZED as libc::c_uint != 0 {
-                    if (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int
-                        == i as libc::c_int
-                    {
+                    if (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int == i as libc::c_int {
                         let fresh21 = (*mc).mc_snum;
                         (*mc).mc_snum = ((*mc).mc_snum).wrapping_add(1);
                         (*mc).mc_top = fresh21;
@@ -5657,31 +5454,28 @@ unsafe extern "C" fn mdb_page_search_root(
             let mut exact: libc::c_int = 0;
             node = mdb_node_search(mc, key, &mut exact);
             if node.is_null() {
-                i = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                    as libc::c_uint)
-                    .wrapping_sub(
-                        (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ),
-                    ) >> 1 as libc::c_int)
+                i = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int)
                     .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
             } else {
                 i = (*mc).mc_ki[(*mc).mc_top as usize];
                 if exact == 0 {
-                    if i as libc::c_int > 0 as libc::c_int {} else {
+                    if i as libc::c_int > 0 as libc::c_int {
+                    } else {
                         mdb_assert_fail(
                             (*(*mc).mc_txn).mt_env,
                             b"i > 0\0" as *const u8 as *const libc::c_char,
-                            (*::core::mem::transmute::<
-                                &[u8; 21],
-                                &[libc::c_char; 21],
-                            >(b"mdb_page_search_root\0"))
-                                .as_ptr(),
+                            (*::core::mem::transmute::<&[u8; 21], &[libc::c_char; 21]>(
+                                b"mdb_page_search_root\0",
+                            ))
+                            .as_ptr(),
                             b"mdb.c\0" as *const u8 as *const libc::c_char,
                             6578 as libc::c_int,
                         );
@@ -5695,27 +5489,24 @@ unsafe extern "C" fn mdb_page_search_root(
         match current_block_30 {
             4495394744059808450 => {
                 if (i as libc::c_uint)
-                    < ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                        as libc::c_uint)
-                        .wrapping_sub(
-                            (16 as libc::c_ulong as libc::c_uint)
-                                .wrapping_sub(
-                                    (if 0 as libc::c_int != 0 {
-                                        16 as libc::c_ulong as libc::c_uint
-                                    } else {
-                                        0 as libc::c_int as libc::c_uint
-                                    }),
-                                ),
-                        ) >> 1 as libc::c_int
-                {} else {
+                    < ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                        .wrapping_sub((16 as libc::c_ulong as libc::c_uint).wrapping_sub(
+                            (if 0 as libc::c_int != 0 {
+                                16 as libc::c_ulong as libc::c_uint
+                            } else {
+                                0 as libc::c_int as libc::c_uint
+                            }),
+                        ))
+                        >> 1 as libc::c_int
+                {
+                } else {
                     mdb_assert_fail(
                         (*(*mc).mc_txn).mt_env,
                         b"i < NUMKEYS(mp)\0" as *const u8 as *const libc::c_char,
-                        (*::core::mem::transmute::<
-                            &[u8; 21],
-                            &[libc::c_char; 21],
-                        >(b"mdb_page_search_root\0"))
-                            .as_ptr(),
+                        (*::core::mem::transmute::<&[u8; 21], &[libc::c_char; 21]>(
+                            b"mdb_page_search_root\0",
+                        ))
+                        .as_ptr(),
                         b"mdb.c\0" as *const u8 as *const libc::c_char,
                         6585 as libc::c_int,
                     );
@@ -5779,7 +5570,8 @@ unsafe extern "C" fn mdb_page_search_root(
         }
     }
     if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int)
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int)
     {
         (*(*mc).mc_txn).mt_flags |= MDB_TXN_ERROR as libc::c_uint;
         return MDB_CORRUPTED;
@@ -5806,19 +5598,16 @@ unsafe extern "C" fn mdb_page_search_lowest(mut mc: *mut MDB_cursor) -> libc::c_
     let mut rc: libc::c_int = 0;
     rc = mdb_page_get(
         mc,
-        (*node).mn_lo as pgno_t | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
-            | (if (if -(1 as libc::c_int) as pgno_t
-                > 0xffffffff as libc::c_uint as pgno_t
-            {
+        (*node).mn_lo as pgno_t
+            | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
+            | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                 32 as libc::c_int
             } else {
                 0 as libc::c_int
             }) != 0
             {
                 ((*node).mn_flags as pgno_t)
-                    << (if -(1 as libc::c_int) as pgno_t
-                        > 0xffffffff as libc::c_uint as pgno_t
-                    {
+                    << (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                         32 as libc::c_int
                     } else {
                         0 as libc::c_int
@@ -5847,7 +5636,7 @@ unsafe extern "C" fn mdb_page_search(
     let mut rc: libc::c_int = 0;
     let mut root: pgno_t = 0;
     if (*(*mc).mc_txn).mt_flags & MDB_TXN_BLOCKED as libc::c_uint != 0 {
-        return MDB_BAD_TXN
+        return MDB_BAD_TXN;
     } else {
         if *(*mc).mc_dbflag as libc::c_int & DB_STALE != 0 {
             let mut mc2 = MDB_cursor {
@@ -5876,11 +5665,7 @@ unsafe extern "C" fn mdb_page_search(
                 MAIN_DBI as MDB_dbi,
                 NULL as *mut MDB_xcursor,
             );
-            rc = mdb_page_search(
-                &mut mc2,
-                &mut (*(*mc).mc_dbx).md_name,
-                0 as libc::c_int,
-            );
+            rc = mdb_page_search(&mut mc2, &mut (*(*mc).mc_dbx).md_name, 0 as libc::c_int);
             if rc != 0 {
                 return rc;
             }
@@ -5890,11 +5675,7 @@ unsafe extern "C" fn mdb_page_search(
             };
             let mut exact = 0 as libc::c_int;
             let mut flags_0: uint16_t = 0;
-            let mut leaf = mdb_node_search(
-                &mut mc2,
-                &mut (*(*mc).mc_dbx).md_name,
-                &mut exact,
-            );
+            let mut leaf = mdb_node_search(&mut mc2, &mut (*(*mc).mc_dbx).md_name, &mut exact);
             if exact == 0 {
                 return MDB_BAD_DBI;
             }
@@ -5911,9 +5692,7 @@ unsafe extern "C" fn mdb_page_search(
                     as *const libc::c_void,
                 ::core::mem::size_of::<uint16_t>() as libc::c_ulong,
             );
-            if (*(*mc).mc_db).md_flags as libc::c_int & PERSISTENT_FLAGS
-                != flags_0 as libc::c_int
-            {
+            if (*(*mc).mc_db).md_flags as libc::c_int & PERSISTENT_FLAGS != flags_0 as libc::c_int {
                 return MDB_INCOMPATIBLE;
             }
             memcpy(
@@ -5921,23 +5700,19 @@ unsafe extern "C" fn mdb_page_search(
                 data.mv_data,
                 ::core::mem::size_of::<MDB_db>() as libc::c_ulong,
             );
-            *(*mc)
-                .mc_dbflag = (*(*mc).mc_dbflag as libc::c_int & !DB_STALE)
-                as libc::c_uchar;
+            *(*mc).mc_dbflag = (*(*mc).mc_dbflag as libc::c_int & !DB_STALE) as libc::c_uchar;
         }
         root = (*(*mc).mc_db).md_root;
         if root == P_INVALID {
             return MDB_NOTFOUND;
         }
     }
-    if root > 1 as libc::c_int as pgno_t {} else {
+    if root > 1 as libc::c_int as pgno_t {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"root > 1\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 16],
-                &[libc::c_char; 16],
-            >(b"mdb_page_search\0"))
+            (*::core::mem::transmute::<&[u8; 16], &[libc::c_char; 16]>(b"mdb_page_search\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             6705 as libc::c_int,
@@ -5981,13 +5756,15 @@ unsafe extern "C" fn mdb_ovpage_free(
     let mut sl = (*txn).mt_spill_pgs;
     let mut pn = pg << 1 as libc::c_int;
     let mut rc: libc::c_int = 0;
-    if !((*env).me_pgstate.mf_pghead).is_null() && ((*txn).mt_parent).is_null()
+    if !((*env).me_pgstate.mf_pghead).is_null()
+        && ((*txn).mt_parent).is_null()
         && ((*mp).mp_flags as libc::c_int & P_DIRTY != 0
             || !sl.is_null()
                 && {
                     x = mdb_midl_search(sl, pn);
                     x as MDB_ID <= *sl.offset(0 as libc::c_int as isize)
-                } && *sl.offset(x as isize) == pn)
+                }
+                && *sl.offset(x as isize) == pn)
     {
         let mut i: libc::c_uint = 0;
         let mut j: libc::c_uint = 0;
@@ -6027,15 +5804,15 @@ unsafe extern "C" fn mdb_ovpage_free(
                     iy = *dl.offset(x as isize);
                     *dl.offset(x as isize) = ix;
                 } else {
-                    if x > 1 as libc::c_int as libc::c_uint {} else {
+                    if x > 1 as libc::c_int as libc::c_uint {
+                    } else {
                         mdb_assert_fail(
                             (*(*mc).mc_txn).mt_env,
                             b"x > 1\0" as *const u8 as *const libc::c_char,
-                            (*::core::mem::transmute::<
-                                &[u8; 16],
-                                &[libc::c_char; 16],
-                            >(b"mdb_ovpage_free\0"))
-                                .as_ptr(),
+                            (*::core::mem::transmute::<&[u8; 16], &[libc::c_char; 16]>(
+                                b"mdb_ovpage_free\0",
+                            ))
+                            .as_ptr(),
                             b"mdb.c\0" as *const u8 as *const libc::c_char,
                             6787 as libc::c_int,
                         );
@@ -6081,9 +5858,8 @@ unsafe extern "C" fn mdb_ovpage_free(
             return rc;
         }
     }
-    (*(*mc).mc_db)
-        .md_overflow_pages = ((*(*mc).mc_db).md_overflow_pages)
-        .wrapping_sub(ovpages as pgno_t);
+    (*(*mc).mc_db).md_overflow_pages =
+        ((*(*mc).mc_db).md_overflow_pages).wrapping_sub(ovpages as pgno_t);
     return 0 as libc::c_int;
 }
 unsafe extern "C" fn mdb_node_read(
@@ -6096,31 +5872,30 @@ unsafe extern "C" fn mdb_node_read(
     let mut rc: libc::c_int = 0;
     !(0 as *mut MDB_page).is_null();
     if !((*leaf).mn_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int) {
-        (*data)
-            .mv_size = ((*leaf).mn_lo as libc::c_uint
-            | ((*leaf).mn_hi as libc::c_uint) << 16 as libc::c_int) as size_t;
-        (*data)
-            .mv_data = ((*leaf).mn_data)
+        (*data).mv_size = ((*leaf).mn_lo as libc::c_uint
+            | ((*leaf).mn_hi as libc::c_uint) << 16 as libc::c_int)
+            as size_t;
+        (*data).mv_data = ((*leaf).mn_data)
             .as_mut_ptr()
-            .offset((*leaf).mn_ksize as libc::c_int as isize) as *mut libc::c_void;
+            .offset((*leaf).mn_ksize as libc::c_int as isize)
+            as *mut libc::c_void;
         return MDB_SUCCESS;
     }
-    (*data)
-        .mv_size = ((*leaf).mn_lo as libc::c_uint
+    (*data).mv_size = ((*leaf).mn_lo as libc::c_uint
         | ((*leaf).mn_hi as libc::c_uint) << 16 as libc::c_int) as size_t;
     memcpy(
         &mut pgno as *mut pgno_t as *mut libc::c_void,
-        ((*leaf).mn_data).as_mut_ptr().offset((*leaf).mn_ksize as libc::c_int as isize)
-            as *mut libc::c_void,
+        ((*leaf).mn_data)
+            .as_mut_ptr()
+            .offset((*leaf).mn_ksize as libc::c_int as isize) as *mut libc::c_void,
         ::core::mem::size_of::<pgno_t>() as libc::c_ulong,
     );
     rc = mdb_page_get(mc, pgno, &mut omp, NULL as *mut libc::c_int);
     if rc != 0 as libc::c_int {
         return rc;
     }
-    (*data)
-        .mv_data = (omp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
-        as *mut libc::c_void;
+    (*data).mv_data =
+        (omp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void;
     return MDB_SUCCESS;
 }
 #[no_mangle]
@@ -6185,10 +5960,11 @@ pub unsafe extern "C" fn mdb_get(
     };
     let mut exact = 0 as libc::c_int;
     let mut rc: libc::c_int = 0;
-    if key.is_null() || data.is_null()
-        || !(!txn.is_null() && dbi < (*txn).mt_numdbs
-            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int
-                & 0x10 as libc::c_int != 0)
+    if key.is_null()
+        || data.is_null()
+        || !(!txn.is_null()
+            && dbi < (*txn).mt_numdbs
+            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -6211,24 +5987,19 @@ unsafe extern "C" fn mdb_cursor_sibling(
     }
     mdb_cursor_pop(mc);
     if if move_right != 0 {
-        (((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint)
-            .wrapping_add(1 as libc::c_uint)
-            >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
+        (((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint).wrapping_add(1 as libc::c_uint)
+            >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                 .mp2_lower as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int) as libc::c_int
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int) as libc::c_int
     } else {
-        ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int == 0 as libc::c_int)
-            as libc::c_int
+        ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int == 0 as libc::c_int) as libc::c_int
     } != 0
     {
         rc = mdb_cursor_sibling(mc, move_right);
@@ -6240,26 +6011,22 @@ unsafe extern "C" fn mdb_cursor_sibling(
             return rc;
         }
     } else if move_right != 0 {
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
+        (*mc).mc_ki[(*mc).mc_top as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
         (*mc).mc_ki[(*mc).mc_top as usize];
     } else {
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_sub(1);
+        (*mc).mc_ki[(*mc).mc_top as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_sub(1);
         (*mc).mc_ki[(*mc).mc_top as usize];
     }
-    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int
-    {} else {
+    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x1 as libc::c_int
+        == 0x1 as libc::c_int
+    {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"IS_BRANCH(mc->mc_pg[mc->mc_top])\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 19],
-                &[libc::c_char; 19],
-            >(b"mdb_cursor_sibling\0"))
+            (*::core::mem::transmute::<&[u8; 19], &[libc::c_char; 19]>(b"mdb_cursor_sibling\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             6929 as libc::c_int,
@@ -6267,8 +6034,7 @@ unsafe extern "C" fn mdb_cursor_sibling(
     };
     indx = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
         .offset(
-            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
+            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                 .mp2_ptrs)
                 .as_mut_ptr()
                 .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize) as libc::c_int
@@ -6283,19 +6049,16 @@ unsafe extern "C" fn mdb_cursor_sibling(
         ) as *mut MDB_node;
     rc = mdb_page_get(
         mc,
-        (*indx).mn_lo as pgno_t | ((*indx).mn_hi as pgno_t) << 16 as libc::c_int
-            | (if (if -(1 as libc::c_int) as pgno_t
-                > 0xffffffff as libc::c_uint as pgno_t
-            {
+        (*indx).mn_lo as pgno_t
+            | ((*indx).mn_hi as pgno_t) << 16 as libc::c_int
+            | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                 32 as libc::c_int
             } else {
                 0 as libc::c_int
             }) != 0
             {
                 ((*indx).mn_flags as pgno_t)
-                    << (if -(1 as libc::c_int) as pgno_t
-                        > 0xffffffff as libc::c_uint as pgno_t
-                    {
+                    << (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                         32 as libc::c_int
                     } else {
                         0 as libc::c_int
@@ -6312,21 +6075,17 @@ unsafe extern "C" fn mdb_cursor_sibling(
     }
     mdb_cursor_push(mc, mp);
     if move_right == 0 {
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-            as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int)
-            .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
+        (*mc).mc_ki[(*mc).mc_top as usize] =
+            (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int)
+                .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
     }
     return MDB_SUCCESS;
 }
@@ -6350,18 +6109,15 @@ unsafe extern "C" fn mdb_cursor_next(
     mp = (*mc).mc_pg[(*mc).mc_top as usize];
     if (*mc).mc_flags & C_EOF as libc::c_uint != 0 {
         if (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-            >= (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int)
+            >= (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int)
                 .wrapping_sub(1 as libc::c_int as libc::c_uint)
         {
             return MDB_NOTFOUND;
@@ -6373,8 +6129,8 @@ unsafe extern "C" fn mdb_cursor_next(
             .offset(
                 *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
-                    .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize) as libc::c_int
-                    as isize,
+                    .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize)
+                    as libc::c_int as isize,
             )
             .offset(
                 (if 0 as libc::c_int != 0 {
@@ -6399,17 +6155,14 @@ unsafe extern "C" fn mdb_cursor_next(
                     if rc == MDB_SUCCESS {
                         if !key.is_null() {
                             (*key).mv_size = (*leaf).mn_ksize as size_t;
-                            (*key)
-                                .mv_data = ((*leaf).mn_data).as_mut_ptr()
-                                as *mut libc::c_void;
+                            (*key).mv_data = ((*leaf).mn_data).as_mut_ptr() as *mut libc::c_void;
                         }
                     }
                     return rc;
                 }
             }
         } else {
-            (*(*mc).mc_xcursor).mx_cursor.mc_flags
-                &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
+            (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
             if op as libc::c_uint == MDB_NEXT_DUP as libc::c_int as libc::c_uint {
                 return MDB_NOTFOUND;
             }
@@ -6417,19 +6170,16 @@ unsafe extern "C" fn mdb_cursor_next(
     }
     if (*mc).mc_flags & C_DEL as libc::c_uint != 0 {
         (*mc).mc_flags ^= C_DEL as libc::c_uint;
-    } else if ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint)
-        .wrapping_add(1 as libc::c_uint)
-        >= ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int
+    } else if ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint).wrapping_add(1 as libc::c_uint)
+        >= ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint).wrapping_sub(
+            (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ),
+        ) >> 1 as libc::c_int
     {
         rc = mdb_cursor_sibling(mc, 1 as libc::c_int);
         if rc != MDB_SUCCESS {
@@ -6438,33 +6188,27 @@ unsafe extern "C" fn mdb_cursor_next(
         }
         mp = (*mc).mc_pg[(*mc).mc_top as usize];
     } else {
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
+        (*mc).mc_ki[(*mc).mc_top as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
         (*mc).mc_ki[(*mc).mc_top as usize];
     }
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         (*key).mv_size = (*(*mc).mc_db).md_pad as size_t;
-        (*key)
-            .mv_data = (mp as *mut libc::c_char)
+        (*key).mv_data = (mp as *mut libc::c_char)
             .offset(PAGEHDRSZ as libc::c_uint as isize)
-            .offset(
-                ((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size) as isize,
-            ) as *mut libc::c_void;
+            .offset(((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size) as isize)
+            as *mut libc::c_void;
         return MDB_SUCCESS;
     }
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int
-    {} else {
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
+    {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"IS_LEAF(mp)\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 16],
-                &[libc::c_char; 16],
-            >(b"mdb_cursor_next\0"))
+            (*::core::mem::transmute::<&[u8; 16], &[libc::c_char; 16]>(b"mdb_cursor_next\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             7018 as libc::c_int,
@@ -6520,32 +6264,28 @@ unsafe extern "C" fn mdb_cursor_prev(
         if rc != 0 {
             return rc;
         }
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
+        (*mc).mc_ki[(*mc).mc_top as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
         (*mc).mc_ki[(*mc).mc_top as usize];
     }
     mp = (*mc).mc_pg[(*mc).mc_top as usize];
     if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPSORT != 0
         && ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint)
             < ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int
     {
         leaf = (mp as *mut libc::c_char)
             .offset(
                 *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
-                    .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize) as libc::c_int
-                    as isize,
+                    .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize)
+                    as libc::c_int as isize,
             )
             .offset(
                 (if 0 as libc::c_int != 0 {
@@ -6570,9 +6310,7 @@ unsafe extern "C" fn mdb_cursor_prev(
                     if rc == MDB_SUCCESS {
                         if !key.is_null() {
                             (*key).mv_size = (*leaf).mn_ksize as size_t;
-                            (*key)
-                                .mv_data = ((*leaf).mn_data).as_mut_ptr()
-                                as *mut libc::c_void;
+                            (*key).mv_data = ((*leaf).mn_data).as_mut_ptr() as *mut libc::c_void;
                         }
                         (*mc).mc_flags &= !C_EOF as libc::c_uint;
                     }
@@ -6580,8 +6318,7 @@ unsafe extern "C" fn mdb_cursor_prev(
                 }
             }
         } else {
-            (*(*mc).mc_xcursor).mx_cursor.mc_flags
-                &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
+            (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
             if op as libc::c_uint == MDB_PREV_DUP as libc::c_int as libc::c_uint {
                 return MDB_NOTFOUND;
             }
@@ -6594,42 +6331,35 @@ unsafe extern "C" fn mdb_cursor_prev(
             return rc;
         }
         mp = (*mc).mc_pg[(*mc).mc_top as usize];
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-            as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int)
-            .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
+        (*mc).mc_ki[(*mc).mc_top as usize] =
+            (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int)
+                .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
     } else {
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_sub(1);
+        (*mc).mc_ki[(*mc).mc_top as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_sub(1);
         (*mc).mc_ki[(*mc).mc_top as usize];
     }
     if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int)
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int)
     {
         return MDB_CORRUPTED;
     }
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         (*key).mv_size = (*(*mc).mc_db).md_pad as size_t;
-        (*key)
-            .mv_data = (mp as *mut libc::c_char)
+        (*key).mv_data = (mp as *mut libc::c_char)
             .offset(PAGEHDRSZ as libc::c_uint as isize)
-            .offset(
-                ((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size) as isize,
-            ) as *mut libc::c_void;
+            .offset(((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size) as isize)
+            as *mut libc::c_void;
         return MDB_SUCCESS;
     }
     leaf = (mp as *mut libc::c_char)
@@ -6683,8 +6413,7 @@ unsafe extern "C" fn mdb_cursor_set(
         return MDB_BAD_VALSIZE;
     }
     if !((*mc).mc_xcursor).is_null() {
-        (*(*mc).mc_xcursor).mx_cursor.mc_flags
-            &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
+        (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
     }
     if (*mc).mc_flags & C_INITIALIZED as libc::c_uint != 0 {
         let mut nodekey = MDB_val {
@@ -6692,27 +6421,23 @@ unsafe extern "C" fn mdb_cursor_set(
             mv_data: 0 as *mut libc::c_void,
         };
         mp = (*mc).mc_pg[(*mc).mc_top as usize];
-        if ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int == 0
+        if ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint).wrapping_sub(
+            (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ),
+        ) >> 1 as libc::c_int
+            == 0
         {
             (*mc).mc_ki[(*mc).mc_top as usize] = 0 as libc::c_int as indx_t;
             return MDB_NOTFOUND;
         }
-        if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-            & P_LEAF2 != 0
-        {
+        if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & P_LEAF2 != 0 {
             nodekey.mv_size = (*(*mc).mc_db).md_pad as size_t;
-            nodekey
-                .mv_data = (mp as *mut libc::c_char)
+            nodekey.mv_data = (mp as *mut libc::c_char)
                 .offset(PAGEHDRSZ as libc::c_uint as isize)
                 .offset((0 as libc::c_int as size_t * nodekey.mv_size) as isize)
                 as *mut libc::c_void;
@@ -6721,7 +6446,8 @@ unsafe extern "C" fn mdb_cursor_set(
                 .offset(
                     *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                         .as_mut_ptr()
-                        .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                        .offset(0 as libc::c_int as isize) as libc::c_int
+                        as isize,
                 )
                 .offset(
                     (if 0 as libc::c_int != 0 {
@@ -6733,8 +6459,7 @@ unsafe extern "C" fn mdb_cursor_set(
             nodekey.mv_size = (*leaf).mn_ksize as size_t;
             nodekey.mv_data = ((*leaf).mn_data).as_mut_ptr() as *mut libc::c_void;
         }
-        rc = ((*(*mc).mc_dbx).md_cmp)
-            .expect("non-null function pointer")(key, &mut nodekey);
+        rc = ((*(*mc).mc_dbx).md_cmp).expect("non-null function pointer")(key, &mut nodekey);
         if rc == 0 as libc::c_int {
             (*mc).mc_ki[(*mc).mc_top as usize] = 0 as libc::c_int as indx_t;
             if !exactp.is_null() {
@@ -6746,36 +6471,33 @@ unsafe extern "C" fn mdb_cursor_set(
                 let mut i: libc::c_uint = 0;
                 let mut nkeys = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
                     as libc::c_uint)
-                    .wrapping_sub(
-                        (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ),
-                    ) >> 1 as libc::c_int;
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int;
                 if nkeys > 1 as libc::c_int as libc::c_uint {
-                    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                        as libc::c_int & P_LEAF2 != 0
+                    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                        & P_LEAF2
+                        != 0
                     {
-                        nodekey
-                            .mv_data = (mp as *mut libc::c_char)
+                        nodekey.mv_data = (mp as *mut libc::c_char)
                             .offset(PAGEHDRSZ as libc::c_uint as isize)
                             .offset(
-                                (nkeys.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                                    as size_t * nodekey.mv_size) as isize,
+                                (nkeys.wrapping_sub(1 as libc::c_int as libc::c_uint) as size_t
+                                    * nodekey.mv_size) as isize,
                             ) as *mut libc::c_void;
                     } else {
                         leaf = (mp as *mut libc::c_char)
                             .offset(
                                 *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                     .as_mut_ptr()
-                                    .offset(
-                                        nkeys.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                                            as isize,
-                                    ) as libc::c_int as isize,
+                                    .offset(nkeys.wrapping_sub(1 as libc::c_int as libc::c_uint)
+                                        as isize) as libc::c_int
+                                    as isize,
                             )
                             .offset(
                                 (if 0 as libc::c_int != 0 {
@@ -6785,17 +6507,15 @@ unsafe extern "C" fn mdb_cursor_set(
                                 }) as isize,
                             ) as *mut MDB_node;
                         nodekey.mv_size = (*leaf).mn_ksize as size_t;
-                        nodekey
-                            .mv_data = ((*leaf).mn_data).as_mut_ptr()
-                            as *mut libc::c_void;
+                        nodekey.mv_data = ((*leaf).mn_data).as_mut_ptr() as *mut libc::c_void;
                     }
-                    rc = ((*(*mc).mc_dbx).md_cmp)
-                        .expect("non-null function pointer")(key, &mut nodekey);
+                    rc = ((*(*mc).mc_dbx).md_cmp).expect("non-null function pointer")(
+                        key,
+                        &mut nodekey,
+                    );
                     if rc == 0 as libc::c_int {
-                        (*mc)
-                            .mc_ki[(*mc).mc_top
-                            as usize] = nkeys
-                            .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
+                        (*mc).mc_ki[(*mc).mc_top as usize] =
+                            nkeys.wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
                         if !exactp.is_null() {
                             *exactp = 1 as libc::c_int;
                         }
@@ -6804,34 +6524,36 @@ unsafe extern "C" fn mdb_cursor_set(
                         if ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint)
                             < ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
                                 as libc::c_uint)
-                                .wrapping_sub(
-                                    (PAGEHDRSZ as libc::c_uint)
-                                        .wrapping_sub(
-                                            (if 0 as libc::c_int != 0 {
-                                                PAGEHDRSZ as libc::c_uint
-                                            } else {
-                                                0 as libc::c_int as libc::c_uint
-                                            }),
-                                        ),
-                                ) >> 1 as libc::c_int
+                                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                    (if 0 as libc::c_int != 0 {
+                                        PAGEHDRSZ as libc::c_uint
+                                    } else {
+                                        0 as libc::c_int as libc::c_uint
+                                    }),
+                                ))
+                                >> 1 as libc::c_int
                         {
                             if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                                as libc::c_int & P_LEAF2 != 0
+                                as libc::c_int
+                                & P_LEAF2
+                                != 0
                             {
-                                nodekey
-                                    .mv_data = (mp as *mut libc::c_char)
+                                nodekey.mv_data = (mp as *mut libc::c_char)
                                     .offset(PAGEHDRSZ as libc::c_uint as isize)
                                     .offset(
                                         ((*mc).mc_ki[(*mc).mc_top as usize] as size_t
-                                            * nodekey.mv_size) as isize,
-                                    ) as *mut libc::c_void;
+                                            * nodekey.mv_size)
+                                            as isize,
+                                    )
+                                    as *mut libc::c_void;
                             } else {
                                 leaf = (mp as *mut libc::c_char)
                                     .offset(
                                         *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                             .as_mut_ptr()
                                             .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize)
-                                            as libc::c_int as isize,
+                                            as libc::c_int
+                                            as isize,
                                     )
                                     .offset(
                                         (if 0 as libc::c_int != 0 {
@@ -6841,12 +6563,13 @@ unsafe extern "C" fn mdb_cursor_set(
                                         }) as isize,
                                     ) as *mut MDB_node;
                                 nodekey.mv_size = (*leaf).mn_ksize as size_t;
-                                nodekey
-                                    .mv_data = ((*leaf).mn_data).as_mut_ptr()
-                                    as *mut libc::c_void;
+                                nodekey.mv_data =
+                                    ((*leaf).mn_data).as_mut_ptr() as *mut libc::c_void;
                             }
-                            rc = ((*(*mc).mc_dbx).md_cmp)
-                                .expect("non-null function pointer")(key, &mut nodekey);
+                            rc = ((*(*mc).mc_dbx).md_cmp).expect("non-null function pointer")(
+                                key,
+                                &mut nodekey,
+                            );
                             if rc == 0 as libc::c_int {
                                 if !exactp.is_null() {
                                     *exactp = 1 as libc::c_int;
@@ -6882,16 +6605,14 @@ unsafe extern "C" fn mdb_cursor_set(
                                 < (((*((*mc).mc_pg[i as usize] as *mut libc::c_void
                                     as *mut MDB_page2))
                                     .mp2_lower as libc::c_uint)
-                                    .wrapping_sub(
-                                        (PAGEHDRSZ as libc::c_uint)
-                                            .wrapping_sub(
-                                                (if 0 as libc::c_int != 0 {
-                                                    PAGEHDRSZ as libc::c_uint
-                                                } else {
-                                                    0 as libc::c_int as libc::c_uint
-                                                }),
-                                            ),
-                                    ) >> 1 as libc::c_int)
+                                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                        (if 0 as libc::c_int != 0 {
+                                            PAGEHDRSZ as libc::c_uint
+                                        } else {
+                                            0 as libc::c_int as libc::c_uint
+                                        }),
+                                    ))
+                                    >> 1 as libc::c_int)
                                     .wrapping_sub(1 as libc::c_int as libc::c_uint)
                             {
                                 break;
@@ -6915,13 +6636,12 @@ unsafe extern "C" fn mdb_cursor_set(
                 _ => {
                     if (*mc).mc_top == 0 {
                         (*mc).mc_ki[(*mc).mc_top as usize] = 0 as libc::c_int as indx_t;
-                        if op as libc::c_uint
-                            == MDB_SET_RANGE as libc::c_int as libc::c_uint
+                        if op as libc::c_uint == MDB_SET_RANGE as libc::c_int as libc::c_uint
                             && exactp.is_null()
                         {
                             rc = 0 as libc::c_int;
                         } else {
-                            return MDB_NOTFOUND
+                            return MDB_NOTFOUND;
                         }
                         current_block = 7663645823963397913;
                     } else {
@@ -6942,16 +6662,17 @@ unsafe extern "C" fn mdb_cursor_set(
             }
             mp = (*mc).mc_pg[(*mc).mc_top as usize];
             if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-                & 0x2 as libc::c_int == 0x2 as libc::c_int
-            {} else {
+                & 0x2 as libc::c_int
+                == 0x2 as libc::c_int
+            {
+            } else {
                 mdb_assert_fail(
                     (*(*mc).mc_txn).mt_env,
                     b"IS_LEAF(mp)\0" as *const u8 as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 15],
-                        &[libc::c_char; 15],
-                    >(b"mdb_cursor_set\0"))
-                        .as_ptr(),
+                    (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(
+                        b"mdb_cursor_set\0",
+                    ))
+                    .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     7237 as libc::c_int,
                 );
@@ -6973,17 +6694,18 @@ unsafe extern "C" fn mdb_cursor_set(
                     return rc;
                 }
                 mp = (*mc).mc_pg[(*mc).mc_top as usize];
-                if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                    as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
-                {} else {
+                if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                    & 0x2 as libc::c_int
+                    == 0x2 as libc::c_int
+                {
+                } else {
                     mdb_assert_fail(
                         (*(*mc).mc_txn).mt_env,
                         b"IS_LEAF(mp)\0" as *const u8 as *const libc::c_char,
-                        (*::core::mem::transmute::<
-                            &[u8; 15],
-                            &[libc::c_char; 15],
-                        >(b"mdb_cursor_set\0"))
-                            .as_ptr(),
+                        (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(
+                            b"mdb_cursor_set\0",
+                        ))
+                        .as_ptr(),
                         b"mdb.c\0" as *const u8 as *const libc::c_char,
                         7253 as libc::c_int,
                     );
@@ -6992,7 +6714,8 @@ unsafe extern "C" fn mdb_cursor_set(
                     .offset(
                         *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                             .as_mut_ptr()
-                            .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                            .offset(0 as libc::c_int as isize)
+                            as libc::c_int as isize,
                     )
                     .offset(
                         (if 0 as libc::c_int != 0 {
@@ -7007,20 +6730,17 @@ unsafe extern "C" fn mdb_cursor_set(
     }
     (*mc).mc_flags |= C_INITIALIZED as libc::c_uint;
     (*mc).mc_flags &= !C_EOF as libc::c_uint;
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         if op as libc::c_uint == MDB_SET_RANGE as libc::c_int as libc::c_uint
             || op as libc::c_uint == MDB_SET_KEY as libc::c_int as libc::c_uint
         {
             (*key).mv_size = (*(*mc).mc_db).md_pad as size_t;
-            (*key)
-                .mv_data = (mp as *mut libc::c_char)
+            (*key).mv_data = (mp as *mut libc::c_char)
                 .offset(PAGEHDRSZ as libc::c_uint as isize)
-                .offset(
-                    ((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size)
-                        as isize,
-                ) as *mut libc::c_void;
+                .offset(((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size) as isize)
+                as *mut libc::c_void;
         }
         return MDB_SUCCESS;
     }
@@ -7063,7 +6783,7 @@ unsafe extern "C" fn mdb_cursor_set(
                 mv_size: 0,
                 mv_data: 0 as *mut libc::c_void,
             };
-            let mut dcmp: Option::<MDB_cmp_func> = None;
+            let mut dcmp: Option<MDB_cmp_func> = None;
             rc = mdb_node_read(mc, leaf, &mut olddata);
             if rc != MDB_SUCCESS {
                 return rc;
@@ -7071,8 +6791,7 @@ unsafe extern "C" fn mdb_cursor_set(
             dcmp = (*(*mc).mc_dbx).md_dcmp;
             if (UINT_MAX as libc::c_ulong) < MDB_SIZE_MAX
                 && dcmp == Some(mdb_cmp_int as MDB_cmp_func)
-                && olddata.mv_size
-                    == ::core::mem::size_of::<mdb_size_t>() as libc::c_ulong
+                && olddata.mv_size == ::core::mem::size_of::<mdb_size_t>() as libc::c_ulong
             {
                 dcmp = Some(mdb_cmp_clong);
             }
@@ -7088,8 +6807,7 @@ unsafe extern "C" fn mdb_cursor_set(
             *data = olddata;
         } else {
             if !((*mc).mc_xcursor).is_null() {
-                (*(*mc).mc_xcursor).mx_cursor.mc_flags
-                    &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
+                (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
             }
             rc = mdb_node_read(mc, leaf, data);
             if rc != MDB_SUCCESS {
@@ -7115,27 +6833,24 @@ unsafe extern "C" fn mdb_cursor_first(
     let mut rc: libc::c_int = 0;
     let mut leaf = 0 as *mut MDB_node;
     if !((*mc).mc_xcursor).is_null() {
-        (*(*mc).mc_xcursor).mx_cursor.mc_flags
-            &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
+        (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
     }
-    if (*mc).mc_flags & C_INITIALIZED as libc::c_uint == 0
-        || (*mc).mc_top as libc::c_int != 0
-    {
+    if (*mc).mc_flags & C_INITIALIZED as libc::c_uint == 0 || (*mc).mc_top as libc::c_int != 0 {
         rc = mdb_page_search(mc, NULL as *mut MDB_val, MDB_PS_FIRST);
         if rc != MDB_SUCCESS {
             return rc;
         }
     }
-    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
-    {} else {
+    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
+    {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"IS_LEAF(mc->mc_pg[mc->mc_top])\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 17],
-                &[libc::c_char; 17],
-            >(b"mdb_cursor_first\0"))
+            (*::core::mem::transmute::<&[u8; 17], &[libc::c_char; 17]>(b"mdb_cursor_first\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             7335 as libc::c_int,
@@ -7143,8 +6858,7 @@ unsafe extern "C" fn mdb_cursor_first(
     };
     leaf = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
         .offset(
-            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
+            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                 .mp2_ptrs)
                 .as_mut_ptr()
                 .offset(0 as libc::c_int as isize) as libc::c_int as isize,
@@ -7159,13 +6873,14 @@ unsafe extern "C" fn mdb_cursor_first(
     (*mc).mc_flags |= C_INITIALIZED as libc::c_uint;
     (*mc).mc_flags &= !C_EOF as libc::c_uint;
     (*mc).mc_ki[(*mc).mc_top as usize] = 0 as libc::c_int as indx_t;
-    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         if !key.is_null() {
             (*key).mv_size = (*(*mc).mc_db).md_pad as size_t;
-            (*key)
-                .mv_data = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
+            (*key).mv_data = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
                 .offset(PAGEHDRSZ as libc::c_uint as isize)
                 .offset((0 as libc::c_int as size_t * (*key).mv_size) as isize)
                 as *mut libc::c_void;
@@ -7202,53 +6917,45 @@ unsafe extern "C" fn mdb_cursor_last(
     let mut rc: libc::c_int = 0;
     let mut leaf = 0 as *mut MDB_node;
     if !((*mc).mc_xcursor).is_null() {
-        (*(*mc).mc_xcursor).mx_cursor.mc_flags
-            &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
+        (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
     }
-    if (*mc).mc_flags & C_INITIALIZED as libc::c_uint == 0
-        || (*mc).mc_top as libc::c_int != 0
-    {
+    if (*mc).mc_flags & C_INITIALIZED as libc::c_uint == 0 || (*mc).mc_top as libc::c_int != 0 {
         rc = mdb_page_search(mc, NULL as *mut MDB_val, MDB_PS_LAST);
         if rc != MDB_SUCCESS {
             return rc;
         }
     }
-    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
-    {} else {
+    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
+    {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"IS_LEAF(mc->mc_pg[mc->mc_top])\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 16],
-                &[libc::c_char; 16],
-            >(b"mdb_cursor_last\0"))
+            (*::core::mem::transmute::<&[u8; 16], &[libc::c_char; 16]>(b"mdb_cursor_last\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             7382 as libc::c_int,
         );
     };
-    (*mc)
-        .mc_ki[(*mc).mc_top
-        as usize] = (((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-        as *mut MDB_page2))
-        .mp2_lower as libc::c_uint)
-        .wrapping_sub(
-            (PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(
-                    (if 0 as libc::c_int != 0 {
-                        PAGEHDRSZ as libc::c_uint
-                    } else {
-                        0 as libc::c_int as libc::c_uint
-                    }),
-                ),
-        ) >> 1 as libc::c_int)
-        .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
+    (*mc).mc_ki[(*mc).mc_top as usize] =
+        (((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+            as libc::c_uint)
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int)
+            .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
     (*mc).mc_flags |= (C_INITIALIZED | C_EOF) as libc::c_uint;
     leaf = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
         .offset(
-            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
+            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                 .mp2_ptrs)
                 .as_mut_ptr()
                 .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize) as libc::c_int
@@ -7261,18 +6968,17 @@ unsafe extern "C" fn mdb_cursor_last(
                 0 as libc::c_int as libc::c_uint
             }) as isize,
         ) as *mut MDB_node;
-    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         if !key.is_null() {
             (*key).mv_size = (*(*mc).mc_db).md_pad as size_t;
-            (*key)
-                .mv_data = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
+            (*key).mv_data = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
                 .offset(PAGEHDRSZ as libc::c_uint as isize)
-                .offset(
-                    ((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size)
-                        as isize,
-                ) as *mut libc::c_void;
+                .offset(((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size) as isize)
+                as *mut libc::c_void;
         }
         return MDB_SUCCESS;
     }
@@ -7309,7 +7015,7 @@ pub unsafe extern "C" fn mdb_cursor_get(
     let mut current_block: u64;
     let mut rc: libc::c_int = 0;
     let mut exact = 0 as libc::c_int;
-    let mut mfunc: Option::<
+    let mut mfunc: Option<
         unsafe extern "C" fn(*mut MDB_cursor, *mut MDB_val, *mut MDB_val) -> libc::c_int,
     > = None;
     if mc.is_null() {
@@ -7324,35 +7030,31 @@ pub unsafe extern "C" fn mdb_cursor_get(
                 rc = EINVAL;
             } else {
                 let mut mp = (*mc).mc_pg[(*mc).mc_top as usize];
-                let mut nkeys = (((*(mp as *mut libc::c_void as *mut MDB_page2))
-                    .mp2_lower as libc::c_uint)
-                    .wrapping_sub(
-                        (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ),
-                    ) >> 1 as libc::c_int) as libc::c_int;
-                if nkeys == 0
-                    || (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int >= nkeys
-                {
+                let mut nkeys = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                    as libc::c_uint)
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int) as libc::c_int;
+                if nkeys == 0 || (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int >= nkeys {
                     (*mc).mc_ki[(*mc).mc_top as usize] = nkeys as indx_t;
                     rc = MDB_NOTFOUND;
                 } else {
                     rc = MDB_SUCCESS;
-                    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                        as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+                    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                        & 0x20 as libc::c_int
+                        == 0x20 as libc::c_int
                     {
                         (*key).mv_size = (*(*mc).mc_db).md_pad as size_t;
-                        (*key)
-                            .mv_data = (mp as *mut libc::c_char)
+                        (*key).mv_data = (mp as *mut libc::c_char)
                             .offset(PAGEHDRSZ as libc::c_uint as isize)
                             .offset(
-                                ((*mc).mc_ki[(*mc).mc_top as usize] as size_t
-                                    * (*key).mv_size) as isize,
+                                ((*mc).mc_ki[(*mc).mc_top as usize] as size_t * (*key).mv_size)
+                                    as isize,
                             ) as *mut libc::c_void;
                     } else {
                         let mut leaf = (mp as *mut libc::c_char)
@@ -7371,9 +7073,7 @@ pub unsafe extern "C" fn mdb_cursor_get(
                             ) as *mut MDB_node;
                         if !key.is_null() {
                             (*key).mv_size = (*leaf).mn_ksize as size_t;
-                            (*key)
-                                .mv_data = ((*leaf).mn_data).as_mut_ptr()
-                                as *mut libc::c_void;
+                            (*key).mv_data = ((*leaf).mn_data).as_mut_ptr() as *mut libc::c_void;
                         }
                         if !data.is_null() {
                             if (*leaf).mn_flags as libc::c_int & 0x4 as libc::c_int
@@ -7417,10 +7117,8 @@ pub unsafe extern "C" fn mdb_cursor_get(
                 current_block = 1765866445182206997;
             } else {
                 rc = MDB_SUCCESS;
-                if (*(*mc).mc_xcursor).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint
-                    == 0
-                    || (*(*mc).mc_xcursor).mx_cursor.mc_flags & C_EOF as libc::c_uint
-                        != 0
+                if (*(*mc).mc_xcursor).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint == 0
+                    || (*(*mc).mc_xcursor).mx_cursor.mc_flags & C_EOF as libc::c_uint != 0
                 {
                     current_block = 1765866445182206997;
                 } else {
@@ -7438,9 +7136,7 @@ pub unsafe extern "C" fn mdb_cursor_get(
             } else {
                 rc = mdb_cursor_next(mc, key, data, MDB_NEXT_DUP);
                 if rc == MDB_SUCCESS {
-                    if (*(*mc).mc_xcursor).mx_cursor.mc_flags
-                        & C_INITIALIZED as libc::c_uint != 0
-                    {
+                    if (*(*mc).mc_xcursor).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint != 0 {
                         mx = 0 as *mut MDB_cursor;
                         current_block = 10292515271029616820;
                     } else {
@@ -7533,40 +7229,35 @@ pub unsafe extern "C" fn mdb_cursor_get(
             } else if ((*mc).mc_xcursor).is_null() {
                 rc = MDB_INCOMPATIBLE;
             } else if (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-                >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                    as *mut MDB_page2))
+                >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                     .mp2_lower as libc::c_uint)
-                    .wrapping_sub(
-                        (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ),
-                    ) >> 1 as libc::c_int
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int
             {
-                (*mc)
-                    .mc_ki[(*mc).mc_top
-                    as usize] = (((*((*mc).mc_pg[(*mc).mc_top as usize]
-                    as *mut libc::c_void as *mut MDB_page2))
-                    .mp2_lower as libc::c_uint)
-                    .wrapping_sub(
-                        (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ),
-                    ) >> 1 as libc::c_int) as indx_t;
+                (*mc).mc_ki[(*mc).mc_top as usize] = (((*((*mc).mc_pg[(*mc).mc_top as usize]
+                    as *mut libc::c_void
+                    as *mut MDB_page2))
+                    .mp2_lower
+                    as libc::c_uint)
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int)
+                    as indx_t;
                 rc = MDB_NOTFOUND;
             } else {
                 (*mc).mc_flags &= !C_EOF as libc::c_uint;
-                let mut leaf_0 = ((*mc).mc_pg[(*mc).mc_top as usize]
-                    as *mut libc::c_char)
+                let mut leaf_0 = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
                     .offset(
                         *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
                             as *mut MDB_page2))
@@ -7582,25 +7273,18 @@ pub unsafe extern "C" fn mdb_cursor_get(
                             0 as libc::c_int as libc::c_uint
                         }) as isize,
                     ) as *mut MDB_node;
-                if !((*leaf_0).mn_flags as libc::c_int & 0x4 as libc::c_int
-                    == 0x4 as libc::c_int)
-                {
+                if !((*leaf_0).mn_flags as libc::c_int & 0x4 as libc::c_int == 0x4 as libc::c_int) {
                     if !key.is_null() {
                         (*key).mv_size = (*leaf_0).mn_ksize as size_t;
-                        (*key)
-                            .mv_data = ((*leaf_0).mn_data).as_mut_ptr()
-                            as *mut libc::c_void;
+                        (*key).mv_data = ((*leaf_0).mn_data).as_mut_ptr() as *mut libc::c_void;
                     }
                     rc = mdb_node_read(mc, leaf_0, data);
-                } else if (*(*mc).mc_xcursor).mx_cursor.mc_flags
-                    & C_INITIALIZED as libc::c_uint == 0
+                } else if (*(*mc).mc_xcursor).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint
+                    == 0
                 {
                     rc = EINVAL;
                 } else {
-                    rc = mfunc
-                        .expect(
-                            "non-null function pointer",
-                        )(
+                    rc = mfunc.expect("non-null function pointer")(
                         &mut (*(*mc).mc_xcursor).mx_cursor,
                         data,
                         NULL as *mut MDB_val,
@@ -7610,40 +7294,33 @@ pub unsafe extern "C" fn mdb_cursor_get(
         }
         10292515271029616820 => {
             mx = &mut (*(*mc).mc_xcursor).mx_cursor;
-            (*data)
-                .mv_size = (((*((*mx).mc_pg[(*mx).mc_top as usize] as *mut libc::c_void
+            (*data).mv_size = (((*((*mx).mc_pg[(*mx).mc_top as usize] as *mut libc::c_void
                 as *mut MDB_page2))
                 .mp2_lower as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int)
                 .wrapping_mul((*(*mx).mc_db).md_pad) as size_t;
-            (*data)
-                .mv_data = ((*mx).mc_pg[(*mx).mc_top as usize] as *mut libc::c_char)
-                .offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void;
-            (*mx)
-                .mc_ki[(*mx).mc_top
-                as usize] = (((*((*mx).mc_pg[(*mx).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
-                .mp2_lower as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int)
-                .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
+            (*data).mv_data = ((*mx).mc_pg[(*mx).mc_top as usize] as *mut libc::c_char)
+                .offset(PAGEHDRSZ as libc::c_uint as isize)
+                as *mut libc::c_void;
+            (*mx).mc_ki[(*mx).mc_top as usize] =
+                (((*((*mx).mc_pg[(*mx).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                    .mp2_lower as libc::c_uint)
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int)
+                    .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
         }
         10057808065911759103 => {
             if key.is_null() {
@@ -7654,8 +7331,7 @@ pub unsafe extern "C" fn mdb_cursor_get(
                     key,
                     data,
                     op,
-                    if op as libc::c_uint == MDB_SET_RANGE as libc::c_int as libc::c_uint
-                    {
+                    if op as libc::c_uint == MDB_SET_RANGE as libc::c_int as libc::c_uint {
                         NULL as *mut libc::c_int
                     } else {
                         &mut exact
@@ -7744,18 +7420,14 @@ unsafe extern "C" fn mdb_cursor_touch(mut mc: *mut MDB_cursor) -> libc::c_int {
     if (*mc).mc_snum != 0 {
         loop {
             rc = mdb_page_touch(mc);
-            if !(rc == 0
-                && {
-                    (*mc).mc_top = ((*mc).mc_top).wrapping_add(1);
-                    ((*mc).mc_top as libc::c_int) < (*mc).mc_snum as libc::c_int
-                })
-            {
+            if !(rc == 0 && {
+                (*mc).mc_top = ((*mc).mc_top).wrapping_add(1);
+                ((*mc).mc_top as libc::c_int) < (*mc).mc_snum as libc::c_int
+            }) {
                 break;
             }
         }
-        (*mc)
-            .mc_top = ((*mc).mc_snum as libc::c_int - 1 as libc::c_int)
-            as libc::c_ushort;
+        (*mc).mc_top = ((*mc).mc_snum as libc::c_int - 1 as libc::c_int) as libc::c_ushort;
     }
     return rc;
 }
@@ -7820,16 +7492,13 @@ unsafe extern "C" fn _mdb_cursor_put(
     if flags & MDB_MULTIPLE as libc::c_uint != 0 {
         dcount = (*data.offset(1 as libc::c_int as isize)).mv_size as libc::c_uint;
         (*data.offset(1 as libc::c_int as isize)).mv_size = 0 as libc::c_int as size_t;
-        if !((*(*mc).mc_db).md_flags as libc::c_int & 0x10 as libc::c_int
-            == 0x10 as libc::c_int)
-        {
+        if !((*(*mc).mc_db).md_flags as libc::c_int & 0x10 as libc::c_int == 0x10 as libc::c_int) {
             return MDB_INCOMPATIBLE;
         }
     }
     nospill = flags & MDB_NOSPILL as libc::c_uint;
     flags &= !MDB_NOSPILL as libc::c_uint;
-    if (*(*mc).mc_txn).mt_flags & (MDB_TXN_RDONLY | MDB_TXN_BLOCKED) as libc::c_uint != 0
-    {
+    if (*(*mc).mc_txn).mt_flags & (MDB_TXN_RDONLY | MDB_TXN_BLOCKED) as libc::c_uint != 0 {
         return if (*(*mc).mc_txn).mt_flags & MDB_TXN_RDONLY as libc::c_uint != 0 {
             EACCES
         } else {
@@ -7837,15 +7506,21 @@ unsafe extern "C" fn _mdb_cursor_put(
         };
     }
     if ((*key).mv_size).wrapping_sub(1 as libc::c_int as size_t)
-        >= (if 0 as libc::c_int != 0 { 0 as libc::c_int } else { 511 as libc::c_int })
-            as size_t
+        >= (if 0 as libc::c_int != 0 {
+            0 as libc::c_int
+        } else {
+            511 as libc::c_int
+        }) as size_t
     {
         return MDB_BAD_VALSIZE;
     }
     if (*data).mv_size
         > (if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPSORT != 0 {
-            (if 0 as libc::c_int != 0 { 0 as libc::c_int } else { 511 as libc::c_int })
-                as libc::c_ulong
+            (if 0 as libc::c_int != 0 {
+                0 as libc::c_int
+            } else {
+                511 as libc::c_int
+            }) as libc::c_ulong
         } else {
             MAXDATASIZE
         })
@@ -7876,13 +7551,11 @@ unsafe extern "C" fn _mdb_cursor_put(
             };
             rc = mdb_cursor_last(mc, &mut k2, &mut d2);
             if rc == 0 as libc::c_int {
-                rc = ((*(*mc).mc_dbx).md_cmp)
-                    .expect("non-null function pointer")(key, &mut k2);
+                rc = ((*(*mc).mc_dbx).md_cmp).expect("non-null function pointer")(key, &mut k2);
                 if rc > 0 as libc::c_int {
                     rc = MDB_NOTFOUND;
-                    (*mc)
-                        .mc_ki[(*mc).mc_top
-                        as usize] = ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
+                    (*mc).mc_ki[(*mc).mc_top as usize] =
+                        ((*mc).mc_ki[(*mc).mc_top as usize]).wrapping_add(1);
                     (*mc).mc_ki[(*mc).mc_top as usize];
                 } else {
                     rc = MDB_KEYEXIST;
@@ -7925,11 +7598,8 @@ unsafe extern "C" fn _mdb_cursor_put(
         (*(*mc).mc_db).md_depth = ((*(*mc).mc_db).md_depth).wrapping_add(1);
         (*(*mc).mc_db).md_depth;
         *(*mc).mc_dbflag = (*(*mc).mc_dbflag as libc::c_int | DB_DIRTY) as libc::c_uchar;
-        if (*(*mc).mc_db).md_flags as libc::c_int & (MDB_DUPSORT | MDB_DUPFIXED)
-            == MDB_DUPFIXED
-        {
-            let ref mut fresh30 = (*(np as *mut libc::c_void as *mut MDB_page2))
-                .mp2_flags;
+        if (*(*mc).mc_db).md_flags as libc::c_int & (MDB_DUPSORT | MDB_DUPFIXED) == MDB_DUPFIXED {
+            let ref mut fresh30 = (*(np as *mut libc::c_void as *mut MDB_page2)).mp2_flags;
             *fresh30 = (*fresh30 as libc::c_int | P_LEAF2) as uint16_t;
         }
         (*mc).mc_flags |= C_INITIALIZED as libc::c_uint;
@@ -7943,31 +7613,32 @@ unsafe extern "C" fn _mdb_cursor_put(
     insert_key = insert_data;
     if insert_key != 0 {
         if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPSORT != 0
-            && NODESIZE.wrapping_add((*key).mv_size).wrapping_add((*data).mv_size)
+            && NODESIZE
+                .wrapping_add((*key).mv_size)
+                .wrapping_add((*data).mv_size)
                 > (*env).me_nodemax as libc::c_ulong
         {
             fp_flags = (P_LEAF | P_DIRTY) as uint16_t;
             fp = (*env).me_pbuf as *mut MDB_page;
             (*fp).mp_pad = (*data).mv_size as uint16_t;
-            let ref mut fresh31 = (*(fp as *mut libc::c_void as *mut MDB_page2))
-                .mp2_upper;
-            *fresh31 = (PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(
-                    (if 0 as libc::c_int != 0 {
-                        PAGEHDRSZ as libc::c_uint
-                    } else {
-                        0 as libc::c_int as libc::c_uint
-                    }),
-                ) as indx_t;
+            let ref mut fresh31 = (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_upper;
+            *fresh31 = (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ) as indx_t;
             (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower = *fresh31;
             olddata.mv_size = PAGEHDRSZ;
             current_block = 4872821565891422174;
         } else {
             current_block = 17353026871531185123;
         }
-    } else if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-        as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+    } else if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+        .mp2_flags as libc::c_int
+        & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         ptr = 0 as *mut libc::c_char;
         ksize = (*(*mc).mc_db).md_pad;
@@ -7977,10 +7648,13 @@ unsafe extern "C" fn _mdb_cursor_put(
         ptr = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
             .offset(PAGEHDRSZ as libc::c_uint as isize)
             .offset(
-                ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint).wrapping_mul(ksize)
-                    as isize,
+                ((*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint).wrapping_mul(ksize) as isize,
             );
-        memcpy(ptr as *mut libc::c_void, (*key).mv_data, ksize as libc::c_ulong);
+        memcpy(
+            ptr as *mut libc::c_void,
+            (*key).mv_data,
+            ksize as libc::c_ulong,
+        );
         current_block = 16240365560028363851;
     } else {
         current_block = 6503087309128928598;
@@ -7997,9 +7671,8 @@ unsafe extern "C" fn _mdb_cursor_put(
                     dummy.md_pad = (*fp).mp_pad as uint32_t;
                     dummy.md_flags = MDB_DUPFIXED as uint16_t;
                     if (*(*mc).mc_db).md_flags as libc::c_int & MDB_INTEGERDUP != 0 {
-                        dummy
-                            .md_flags = (dummy.md_flags as libc::c_int | MDB_INTEGERKEY)
-                            as uint16_t;
+                        dummy.md_flags =
+                            (dummy.md_flags as libc::c_int | MDB_INTEGERKEY) as uint16_t;
                     }
                 } else {
                     dummy.md_pad = 0 as libc::c_int as uint32_t;
@@ -8009,36 +7682,30 @@ unsafe extern "C" fn _mdb_cursor_put(
                 dummy.md_branch_pages = 0 as libc::c_int as pgno_t;
                 dummy.md_leaf_pages = 1 as libc::c_int as pgno_t;
                 dummy.md_overflow_pages = 0 as libc::c_int as pgno_t;
-                dummy
-                    .md_entries = (((*(fp as *mut libc::c_void as *mut MDB_page2))
-                    .mp2_lower as libc::c_uint)
-                    .wrapping_sub(
-                        (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ),
-                    ) >> 1 as libc::c_int) as mdb_size_t;
+                dummy.md_entries = (((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                    as libc::c_uint)
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int) as mdb_size_t;
                 xdata.mv_size = ::core::mem::size_of::<MDB_db>() as libc::c_ulong;
                 xdata.mv_data = &mut dummy as *mut MDB_db as *mut libc::c_void;
                 rc = mdb_page_alloc(mc, 1 as libc::c_int, &mut mp);
                 if rc != 0 {
                     return rc;
                 }
-                offset = ((*env).me_psize as size_t).wrapping_sub(olddata.mv_size)
-                    as libc::c_uint;
+                offset = ((*env).me_psize as size_t).wrapping_sub(olddata.mv_size) as libc::c_uint;
                 flags |= (F_DUPDATA | F_SUBDATA) as libc::c_uint;
                 dummy.md_root = (*mp).mp_p.p_pgno;
                 sub_root = mp;
                 current_block = 10601179871800211547;
             }
             16240365560028363851 => {
-                if (*mc).mc_top as libc::c_int != 0
-                    && (*mc).mc_ki[(*mc).mc_top as usize] == 0
-                {
+                if (*mc).mc_top as libc::c_int != 0 && (*mc).mc_ki[(*mc).mc_top as usize] == 0 {
                     let mut dtop = 1 as libc::c_int as libc::c_ushort;
                     (*mc).mc_top = ((*mc).mc_top).wrapping_sub(1);
                     (*mc).mc_top;
@@ -8055,9 +7722,8 @@ unsafe extern "C" fn _mdb_cursor_put(
                     } else {
                         rc2 = MDB_SUCCESS;
                     }
-                    (*mc)
-                        .mc_top = ((*mc).mc_top as libc::c_int + dtop as libc::c_int)
-                        as libc::c_ushort;
+                    (*mc).mc_top =
+                        ((*mc).mc_top as libc::c_int + dtop as libc::c_int) as libc::c_ushort;
                     if rc2 != 0 {
                         return rc2;
                     }
@@ -8081,29 +7747,24 @@ unsafe extern "C" fn _mdb_cursor_put(
                             0 as libc::c_int as libc::c_uint
                         }) as isize,
                     ) as *mut MDB_node;
-                olddata
-                    .mv_size = ((*leaf).mn_lo as libc::c_uint
-                    | ((*leaf).mn_hi as libc::c_uint) << 16 as libc::c_int) as size_t;
-                olddata
-                    .mv_data = ((*leaf).mn_data)
+                olddata.mv_size = ((*leaf).mn_lo as libc::c_uint
+                    | ((*leaf).mn_hi as libc::c_uint) << 16 as libc::c_int)
+                    as size_t;
+                olddata.mv_data = ((*leaf).mn_data)
                     .as_mut_ptr()
                     .offset((*leaf).mn_ksize as libc::c_int as isize)
                     as *mut libc::c_void;
-                if (*(*mc).mc_db).md_flags as libc::c_int & 0x4 as libc::c_int
-                    == 0x4 as libc::c_int
+                if (*(*mc).mc_db).md_flags as libc::c_int & 0x4 as libc::c_int == 0x4 as libc::c_int
                 {
                     i = 0;
                     offset = 0 as libc::c_int as libc::c_uint;
                     xdata.mv_data = (*env).me_pbuf;
                     fp = xdata.mv_data as *mut MDB_page;
                     mp = fp;
-                    (*mp)
-                        .mp_p
-                        .p_pgno = (*(*mc).mc_pg[(*mc).mc_top as usize]).mp_p.p_pgno;
-                    if !((*leaf).mn_flags as libc::c_int & 0x4 as libc::c_int
-                        == 0x4 as libc::c_int)
+                    (*mp).mp_p.p_pgno = (*(*mc).mc_pg[(*mc).mc_top as usize]).mp_p.p_pgno;
+                    if !((*leaf).mn_flags as libc::c_int & 0x4 as libc::c_int == 0x4 as libc::c_int)
                     {
-                        let mut dcmp: Option::<MDB_cmp_func> = None;
+                        let mut dcmp: Option<MDB_cmp_func> = None;
                         if flags == MDB_CURRENT as libc::c_uint {
                             current_block = 3799958390938788923;
                         } else {
@@ -8115,66 +7776,54 @@ unsafe extern "C" fn _mdb_cursor_put(
                             {
                                 dcmp = Some(mdb_cmp_clong);
                             }
-                            if dcmp
-                                .expect("non-null function pointer")(data, &mut olddata)
-                                == 0
-                            {
-                                if flags & (MDB_NODUPDATA | MDB_APPENDDUP) as libc::c_uint
-                                    != 0
-                                {
+                            if dcmp.expect("non-null function pointer")(data, &mut olddata) == 0 {
+                                if flags & (MDB_NODUPDATA | MDB_APPENDDUP) as libc::c_uint != 0 {
                                     return MDB_KEYEXIST;
                                 }
                                 current_block = 3799958390938788923;
                             } else {
                                 dkey.mv_size = olddata.mv_size;
-                                dkey
-                                    .mv_data = memcpy(
+                                dkey.mv_data = memcpy(
                                     fp.offset(1 as libc::c_int as isize) as *mut libc::c_void,
                                     olddata.mv_data,
                                     olddata.mv_size,
                                 );
-                                (*(fp as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_flags = (P_LEAF | P_DIRTY | P_SUBP) as uint16_t;
-                                (*(fp as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_lower = (PAGEHDRSZ as libc::c_uint)
-                                    .wrapping_sub(
+                                (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_flags =
+                                    (P_LEAF | P_DIRTY | P_SUBP) as uint16_t;
+                                (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower =
+                                    (PAGEHDRSZ as libc::c_uint).wrapping_sub(
                                         (if 0 as libc::c_int != 0 {
                                             PAGEHDRSZ as libc::c_uint
                                         } else {
                                             0 as libc::c_int as libc::c_uint
                                         }),
                                     ) as indx_t;
-                                xdata
-                                    .mv_size = PAGEHDRSZ
+                                xdata.mv_size = PAGEHDRSZ
                                     .wrapping_add(dkey.mv_size)
                                     .wrapping_add((*data).mv_size);
-                                if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPFIXED
-                                    != 0
-                                {
-                                    let ref mut fresh32 = (*(fp as *mut libc::c_void
-                                        as *mut MDB_page2))
-                                        .mp2_flags;
+                                if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPFIXED != 0 {
+                                    let ref mut fresh32 =
+                                        (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_flags;
                                     *fresh32 = (*fresh32 as libc::c_int | P_LEAF2) as uint16_t;
                                     (*fp).mp_pad = (*data).mv_size as uint16_t;
-                                    xdata
-                                        .mv_size = (xdata.mv_size)
+                                    xdata.mv_size = (xdata.mv_size)
                                         .wrapping_add(2 as libc::c_int as size_t * (*data).mv_size);
                                 } else {
-                                    xdata
-                                        .mv_size = (xdata.mv_size as libc::c_ulong)
-                                        .wrapping_add(
-                                            (2 as libc::c_int as libc::c_ulong)
-                                                .wrapping_mul(
-                                                    (::core::mem::size_of::<indx_t>() as libc::c_ulong)
-                                                        .wrapping_add(NODESIZE),
-                                                )
-                                                .wrapping_add(dkey.mv_size & 1 as libc::c_int as size_t)
-                                                .wrapping_add((*data).mv_size & 1 as libc::c_int as size_t),
-                                        ) as size_t as size_t;
+                                    xdata.mv_size = (xdata.mv_size as libc::c_ulong).wrapping_add(
+                                        (2 as libc::c_int as libc::c_ulong)
+                                            .wrapping_mul(
+                                                (::core::mem::size_of::<indx_t>() as libc::c_ulong)
+                                                    .wrapping_add(NODESIZE),
+                                            )
+                                            .wrapping_add(dkey.mv_size & 1 as libc::c_int as size_t)
+                                            .wrapping_add(
+                                                (*data).mv_size & 1 as libc::c_int as size_t,
+                                            ),
+                                    ) as size_t
+                                        as size_t;
                                 }
-                                (*(fp as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_upper = (xdata.mv_size)
-                                    .wrapping_sub(
+                                (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_upper =
+                                    (xdata.mv_size).wrapping_sub(
                                         (if 0 as libc::c_int != 0 {
                                             PAGEHDRSZ as libc::c_uint
                                         } else {
@@ -8195,26 +7844,28 @@ unsafe extern "C" fn _mdb_cursor_put(
                                 current_block = 10827009522389732452;
                             }
                             _ => {
-                                if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPFIXED
-                                    == 0
-                                {
+                                if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPFIXED == 0 {
                                     offset = ((8 as libc::c_ulong)
                                         .wrapping_add(
-                                            ::core::mem::size_of::<indx_t>() as libc::c_ulong,
+                                            ::core::mem::size_of::<indx_t>() as libc::c_ulong
                                         )
                                         .wrapping_add((*data).mv_size)
                                         .wrapping_add(1 as libc::c_uint as libc::c_ulong)
-                                        & -(2 as libc::c_int) as libc::c_ulong) as libc::c_uint;
+                                        & -(2 as libc::c_int) as libc::c_ulong)
+                                        as libc::c_uint;
                                     current_block = 6897179874198677617;
                                 } else {
                                     offset = (*fp).mp_pad as libc::c_uint;
-                                    if (((*(fp as *mut libc::c_void as *mut MDB_page2))
-                                        .mp2_upper as libc::c_int
+                                    if (((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_upper
+                                        as libc::c_int
                                         - (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                                            as libc::c_int) as indx_t as libc::c_uint) < offset
+                                            as libc::c_int)
+                                        as indx_t
+                                        as libc::c_uint)
+                                        < offset
                                     {
-                                        offset = offset
-                                            .wrapping_mul(4 as libc::c_int as libc::c_uint);
+                                        offset =
+                                            offset.wrapping_mul(4 as libc::c_int as libc::c_uint);
                                         current_block = 6897179874198677617;
                                     } else {
                                         current_block = 10827009522389732452;
@@ -8223,8 +7874,8 @@ unsafe extern "C" fn _mdb_cursor_put(
                                 match current_block {
                                     10827009522389732452 => {}
                                     _ => {
-                                        xdata
-                                            .mv_size = (olddata.mv_size).wrapping_add(offset as size_t);
+                                        xdata.mv_size =
+                                            (olddata.mv_size).wrapping_add(offset as size_t);
                                         current_block = 248631179418912492;
                                     }
                                 }
@@ -8233,16 +7884,17 @@ unsafe extern "C" fn _mdb_cursor_put(
                         match current_block {
                             248631179418912492 => {}
                             _ => {
-                                let ref mut fresh33 = (*(fp as *mut libc::c_void
-                                    as *mut MDB_page2))
-                                    .mp2_flags;
+                                let ref mut fresh33 =
+                                    (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_flags;
                                 *fresh33 = (*fresh33 as libc::c_int | P_DIRTY) as uint16_t;
                                 let mut s = 0 as *mut libc::c_ushort;
                                 let mut d = 0 as *mut libc::c_ushort;
-                                s = &mut (*(mp as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_p as *mut [uint16_t; 4] as *mut libc::c_ushort;
-                                d = &mut (*(fp as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_p as *mut [uint16_t; 4] as *mut libc::c_ushort;
+                                s = &mut (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_p
+                                    as *mut [uint16_t; 4]
+                                    as *mut libc::c_ushort;
+                                d = &mut (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_p
+                                    as *mut [uint16_t; 4]
+                                    as *mut libc::c_ushort;
                                 let fresh34 = s;
                                 s = s.offset(1);
                                 let fresh35 = d;
@@ -8259,9 +7911,7 @@ unsafe extern "C" fn _mdb_cursor_put(
                                 d = d.offset(1);
                                 *fresh39 = *fresh38;
                                 *d = *s;
-                                (*(*mc).mc_xcursor)
-                                    .mx_cursor
-                                    .mc_pg[0 as libc::c_int as usize] = fp;
+                                (*(*mc).mc_xcursor).mx_cursor.mc_pg[0 as libc::c_int as usize] = fp;
                                 flags |= F_DUPDATA as libc::c_uint;
                                 current_block = 5681788516532307688;
                             }
@@ -8271,8 +7921,7 @@ unsafe extern "C" fn _mdb_cursor_put(
                         5681788516532307688 => {}
                         3799958390938788923 => {}
                         _ => {
-                            fp_flags = (*(fp as *mut libc::c_void as *mut MDB_page2))
-                                .mp2_flags;
+                            fp_flags = (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_flags;
                             if NODESIZE
                                 .wrapping_add((*leaf).mn_ksize as libc::c_ulong)
                                 .wrapping_add(xdata.mv_size)
@@ -8293,8 +7942,8 @@ unsafe extern "C" fn _mdb_cursor_put(
                     5681788516532307688 => {}
                     10601179871800211547 => {}
                     _ => {
-                        if ((*leaf).mn_flags as libc::c_uint ^ flags)
-                            & F_SUBDATA as libc::c_uint != 0
+                        if ((*leaf).mn_flags as libc::c_uint ^ flags) & F_SUBDATA as libc::c_uint
+                            != 0
                         {
                             return MDB_INCOMPATIBLE;
                         }
@@ -8306,9 +7955,12 @@ unsafe extern "C" fn _mdb_cursor_put(
                             let mut level: libc::c_int = 0;
                             let mut ovpages: libc::c_int = 0;
                             let mut dpages = (((PAGEHDRSZ as libc::c_uint)
-                                .wrapping_sub(1 as libc::c_int as libc::c_uint) as size_t)
-                                .wrapping_add((*data).mv_size) / (*env).me_psize as size_t)
-                                .wrapping_add(1 as libc::c_int as size_t) as libc::c_int;
+                                .wrapping_sub(1 as libc::c_int as libc::c_uint)
+                                as size_t)
+                                .wrapping_add((*data).mv_size)
+                                / (*env).me_psize as size_t)
+                                .wrapping_add(1 as libc::c_int as size_t)
+                                as libc::c_int;
                             memcpy(
                                 &mut pg as *mut pgno_t as *mut libc::c_void,
                                 olddata.mv_data,
@@ -8334,10 +7986,8 @@ unsafe extern "C" fn _mdb_cursor_put(
                                     if level > 1 as libc::c_int {
                                         let mut sz = (*env).me_psize as size_t * ovpages as size_t;
                                         let mut off: size_t = 0;
-                                        let mut np_0 = mdb_page_malloc(
-                                            (*mc).mc_txn,
-                                            ovpages as libc::c_uint,
-                                        );
+                                        let mut np_0 =
+                                            mdb_page_malloc((*mc).mc_txn, ovpages as libc::c_uint);
                                         let mut id2 = MDB_ID2 {
                                             mid: 0,
                                             mptr: 0 as *mut libc::c_void,
@@ -8351,28 +8001,35 @@ unsafe extern "C" fn _mdb_cursor_put(
                                             (*(*mc).mc_txn).mt_u.dirty_list,
                                             &mut id2,
                                         );
-                                        if rc2 == 0 as libc::c_int {} else {
+                                        if rc2 == 0 as libc::c_int {
+                                        } else {
                                             mdb_assert_fail(
                                                 (*(*mc).mc_txn).mt_env,
                                                 b"rc2 == 0\0" as *const u8 as *const libc::c_char,
                                                 (*::core::mem::transmute::<
                                                     &[u8; 16],
                                                     &[libc::c_char; 16],
-                                                >(b"_mdb_cursor_put\0"))
-                                                    .as_ptr(),
+                                                >(
+                                                    b"_mdb_cursor_put\0"
+                                                ))
+                                                .as_ptr(),
                                                 b"mdb.c\0" as *const u8 as *const libc::c_char,
                                                 7985 as libc::c_int,
                                             );
                                         };
                                         if flags & MDB_RESERVE as libc::c_uint == 0 {
                                             off = PAGEHDRSZ.wrapping_add((*data).mv_size)
-                                                & -(::core::mem::size_of::<size_t>() as libc::c_ulong
-                                                    as libc::c_int) as size_t;
+                                                & -(::core::mem::size_of::<size_t>()
+                                                    as libc::c_ulong
+                                                    as libc::c_int)
+                                                    as size_t;
                                             memcpy(
                                                 (np_0 as *mut libc::c_char).offset(off as isize)
-                                                    as *mut size_t as *mut libc::c_void,
+                                                    as *mut size_t
+                                                    as *mut libc::c_void,
                                                 (omp as *mut libc::c_char).offset(off as isize)
-                                                    as *mut size_t as *const libc::c_void,
+                                                    as *mut size_t
+                                                    as *const libc::c_void,
                                                 sz.wrapping_sub(off),
                                             );
                                             sz = PAGEHDRSZ;
@@ -8384,17 +8041,15 @@ unsafe extern "C" fn _mdb_cursor_put(
                                         );
                                         omp = np_0;
                                     }
-                                    (*leaf)
-                                        .mn_lo = ((*data).mv_size & 0xffff as libc::c_int as size_t)
+                                    (*leaf).mn_lo = ((*data).mv_size
+                                        & 0xffff as libc::c_int as size_t)
                                         as libc::c_ushort;
-                                    (*leaf)
-                                        .mn_hi = ((*data).mv_size >> 16 as libc::c_int)
-                                        as libc::c_ushort;
+                                    (*leaf).mn_hi =
+                                        ((*data).mv_size >> 16 as libc::c_int) as libc::c_ushort;
                                     if flags & 0x10000 as libc::c_int as libc::c_uint
                                         == 0x10000 as libc::c_int as libc::c_uint
                                     {
-                                        (*data)
-                                            .mv_data = (omp as *mut libc::c_char)
+                                        (*data).mv_data = (omp as *mut libc::c_char)
                                             .offset(PAGEHDRSZ as libc::c_uint as isize)
                                             as *mut libc::c_void;
                                     } else {
@@ -8444,39 +8099,33 @@ unsafe extern "C" fn _mdb_cursor_put(
         match current_block {
             10601179871800211547 => {
                 if mp != fp {
-                    (*(mp as *mut libc::c_void as *mut MDB_page2))
-                        .mp2_flags = (fp_flags as libc::c_int | P_DIRTY) as uint16_t;
-                    (*(mp as *mut libc::c_void as *mut MDB_page2))
-                        .mp2_pad = (*(fp as *mut libc::c_void as *mut MDB_page2))
-                        .mp2_pad;
-                    (*(mp as *mut libc::c_void as *mut MDB_page2))
-                        .mp2_lower = (*(fp as *mut libc::c_void as *mut MDB_page2))
-                        .mp2_lower;
-                    (*(mp as *mut libc::c_void as *mut MDB_page2))
-                        .mp2_upper = ((*(fp as *mut libc::c_void as *mut MDB_page2))
-                        .mp2_upper as libc::c_uint)
-                        .wrapping_add(offset) as indx_t;
+                    (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags =
+                        (fp_flags as libc::c_int | P_DIRTY) as uint16_t;
+                    (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_pad =
+                        (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_pad;
+                    (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower =
+                        (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower;
+                    (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper =
+                        ((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as libc::c_uint)
+                            .wrapping_add(offset) as indx_t;
                     if fp_flags as libc::c_int & P_LEAF2 != 0 {
                         memcpy(
-                            (mp as *mut libc::c_char)
-                                .offset(PAGEHDRSZ as libc::c_uint as isize)
+                            (mp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
                                 as *mut libc::c_void,
-                            (fp as *mut libc::c_char)
-                                .offset(PAGEHDRSZ as libc::c_uint as isize)
+                            (fp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
                                 as *mut libc::c_void,
                             (((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
                                 as libc::c_uint)
-                                .wrapping_sub(
-                                    (PAGEHDRSZ as libc::c_uint)
-                                        .wrapping_sub(
-                                            (if 0 as libc::c_int != 0 {
-                                                PAGEHDRSZ as libc::c_uint
-                                            } else {
-                                                0 as libc::c_int as libc::c_uint
-                                            }),
-                                        ),
-                                ) >> 1 as libc::c_int)
-                                .wrapping_mul((*fp).mp_pad as libc::c_uint) as libc::c_ulong,
+                                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                    (if 0 as libc::c_int != 0 {
+                                        PAGEHDRSZ as libc::c_uint
+                                    } else {
+                                        0 as libc::c_int as libc::c_uint
+                                    }),
+                                ))
+                                >> 1 as libc::c_int)
+                                .wrapping_mul((*fp).mp_pad as libc::c_uint)
+                                as libc::c_ulong,
                         );
                     } else {
                         memcpy(
@@ -8518,46 +8167,40 @@ unsafe extern "C" fn _mdb_cursor_put(
                                 ),
                         );
                         memcpy(
-                            ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
-                                .as_mut_ptr() as *mut libc::c_char as *mut libc::c_void,
-                            ((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
-                                .as_mut_ptr() as *mut libc::c_char as *const libc::c_void,
+                            ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs).as_mut_ptr()
+                                as *mut libc::c_char
+                                as *mut libc::c_void,
+                            ((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs).as_mut_ptr()
+                                as *mut libc::c_char
+                                as *const libc::c_void,
                             ((((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
                                 as libc::c_uint)
-                                .wrapping_sub(
-                                    (PAGEHDRSZ as libc::c_uint)
-                                        .wrapping_sub(
-                                            (if 0 as libc::c_int != 0 {
-                                                PAGEHDRSZ as libc::c_uint
-                                            } else {
-                                                0 as libc::c_int as libc::c_uint
-                                            }),
-                                        ),
-                                ) >> 1 as libc::c_int) as libc::c_ulong)
-                                .wrapping_mul(
-                                    ::core::mem::size_of::<indx_t>() as libc::c_ulong,
-                                ),
+                                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                    (if 0 as libc::c_int != 0 {
+                                        PAGEHDRSZ as libc::c_uint
+                                    } else {
+                                        0 as libc::c_int as libc::c_uint
+                                    }),
+                                ))
+                                >> 1 as libc::c_int) as libc::c_ulong)
+                                .wrapping_mul(::core::mem::size_of::<indx_t>() as libc::c_ulong),
                         );
                         i = 0 as libc::c_int as libc::c_uint;
                         while i
                             < ((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
                                 as libc::c_uint)
-                                .wrapping_sub(
-                                    (PAGEHDRSZ as libc::c_uint)
-                                        .wrapping_sub(
-                                            (if 0 as libc::c_int != 0 {
-                                                PAGEHDRSZ as libc::c_uint
-                                            } else {
-                                                0 as libc::c_int as libc::c_uint
-                                            }),
-                                        ),
-                                ) >> 1 as libc::c_int
+                                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                    (if 0 as libc::c_int != 0 {
+                                        PAGEHDRSZ as libc::c_uint
+                                    } else {
+                                        0 as libc::c_int as libc::c_uint
+                                    }),
+                                ))
+                                >> 1 as libc::c_int
                         {
-                            let ref mut fresh40 = *((*mp).mp_ptrs)
-                                .as_mut_ptr()
-                                .offset(i as isize);
-                            *fresh40 = (*fresh40 as libc::c_uint).wrapping_add(offset)
-                                as indx_t as indx_t;
+                            let ref mut fresh40 = *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize);
+                            *fresh40 =
+                                (*fresh40 as libc::c_uint).wrapping_add(offset) as indx_t as indx_t;
                             i = i.wrapping_add(1);
                             i;
                         }
@@ -8578,22 +8221,21 @@ unsafe extern "C" fn _mdb_cursor_put(
                 nflags = flags & NODE_ADD_FLAGS as libc::c_uint;
                 nsize = if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
                     as *mut MDB_page2))
-                    .mp2_flags as libc::c_int & 0x20 as libc::c_int
+                    .mp2_flags as libc::c_int
+                    & 0x20 as libc::c_int
                     == 0x20 as libc::c_int
                 {
                     (*key).mv_size
                 } else {
                     mdb_leaf_size(env, key, rdata)
                 };
-                if (((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                    as *mut MDB_page2))
+                if (((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                     .mp2_upper as libc::c_int
-                    - (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                        as *mut MDB_page2))
-                        .mp2_lower as libc::c_int) as indx_t as size_t) < nsize
+                    - (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                        .mp2_lower as libc::c_int) as indx_t as size_t)
+                    < nsize
                 {
-                    if flags & (F_DUPDATA | F_SUBDATA) as libc::c_uint
-                        == F_DUPDATA as libc::c_uint
+                    if flags & (F_DUPDATA | F_SUBDATA) as libc::c_uint == F_DUPDATA as libc::c_uint
                     {
                         nflags &= !MDB_APPEND as libc::c_uint;
                     }
@@ -8624,44 +8266,45 @@ unsafe extern "C" fn _mdb_cursor_put(
                                 m3 = m2;
                             }
                             if !(m3 == mc
-                                || ((*m3).mc_snum as libc::c_int)
-                                    < (*mc).mc_snum as libc::c_int
+                                || ((*m3).mc_snum as libc::c_int) < (*mc).mc_snum as libc::c_int
                                 || (*m3).mc_pg[i_0 as usize] != mp_0)
                             {
                                 if (*m3).mc_ki[i_0 as usize] as libc::c_int
                                     >= (*mc).mc_ki[i_0 as usize] as libc::c_int
                                     && insert_key != 0
                                 {
-                                    (*m3)
-                                        .mc_ki[i_0
-                                        as usize] = ((*m3).mc_ki[i_0 as usize]).wrapping_add(1);
+                                    (*m3).mc_ki[i_0 as usize] =
+                                        ((*m3).mc_ki[i_0 as usize]).wrapping_add(1);
                                     (*m3).mc_ki[i_0 as usize];
                                 }
                                 let mut xr_pg = mp_0;
                                 let mut xr_node = 0 as *mut MDB_node;
                                 if !(!(!((*m3).mc_xcursor).is_null()
                                     && (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                                        & C_INITIALIZED as libc::c_uint != 0)
+                                        & C_INITIALIZED as libc::c_uint
+                                        != 0)
                                     || (*m3).mc_ki[i_0 as usize] as libc::c_uint
                                         >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                            .mp2_lower as libc::c_uint)
+                                            .mp2_lower
+                                            as libc::c_uint)
                                             .wrapping_sub(
-                                                (PAGEHDRSZ as libc::c_uint)
-                                                    .wrapping_sub(
-                                                        (if 0 as libc::c_int != 0 {
-                                                            PAGEHDRSZ as libc::c_uint
-                                                        } else {
-                                                            0 as libc::c_int as libc::c_uint
-                                                        }),
-                                                    ),
-                                            ) >> 1 as libc::c_int)
+                                                (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                                    (if 0 as libc::c_int != 0 {
+                                                        PAGEHDRSZ as libc::c_uint
+                                                    } else {
+                                                        0 as libc::c_int as libc::c_uint
+                                                    }),
+                                                ),
+                                            )
+                                            >> 1 as libc::c_int)
                                 {
                                     xr_node = (xr_pg as *mut libc::c_char)
                                         .offset(
                                             *((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
                                                 .mp2_ptrs)
                                                 .as_mut_ptr()
-                                                .offset((*m3).mc_ki[i_0 as usize] as isize) as libc::c_int
+                                                .offset((*m3).mc_ki[i_0 as usize] as isize)
+                                                as libc::c_int
                                                 as isize,
                                         )
                                         .offset(
@@ -8670,17 +8313,17 @@ unsafe extern "C" fn _mdb_cursor_put(
                                             } else {
                                                 0 as libc::c_int as libc::c_uint
                                             }) as isize,
-                                        ) as *mut MDB_node;
-                                    if (*xr_node).mn_flags as libc::c_int
-                                        & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
+                                        )
+                                        as *mut MDB_node;
+                                    if (*xr_node).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA)
+                                        == F_DUPDATA
                                     {
-                                        (*(*m3).mc_xcursor)
-                                            .mx_cursor
-                                            .mc_pg[0 as libc::c_int
-                                            as usize] = ((*xr_node).mn_data)
+                                        (*(*m3).mc_xcursor).mx_cursor.mc_pg
+                                            [0 as libc::c_int as usize] = ((*xr_node).mn_data)
                                             .as_mut_ptr()
                                             .offset((*xr_node).mn_ksize as libc::c_int as isize)
-                                            as *mut libc::c_void as *mut MDB_page;
+                                            as *mut libc::c_void
+                                            as *mut MDB_page;
                                     }
                                 }
                             }
@@ -8706,9 +8349,7 @@ unsafe extern "C" fn _mdb_cursor_put(
         match current_block {
             5681788516532307688 => {
                 xdata.mv_size = 0 as libc::c_int as size_t;
-                xdata
-                    .mv_data = b"\0" as *const u8 as *const libc::c_char
-                    as *mut libc::c_void;
+                xdata.mv_data = b"\0" as *const u8 as *const libc::c_char as *mut libc::c_void;
                 leaf = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
                     .offset(
                         *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
@@ -8738,9 +8379,7 @@ unsafe extern "C" fn _mdb_cursor_put(
                     };
                 }
                 if !sub_root.is_null() {
-                    (*(*mc).mc_xcursor)
-                        .mx_cursor
-                        .mc_pg[0 as libc::c_int as usize] = sub_root;
+                    (*(*mc).mc_xcursor).mx_cursor.mc_pg[0 as libc::c_int as usize] = sub_root;
                 }
                 new_dupdata = dkey.mv_size as libc::c_int;
                 if dkey.mv_size != 0 {
@@ -8756,9 +8395,7 @@ unsafe extern "C" fn _mdb_cursor_put(
                     }
                     dkey.mv_size = 0 as libc::c_int as size_t;
                 }
-                if (*leaf).mn_flags as libc::c_int & F_SUBDATA == 0
-                    || !sub_root.is_null()
-                {
+                if (*leaf).mn_flags as libc::c_int & F_SUBDATA == 0 || !sub_root.is_null() {
                     let mut m2_0 = 0 as *mut MDB_cursor;
                     let mut mx = (*mc).mc_xcursor;
                     let mut i_1 = (*mc).mc_top as libc::c_uint;
@@ -8766,8 +8403,7 @@ unsafe extern "C" fn _mdb_cursor_put(
                     m2_0 = *((*(*mc).mc_txn).mt_cursors).offset((*mc).mc_dbi as isize);
                     while !m2_0.is_null() {
                         if !(m2_0 == mc
-                            || ((*m2_0).mc_snum as libc::c_int)
-                                < (*mc).mc_snum as libc::c_int)
+                            || ((*m2_0).mc_snum as libc::c_int) < (*mc).mc_snum as libc::c_int)
                         {
                             if !((*m2_0).mc_flags & C_INITIALIZED as libc::c_uint == 0) {
                                 if (*m2_0).mc_pg[i_1 as usize] == mp_1 {
@@ -8780,27 +8416,34 @@ unsafe extern "C" fn _mdb_cursor_put(
                                         let mut xr_node_0 = 0 as *mut MDB_node;
                                         if !(!(!((*m2_0).mc_xcursor).is_null()
                                             && (*(*m2_0).mc_xcursor).mx_cursor.mc_flags
-                                                & C_INITIALIZED as libc::c_uint != 0)
+                                                & C_INITIALIZED as libc::c_uint
+                                                != 0)
                                             || (*m2_0).mc_ki[i_1 as usize] as libc::c_uint
-                                                >= ((*(xr_pg_0 as *mut libc::c_void as *mut MDB_page2))
-                                                    .mp2_lower as libc::c_uint)
+                                                >= ((*(xr_pg_0 as *mut libc::c_void
+                                                    as *mut MDB_page2))
+                                                    .mp2_lower
+                                                    as libc::c_uint)
                                                     .wrapping_sub(
-                                                        (PAGEHDRSZ as libc::c_uint)
-                                                            .wrapping_sub(
-                                                                (if 0 as libc::c_int != 0 {
-                                                                    PAGEHDRSZ as libc::c_uint
-                                                                } else {
-                                                                    0 as libc::c_int as libc::c_uint
-                                                                }),
-                                                            ),
-                                                    ) >> 1 as libc::c_int)
+                                                        (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                                            (if 0 as libc::c_int != 0 {
+                                                                PAGEHDRSZ as libc::c_uint
+                                                            } else {
+                                                                0 as libc::c_int as libc::c_uint
+                                                            }),
+                                                        ),
+                                                    )
+                                                    >> 1 as libc::c_int)
                                         {
                                             xr_node_0 = (xr_pg_0 as *mut libc::c_char)
                                                 .offset(
-                                                    *((*(xr_pg_0 as *mut libc::c_void as *mut MDB_page2))
+                                                    *((*(xr_pg_0 as *mut libc::c_void
+                                                        as *mut MDB_page2))
                                                         .mp2_ptrs)
                                                         .as_mut_ptr()
-                                                        .offset((*m2_0).mc_ki[i_1 as usize] as isize) as libc::c_int
+                                                        .offset(
+                                                            (*m2_0).mc_ki[i_1 as usize] as isize,
+                                                        )
+                                                        as libc::c_int
                                                         as isize,
                                                 )
                                                 .offset(
@@ -8808,18 +8451,22 @@ unsafe extern "C" fn _mdb_cursor_put(
                                                         PAGEHDRSZ as libc::c_uint
                                                     } else {
                                                         0 as libc::c_int as libc::c_uint
-                                                    }) as isize,
-                                                ) as *mut MDB_node;
+                                                    })
+                                                        as isize,
+                                                )
+                                                as *mut MDB_node;
                                             if (*xr_node_0).mn_flags as libc::c_int
-                                                & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
+                                                & (F_DUPDATA | F_SUBDATA)
+                                                == F_DUPDATA
                                             {
-                                                (*(*m2_0).mc_xcursor)
-                                                    .mx_cursor
-                                                    .mc_pg[0 as libc::c_int
-                                                    as usize] = ((*xr_node_0).mn_data)
-                                                    .as_mut_ptr()
-                                                    .offset((*xr_node_0).mn_ksize as libc::c_int as isize)
-                                                    as *mut libc::c_void as *mut MDB_page;
+                                                (*(*m2_0).mc_xcursor).mx_cursor.mc_pg
+                                                    [0 as libc::c_int as usize] =
+                                                    ((*xr_node_0).mn_data).as_mut_ptr().offset(
+                                                        (*xr_node_0).mn_ksize as libc::c_int
+                                                            as isize,
+                                                    )
+                                                        as *mut libc::c_void
+                                                        as *mut MDB_page;
                                             }
                                         }
                                     }
@@ -8846,13 +8493,12 @@ unsafe extern "C" fn _mdb_cursor_put(
                         as *mut libc::c_void;
                     memcpy(
                         db,
-                        &mut (*(*mc).mc_xcursor).mx_db as *mut MDB_db
-                            as *const libc::c_void,
+                        &mut (*(*mc).mc_xcursor).mx_db as *mut MDB_db as *const libc::c_void,
                         ::core::mem::size_of::<MDB_db>() as libc::c_ulong,
                     );
                 }
-                insert_data = ((*(*mc).mc_xcursor).mx_db.md_entries).wrapping_sub(ecount)
-                    as libc::c_int;
+                insert_data =
+                    ((*(*mc).mc_xcursor).mx_db.md_entries).wrapping_sub(ecount) as libc::c_int;
             }
             _ => {}
         }
@@ -8883,8 +8529,7 @@ unsafe extern "C" fn _mdb_cursor_put(
             break;
         }
         let ref mut fresh41 = (*data.offset(0 as libc::c_int as isize)).mv_data;
-        *fresh41 = ((*data.offset(0 as libc::c_int as isize)).mv_data
-            as *mut libc::c_char)
+        *fresh41 = ((*data.offset(0 as libc::c_int as isize)).mv_data as *mut libc::c_char)
             .offset((*data.offset(0 as libc::c_int as isize)).mv_size as isize)
             as *mut libc::c_void;
         insert_data = 0 as libc::c_int;
@@ -8922,8 +8567,7 @@ unsafe extern "C" fn _mdb_cursor_del(
     let mut leaf = 0 as *mut MDB_node;
     let mut mp = 0 as *mut MDB_page;
     let mut rc: libc::c_int = 0;
-    if (*(*mc).mc_txn).mt_flags & (MDB_TXN_RDONLY | MDB_TXN_BLOCKED) as libc::c_uint != 0
-    {
+    if (*(*mc).mc_txn).mt_flags & (MDB_TXN_RDONLY | MDB_TXN_BLOCKED) as libc::c_uint != 0 {
         return if (*(*mc).mc_txn).mt_flags & MDB_TXN_RDONLY as libc::c_uint != 0 {
             EACCES
         } else {
@@ -8934,28 +8578,23 @@ unsafe extern "C" fn _mdb_cursor_del(
         return EINVAL;
     }
     if (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-        >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-            as *mut MDB_page2))
-            .mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int
+        >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+            as libc::c_uint)
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int
     {
         return MDB_NOTFOUND;
     }
-    if flags & MDB_NOSPILL as libc::c_uint == 0
-        && {
-            rc = mdb_page_spill(mc, NULL as *mut MDB_val, NULL as *mut MDB_val);
-            rc != 0
-        }
-    {
+    if flags & MDB_NOSPILL as libc::c_uint == 0 && {
+        rc = mdb_page_spill(mc, NULL as *mut MDB_val, NULL as *mut MDB_val);
+        rc != 0
+    } {
         return rc;
     }
     rc = mdb_cursor_touch(mc);
@@ -8964,19 +8603,21 @@ unsafe extern "C" fn _mdb_cursor_del(
     }
     mp = (*mc).mc_pg[(*mc).mc_top as usize];
     if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int)
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int)
     {
         return MDB_CORRUPTED;
     }
     if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int)
+        & 0x20 as libc::c_int
+        == 0x20 as libc::c_int)
     {
         leaf = (mp as *mut libc::c_char)
             .offset(
                 *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
-                    .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize) as libc::c_int
-                    as isize,
+                    .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize)
+                    as libc::c_int as isize,
             )
             .offset(
                 (if 0 as libc::c_int != 0 {
@@ -8987,24 +8628,18 @@ unsafe extern "C" fn _mdb_cursor_del(
             ) as *mut MDB_node;
         if (*leaf).mn_flags as libc::c_int & 0x4 as libc::c_int == 0x4 as libc::c_int {
             if flags & MDB_NODUPDATA as libc::c_uint != 0 {
-                (*(*mc).mc_db)
-                    .md_entries = ((*(*mc).mc_db).md_entries)
-                    .wrapping_sub(
-                        ((*(*mc).mc_xcursor).mx_db.md_entries)
-                            .wrapping_sub(1 as libc::c_int as mdb_size_t),
-                    );
+                (*(*mc).mc_db).md_entries = ((*(*mc).mc_db).md_entries).wrapping_sub(
+                    ((*(*mc).mc_xcursor).mx_db.md_entries)
+                        .wrapping_sub(1 as libc::c_int as mdb_size_t),
+                );
                 (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !C_INITIALIZED as libc::c_uint;
             } else {
-                if !((*leaf).mn_flags as libc::c_int & 0x2 as libc::c_int
-                    == 0x2 as libc::c_int)
-                {
-                    (*(*mc).mc_xcursor)
-                        .mx_cursor
-                        .mc_pg[0 as libc::c_int
-                        as usize] = ((*leaf).mn_data)
-                        .as_mut_ptr()
-                        .offset((*leaf).mn_ksize as libc::c_int as isize)
-                        as *mut libc::c_void as *mut MDB_page;
+                if !((*leaf).mn_flags as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int) {
+                    (*(*mc).mc_xcursor).mx_cursor.mc_pg[0 as libc::c_int as usize] =
+                        ((*leaf).mn_data)
+                            .as_mut_ptr()
+                            .offset((*leaf).mn_ksize as libc::c_int as isize)
+                            as *mut libc::c_void as *mut MDB_page;
                 }
                 rc = _mdb_cursor_del(
                     &mut (*(*mc).mc_xcursor).mx_cursor,
@@ -9021,8 +8656,7 @@ unsafe extern "C" fn _mdb_cursor_del(
                             as *mut libc::c_void;
                         memcpy(
                             db,
-                            &mut (*(*mc).mc_xcursor).mx_db as *mut MDB_db
-                                as *const libc::c_void,
+                            &mut (*(*mc).mc_xcursor).mx_db as *mut MDB_db as *const libc::c_void,
                             ::core::mem::size_of::<MDB_db>() as libc::c_ulong,
                         );
                     } else {
@@ -9042,18 +8676,15 @@ unsafe extern "C" fn _mdb_cursor_del(
                                     0 as libc::c_int as libc::c_uint
                                 }) as isize,
                             ) as *mut MDB_node;
-                        (*(*mc).mc_xcursor)
-                            .mx_cursor
-                            .mc_pg[0 as libc::c_int
-                            as usize] = ((*leaf).mn_data)
-                            .as_mut_ptr()
-                            .offset((*leaf).mn_ksize as libc::c_int as isize)
-                            as *mut libc::c_void as *mut MDB_page;
+                        (*(*mc).mc_xcursor).mx_cursor.mc_pg[0 as libc::c_int as usize] =
+                            ((*leaf).mn_data)
+                                .as_mut_ptr()
+                                .offset((*leaf).mn_ksize as libc::c_int as isize)
+                                as *mut libc::c_void as *mut MDB_page;
                         m2 = *((*(*mc).mc_txn).mt_cursors).offset((*mc).mc_dbi as isize);
                         while !m2.is_null() {
                             if !(m2 == mc
-                                || ((*m2).mc_snum as libc::c_int)
-                                    < (*mc).mc_snum as libc::c_int)
+                                || ((*m2).mc_snum as libc::c_int) < (*mc).mc_snum as libc::c_int)
                             {
                                 if !((*m2).mc_flags & C_INITIALIZED as libc::c_uint == 0) {
                                     if (*m2).mc_pg[(*mc).mc_top as usize] == mp {
@@ -9061,46 +8692,57 @@ unsafe extern "C" fn _mdb_cursor_del(
                                         let mut xr_node = 0 as *mut MDB_node;
                                         if !(!(!((*m2).mc_xcursor).is_null()
                                             && (*(*m2).mc_xcursor).mx_cursor.mc_flags
-                                                & C_INITIALIZED as libc::c_uint != 0)
+                                                & C_INITIALIZED as libc::c_uint
+                                                != 0)
                                             || (*m2).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-                                                >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                                    .mp2_lower as libc::c_uint)
+                                                >= ((*(xr_pg as *mut libc::c_void
+                                                    as *mut MDB_page2))
+                                                    .mp2_lower
+                                                    as libc::c_uint)
                                                     .wrapping_sub(
-                                                        (PAGEHDRSZ as libc::c_uint)
-                                                            .wrapping_sub(
-                                                                (if 0 as libc::c_int != 0 {
-                                                                    PAGEHDRSZ as libc::c_uint
-                                                                } else {
-                                                                    0 as libc::c_int as libc::c_uint
-                                                                }),
-                                                            ),
-                                                    ) >> 1 as libc::c_int)
+                                                        (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                                            (if 0 as libc::c_int != 0 {
+                                                                PAGEHDRSZ as libc::c_uint
+                                                            } else {
+                                                                0 as libc::c_int as libc::c_uint
+                                                            }),
+                                                        ),
+                                                    )
+                                                    >> 1 as libc::c_int)
                                         {
                                             xr_node = (xr_pg as *mut libc::c_char)
                                                 .offset(
-                                                    *((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
+                                                    *((*(xr_pg as *mut libc::c_void
+                                                        as *mut MDB_page2))
                                                         .mp2_ptrs)
                                                         .as_mut_ptr()
-                                                        .offset((*m2).mc_ki[(*mc).mc_top as usize] as isize)
-                                                        as libc::c_int as isize,
+                                                        .offset(
+                                                            (*m2).mc_ki[(*mc).mc_top as usize]
+                                                                as isize,
+                                                        )
+                                                        as libc::c_int
+                                                        as isize,
                                                 )
                                                 .offset(
                                                     (if 0 as libc::c_int != 0 {
                                                         PAGEHDRSZ as libc::c_uint
                                                     } else {
                                                         0 as libc::c_int as libc::c_uint
-                                                    }) as isize,
-                                                ) as *mut MDB_node;
+                                                    })
+                                                        as isize,
+                                                )
+                                                as *mut MDB_node;
                                             if (*xr_node).mn_flags as libc::c_int
-                                                & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
+                                                & (F_DUPDATA | F_SUBDATA)
+                                                == F_DUPDATA
                                             {
-                                                (*(*m2).mc_xcursor)
-                                                    .mx_cursor
-                                                    .mc_pg[0 as libc::c_int
-                                                    as usize] = ((*xr_node).mn_data)
-                                                    .as_mut_ptr()
-                                                    .offset((*xr_node).mn_ksize as libc::c_int as isize)
-                                                    as *mut libc::c_void as *mut MDB_page;
+                                                (*(*m2).mc_xcursor).mx_cursor.mc_pg
+                                                    [0 as libc::c_int as usize] =
+                                                    ((*xr_node).mn_data).as_mut_ptr().offset(
+                                                        (*xr_node).mn_ksize as libc::c_int as isize,
+                                                    )
+                                                        as *mut libc::c_void
+                                                        as *mut MDB_page;
                                             }
                                         }
                                     }
@@ -9109,13 +8751,11 @@ unsafe extern "C" fn _mdb_cursor_del(
                             m2 = (*m2).mc_next;
                         }
                     }
-                    (*(*mc).mc_db)
-                        .md_entries = ((*(*mc).mc_db).md_entries).wrapping_sub(1);
+                    (*(*mc).mc_db).md_entries = ((*(*mc).mc_db).md_entries).wrapping_sub(1);
                     (*(*mc).mc_db).md_entries;
                     return rc;
                 } else {
-                    (*(*mc).mc_xcursor).mx_cursor.mc_flags
-                        &= !C_INITIALIZED as libc::c_uint;
+                    (*(*mc).mc_xcursor).mx_cursor.mc_flags &= !C_INITIALIZED as libc::c_uint;
                 }
             }
             if (*leaf).mn_flags as libc::c_int & F_SUBDATA != 0 {
@@ -9128,9 +8768,7 @@ unsafe extern "C" fn _mdb_cursor_del(
             } else {
                 current_block = 3689906465960840878;
             }
-        } else if ((*leaf).mn_flags as libc::c_uint ^ flags) & F_SUBDATA as libc::c_uint
-            != 0
-        {
+        } else if ((*leaf).mn_flags as libc::c_uint ^ flags) & F_SUBDATA as libc::c_uint != 0 {
             rc = MDB_INCOMPATIBLE;
             current_block = 10917811640877813153;
         } else {
@@ -9138,9 +8776,7 @@ unsafe extern "C" fn _mdb_cursor_del(
         }
         match current_block {
             3689906465960840878 => {
-                if (*leaf).mn_flags as libc::c_int & 0x1 as libc::c_int
-                    == 0x1 as libc::c_int
-                {
+                if (*leaf).mn_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int {
                     let mut omp = 0 as *mut MDB_page;
                     let mut pg: pgno_t = 0;
                     memcpy(
@@ -9152,12 +8788,10 @@ unsafe extern "C" fn _mdb_cursor_del(
                         ::core::mem::size_of::<pgno_t>() as libc::c_ulong,
                     );
                     rc = mdb_page_get(mc, pg, &mut omp, NULL as *mut libc::c_int);
-                    if rc != 0
-                        || {
-                            rc = mdb_ovpage_free(mc, omp);
-                            rc != 0
-                        }
-                    {
+                    if rc != 0 || {
+                        rc = mdb_ovpage_free(mc, omp);
+                        rc != 0
+                    } {
                         current_block = 10917811640877813153;
                     } else {
                         current_block = 2064878754691380821;
@@ -9198,45 +8832,37 @@ unsafe extern "C" fn mdb_page_new(
         return rc;
     }
     (*np).mp_flags = (flags | P_DIRTY as uint32_t) as uint16_t;
-    (*np)
-        .mp_pb
-        .pb
-        .pb_lower = (PAGEHDRSZ as libc::c_uint)
-        .wrapping_sub(
-            (if 0 as libc::c_int != 0 {
-                PAGEHDRSZ as libc::c_uint
-            } else {
-                0 as libc::c_int as libc::c_uint
-            }),
-        ) as indx_t;
-    (*np)
-        .mp_pb
-        .pb
-        .pb_upper = ((*(*(*mc).mc_txn).mt_env).me_psize)
-        .wrapping_sub(
-            (if 0 as libc::c_int != 0 {
-                PAGEHDRSZ as libc::c_uint
-            } else {
-                0 as libc::c_int as libc::c_uint
-            }),
-        ) as indx_t;
-    if (*(np as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x1 as libc::c_int == 0x1 as libc::c_int
+    (*np).mp_pb.pb.pb_lower = (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+        (if 0 as libc::c_int != 0 {
+            PAGEHDRSZ as libc::c_uint
+        } else {
+            0 as libc::c_int as libc::c_uint
+        }),
+    ) as indx_t;
+    (*np).mp_pb.pb.pb_upper = ((*(*(*mc).mc_txn).mt_env).me_psize).wrapping_sub(
+        (if 0 as libc::c_int != 0 {
+            PAGEHDRSZ as libc::c_uint
+        } else {
+            0 as libc::c_int as libc::c_uint
+        }),
+    ) as indx_t;
+    if (*(np as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x1 as libc::c_int
+        == 0x1 as libc::c_int
     {
-        (*(*mc).mc_db)
-            .md_branch_pages = ((*(*mc).mc_db).md_branch_pages).wrapping_add(1);
+        (*(*mc).mc_db).md_branch_pages = ((*(*mc).mc_db).md_branch_pages).wrapping_add(1);
         (*(*mc).mc_db).md_branch_pages;
     } else if (*(np as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
     {
         (*(*mc).mc_db).md_leaf_pages = ((*(*mc).mc_db).md_leaf_pages).wrapping_add(1);
         (*(*mc).mc_db).md_leaf_pages;
     } else if (*(np as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x4 as libc::c_int == 0x4 as libc::c_int
+        & 0x4 as libc::c_int
+        == 0x4 as libc::c_int
     {
-        (*(*mc).mc_db)
-            .md_overflow_pages = ((*(*mc).mc_db).md_overflow_pages)
-            .wrapping_add(num as pgno_t);
+        (*(*mc).mc_db).md_overflow_pages =
+            ((*(*mc).mc_db).md_overflow_pages).wrapping_add(num as pgno_t);
         (*np).mp_pb.pb_pages = num as uint32_t;
     }
     *mp = np;
@@ -9248,28 +8874,28 @@ unsafe extern "C" fn mdb_leaf_size(
     mut data: *mut MDB_val,
 ) -> size_t {
     let mut sz: size_t = 0;
-    sz = NODESIZE.wrapping_add((*key).mv_size).wrapping_add((*data).mv_size);
+    sz = NODESIZE
+        .wrapping_add((*key).mv_size)
+        .wrapping_add((*data).mv_size);
     if sz > (*env).me_nodemax as size_t {
-        sz = (sz as libc::c_ulong)
-            .wrapping_sub(
-                ((*data).mv_size)
-                    .wrapping_sub(::core::mem::size_of::<pgno_t>() as libc::c_ulong),
-            ) as size_t as size_t;
+        sz = (sz as libc::c_ulong).wrapping_sub(
+            ((*data).mv_size).wrapping_sub(::core::mem::size_of::<pgno_t>() as libc::c_ulong),
+        ) as size_t as size_t;
     }
     return sz
         .wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong)
         .wrapping_add(1 as libc::c_uint as libc::c_ulong)
         & -(2 as libc::c_int) as libc::c_ulong;
 }
-unsafe extern "C" fn mdb_branch_size(
-    mut env: *mut MDB_env,
-    mut key: *mut MDB_val,
-) -> size_t {
+unsafe extern "C" fn mdb_branch_size(mut env: *mut MDB_env, mut key: *mut MDB_val) -> size_t {
     let mut sz: size_t = 0;
-    sz = NODESIZE
-        .wrapping_add(
-            (if key.is_null() { 0 as libc::c_int as size_t } else { (*key).mv_size }),
-        );
+    sz = NODESIZE.wrapping_add(
+        (if key.is_null() {
+            0 as libc::c_int as size_t
+        } else {
+            (*key).mv_size
+        }),
+    );
     sz > (*env).me_nodemax as size_t;
     return sz.wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong);
 }
@@ -9292,21 +8918,18 @@ unsafe extern "C" fn mdb_node_add(
     let mut ndata = 0 as *mut libc::c_void;
     if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as libc::c_int
         >= (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_int
-    {} else {
+    {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"MP_UPPER(mp) >= MP_LOWER(mp)\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 13],
-                &[libc::c_char; 13],
-            >(b"mdb_node_add\0"))
-                .as_ptr(),
+            (*::core::mem::transmute::<&[u8; 13], &[libc::c_char; 13]>(b"mdb_node_add\0")).as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             8402 as libc::c_int,
         );
     };
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         let mut ksize = (*(*mc).mc_db).md_pad as libc::c_int;
         let mut dif: libc::c_int = 0;
@@ -9314,16 +8937,14 @@ unsafe extern "C" fn mdb_node_add(
             .offset(PAGEHDRSZ as libc::c_uint as isize)
             .offset((indx as libc::c_int * ksize) as isize);
         dif = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int)
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int)
             .wrapping_sub(indx as libc::c_uint) as libc::c_int;
         if dif > 0 as libc::c_int {
             memmove(
@@ -9332,17 +8953,20 @@ unsafe extern "C" fn mdb_node_add(
                 (dif * ksize) as libc::c_ulong,
             );
         }
-        memcpy(ptr as *mut libc::c_void, (*key).mv_data, ksize as libc::c_ulong);
+        memcpy(
+            ptr as *mut libc::c_void,
+            (*key).mv_data,
+            ksize as libc::c_ulong,
+        );
         let ref mut fresh42 = (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower;
         *fresh42 = (*fresh42 as libc::c_ulong)
-            .wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong) as indx_t
-            as indx_t;
+            .wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong)
+            as indx_t as indx_t;
         let ref mut fresh43 = (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper;
-        *fresh43 = (*fresh43 as libc::c_ulong)
-            .wrapping_sub(
-                (ksize as libc::c_ulong)
-                    .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong),
-            ) as indx_t as indx_t;
+        *fresh43 = (*fresh43 as libc::c_ulong).wrapping_sub(
+            (ksize as libc::c_ulong)
+                .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong),
+        ) as indx_t as indx_t;
         return MDB_SUCCESS;
     }
     room = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as libc::c_int
@@ -9352,25 +8976,21 @@ unsafe extern "C" fn mdb_node_add(
     if !key.is_null() {
         node_size = node_size.wrapping_add((*key).mv_size);
     }
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
     {
-        if !key.is_null() && !data.is_null() {} else {
+        if !key.is_null() && !data.is_null() {
+        } else {
             mdb_assert_fail(
                 (*(*mc).mc_txn).mt_env,
                 b"key && data\0" as *const u8 as *const libc::c_char,
-                (*::core::mem::transmute::<
-                    &[u8; 13],
-                    &[libc::c_char; 13],
-                >(b"mdb_node_add\0"))
+                (*::core::mem::transmute::<&[u8; 13], &[libc::c_char; 13]>(b"mdb_node_add\0"))
                     .as_ptr(),
                 b"mdb.c\0" as *const u8 as *const libc::c_char,
                 8430 as libc::c_int,
             );
         };
-        if flags & 0x1 as libc::c_int as libc::c_uint
-            == 0x1 as libc::c_int as libc::c_uint
-        {
+        if flags & 0x1 as libc::c_int as libc::c_uint == 0x1 as libc::c_int as libc::c_uint {
             node_size = (node_size as libc::c_ulong)
                 .wrapping_add(::core::mem::size_of::<pgno_t>() as libc::c_ulong)
                 as size_t as size_t;
@@ -9378,11 +8998,12 @@ unsafe extern "C" fn mdb_node_add(
         } else if node_size.wrapping_add((*data).mv_size)
             > (*(*(*mc).mc_txn).mt_env).me_nodemax as size_t
         {
-            let mut ovpages = (((PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(1 as libc::c_int as libc::c_uint) as size_t)
-                .wrapping_add((*data).mv_size)
-                / (*(*(*mc).mc_txn).mt_env).me_psize as size_t)
-                .wrapping_add(1 as libc::c_int as size_t) as libc::c_int;
+            let mut ovpages =
+                (((PAGEHDRSZ as libc::c_uint).wrapping_sub(1 as libc::c_int as libc::c_uint)
+                    as size_t)
+                    .wrapping_add((*data).mv_size)
+                    / (*(*(*mc).mc_txn).mt_env).me_psize as size_t)
+                    .wrapping_add(1 as libc::c_int as size_t) as libc::c_int;
             let mut rc: libc::c_int = 0;
             node_size = node_size
                 .wrapping_add(::core::mem::size_of::<pgno_t>() as libc::c_ulong)
@@ -9407,8 +9028,8 @@ unsafe extern "C" fn mdb_node_add(
     }
     match current_block {
         11057878835866523405 => {
-            node_size = node_size.wrapping_add(1 as libc::c_uint as size_t)
-                & -(2 as libc::c_int) as size_t;
+            node_size =
+                node_size.wrapping_add(1 as libc::c_uint as size_t) & -(2 as libc::c_int) as size_t;
             if node_size as ssize_t > room {
                 current_block = 15594603006322722090;
             } else {
@@ -9423,24 +9044,20 @@ unsafe extern "C" fn mdb_node_add(
             return MDB_PAGE_FULL;
         }
         _ => {
-            i = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int;
+            i = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int;
             while i > indx as libc::c_uint {
                 *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
-                    .offset(
-                        i as isize,
-                    ) = *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
+                    .offset(i as isize) = *((*(mp as *mut libc::c_void as *mut MDB_page2))
+                    .mp2_ptrs)
                     .as_mut_ptr()
                     .offset(i.wrapping_sub(1 as libc::c_int as libc::c_uint) as isize);
                 i = i.wrapping_sub(1);
@@ -9449,18 +9066,14 @@ unsafe extern "C" fn mdb_node_add(
             ofs = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as size_t)
                 .wrapping_sub(node_size) as indx_t;
             if ofs as libc::c_ulong
-                >= ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                    as libc::c_ulong)
+                >= ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_ulong)
                     .wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong)
-            {} else {
+            {
+            } else {
                 mdb_assert_fail(
                     (*(*mc).mc_txn).mt_env,
-                    b"ofs >= MP_LOWER(mp) + sizeof(indx_t)\0" as *const u8
-                        as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 13],
-                        &[libc::c_char; 13],
-                    >(b"mdb_node_add\0"))
+                    b"ofs >= MP_LOWER(mp) + sizeof(indx_t)\0" as *const u8 as *const libc::c_char,
+                    (*::core::mem::transmute::<&[u8; 13], &[libc::c_char; 13]>(b"mdb_node_add\0"))
                         .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     8463 as libc::c_int,
@@ -9470,8 +9083,7 @@ unsafe extern "C" fn mdb_node_add(
                 .as_mut_ptr()
                 .offset(indx as isize) = ofs;
             (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper = ofs;
-            let ref mut fresh44 = (*(mp as *mut libc::c_void as *mut MDB_page2))
-                .mp2_lower;
+            let ref mut fresh44 = (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower;
             *fresh44 = (*fresh44 as libc::c_ulong)
                 .wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong)
                 as indx_t as indx_t;
@@ -9488,36 +9100,30 @@ unsafe extern "C" fn mdb_node_add(
                         0 as libc::c_int as libc::c_uint
                     }) as isize,
                 ) as *mut MDB_node;
-            (*node)
-                .mn_ksize = (if key.is_null() {
+            (*node).mn_ksize = (if key.is_null() {
                 0 as libc::c_int as size_t
             } else {
                 (*key).mv_size
             }) as libc::c_ushort;
             (*node).mn_flags = flags as libc::c_ushort;
             if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-                & 0x2 as libc::c_int == 0x2 as libc::c_int
+                & 0x2 as libc::c_int
+                == 0x2 as libc::c_int
             {
-                (*node)
-                    .mn_lo = ((*data).mv_size & 0xffff as libc::c_int as size_t)
-                    as libc::c_ushort;
+                (*node).mn_lo =
+                    ((*data).mv_size & 0xffff as libc::c_int as size_t) as libc::c_ushort;
                 (*node).mn_hi = ((*data).mv_size >> 16 as libc::c_int) as libc::c_ushort;
             } else {
-                (*node)
-                    .mn_lo = (pgno & 0xffff as libc::c_int as pgno_t) as libc::c_ushort;
+                (*node).mn_lo = (pgno & 0xffff as libc::c_int as pgno_t) as libc::c_ushort;
                 (*node).mn_hi = (pgno >> 16 as libc::c_int) as libc::c_ushort;
-                if if -(1 as libc::c_int) as pgno_t
-                    > 0xffffffff as libc::c_uint as pgno_t
-                {
+                if if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                     32 as libc::c_int
                 } else {
                     0 as libc::c_int
                 } != 0
                 {
-                    (*node)
-                        .mn_flags = (pgno
-                        >> (if -(1 as libc::c_int) as pgno_t
-                            > 0xffffffff as libc::c_uint as pgno_t
+                    (*node).mn_flags = (pgno
+                        >> (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t
                         {
                             32 as libc::c_int
                         } else {
@@ -9533,7 +9139,8 @@ unsafe extern "C" fn mdb_node_add(
                 );
             }
             if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-                & 0x2 as libc::c_int == 0x2 as libc::c_int
+                & 0x2 as libc::c_int
+                == 0x2 as libc::c_int
             {
                 ndata = ((*node).mn_data)
                     .as_mut_ptr()
@@ -9561,8 +9168,8 @@ unsafe extern "C" fn mdb_node_add(
                         &mut (*ofp).mp_p.p_pgno as *mut pgno_t as *const libc::c_void,
                         ::core::mem::size_of::<pgno_t>() as libc::c_ulong,
                     );
-                    ndata = (ofp as *mut libc::c_char)
-                        .offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void;
+                    ndata = (ofp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
+                        as *mut libc::c_void;
                     if flags & 0x10000 as libc::c_int as libc::c_uint
                         == 0x10000 as libc::c_int as libc::c_uint
                     {
@@ -9587,31 +9194,26 @@ unsafe extern "C" fn mdb_node_del(mut mc: *mut MDB_cursor, mut ksize: libc::c_in
     let mut node = 0 as *mut MDB_node;
     let mut base = 0 as *mut libc::c_char;
     numkeys = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-        .wrapping_sub(
-            (PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(
-                    (if 0 as libc::c_int != 0 {
-                        PAGEHDRSZ as libc::c_uint
-                    } else {
-                        0 as libc::c_int as libc::c_uint
-                    }),
-                ),
-        ) >> 1 as libc::c_int) as indx_t;
-    if (indx as libc::c_int) < numkeys as libc::c_int {} else {
+        .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+            (if 0 as libc::c_int != 0 {
+                PAGEHDRSZ as libc::c_uint
+            } else {
+                0 as libc::c_int as libc::c_uint
+            }),
+        ))
+        >> 1 as libc::c_int) as indx_t;
+    if (indx as libc::c_int) < numkeys as libc::c_int {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"indx < numkeys\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 13],
-                &[libc::c_char; 13],
-            >(b"mdb_node_del\0"))
-                .as_ptr(),
+            (*::core::mem::transmute::<&[u8; 13], &[libc::c_char; 13]>(b"mdb_node_del\0")).as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             8528 as libc::c_int,
         );
     };
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         let mut x = numkeys as libc::c_int - 1 as libc::c_int - indx as libc::c_int;
         base = (mp as *mut libc::c_char)
@@ -9626,14 +9228,13 @@ unsafe extern "C" fn mdb_node_del(mut mc: *mut MDB_cursor, mut ksize: libc::c_in
         }
         let ref mut fresh45 = (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower;
         *fresh45 = (*fresh45 as libc::c_ulong)
-            .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong) as indx_t
-            as indx_t;
+            .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong)
+            as indx_t as indx_t;
         let ref mut fresh46 = (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper;
-        *fresh46 = (*fresh46 as libc::c_ulong)
-            .wrapping_add(
-                (ksize as libc::c_ulong)
-                    .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong),
-            ) as indx_t as indx_t;
+        *fresh46 = (*fresh46 as libc::c_ulong).wrapping_add(
+            (ksize as libc::c_ulong)
+                .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong),
+        ) as indx_t as indx_t;
         return;
     }
     node = (mp as *mut libc::c_char)
@@ -9650,19 +9251,18 @@ unsafe extern "C" fn mdb_node_del(mut mc: *mut MDB_cursor, mut ksize: libc::c_in
             }) as isize,
         ) as *mut MDB_node;
     sz = NODESIZE.wrapping_add((*node).mn_ksize as libc::c_ulong) as libc::c_uint;
-    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int
+    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
     {
         if (*node).mn_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int {
             sz = (sz as libc::c_ulong)
                 .wrapping_add(::core::mem::size_of::<pgno_t>() as libc::c_ulong)
                 as libc::c_uint as libc::c_uint;
         } else {
-            sz = sz
-                .wrapping_add(
-                    (*node).mn_lo as libc::c_uint
-                        | ((*node).mn_hi as libc::c_uint) << 16 as libc::c_int,
-                );
+            sz = sz.wrapping_add(
+                (*node).mn_lo as libc::c_uint
+                    | ((*node).mn_hi as libc::c_uint) << 16 as libc::c_int,
+            );
         }
     }
     sz = sz.wrapping_add(1 as libc::c_uint) & -(2 as libc::c_int) as libc::c_uint;
@@ -9675,21 +9275,18 @@ unsafe extern "C" fn mdb_node_del(mut mc: *mut MDB_cursor, mut ksize: libc::c_in
         if i as libc::c_int != indx as libc::c_int {
             *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                 .as_mut_ptr()
-                .offset(
-                    j as isize,
-                ) = *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
+                .offset(j as isize) = *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                 .as_mut_ptr()
                 .offset(i as isize);
             if (*((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                 .as_mut_ptr()
-                .offset(i as isize) as libc::c_int) < ptr as libc::c_int
+                .offset(i as isize) as libc::c_int)
+                < ptr as libc::c_int
             {
-                let ref mut fresh47 = *((*(mp as *mut libc::c_void as *mut MDB_page2))
-                    .mp2_ptrs)
+                let ref mut fresh47 = *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
                     .offset(j as isize);
-                *fresh47 = (*fresh47 as libc::c_uint).wrapping_add(sz) as indx_t
-                    as indx_t;
+                *fresh47 = (*fresh47 as libc::c_uint).wrapping_add(sz) as indx_t as indx_t;
             }
             j = j.wrapping_add(1);
             j;
@@ -9698,10 +9295,7 @@ unsafe extern "C" fn mdb_node_del(mut mc: *mut MDB_cursor, mut ksize: libc::c_in
         i;
     }
     base = (mp as *mut libc::c_char)
-        .offset(
-            (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as libc::c_int
-                as isize,
-        )
+        .offset((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as libc::c_int as isize)
         .offset(
             (if 0 as libc::c_int != 0 {
                 PAGEHDRSZ as libc::c_uint
@@ -9746,35 +9340,33 @@ unsafe extern "C" fn mdb_node_shrink(mut mp: *mut MDB_page, mut indx: indx_t) {
                 0 as libc::c_int as libc::c_uint
             }) as isize,
         ) as *mut MDB_node;
-    sp = ((*node).mn_data).as_mut_ptr().offset((*node).mn_ksize as libc::c_int as isize)
-        as *mut libc::c_void as *mut MDB_page;
+    sp = ((*node).mn_data)
+        .as_mut_ptr()
+        .offset((*node).mn_ksize as libc::c_int as isize) as *mut libc::c_void
+        as *mut MDB_page;
     delta = ((*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as libc::c_int
         - (*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_int)
         as indx_t;
-    nsize = ((*node).mn_lo as libc::c_uint
-        | ((*node).mn_hi as libc::c_uint) << 16 as libc::c_int)
+    nsize = ((*node).mn_lo as libc::c_uint | ((*node).mn_hi as libc::c_uint) << 16 as libc::c_int)
         .wrapping_sub(delta as libc::c_uint) as indx_t;
-    if (*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         len = nsize;
         if nsize as libc::c_int & 1 as libc::c_int != 0 {
             return;
         }
     } else {
-        xp = (sp as *mut libc::c_char).offset(delta as libc::c_int as isize)
-            as *mut MDB_page;
+        xp = (sp as *mut libc::c_char).offset(delta as libc::c_int as isize) as *mut MDB_page;
         i = (((*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int) as libc::c_int;
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int) as libc::c_int;
         loop {
             i -= 1;
             if !(i >= 0 as libc::c_int) {
@@ -9782,16 +9374,15 @@ unsafe extern "C" fn mdb_node_shrink(mut mp: *mut MDB_page, mut indx: indx_t) {
             }
             *((*(xp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                 .as_mut_ptr()
-                .offset(
-                    i as isize,
-                ) = (*((*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
+                .offset(i as isize) = (*((*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                 .as_mut_ptr()
-                .offset(i as isize) as libc::c_int - delta as libc::c_int) as indx_t;
+                .offset(i as isize) as libc::c_int
+                - delta as libc::c_int) as indx_t;
         }
         len = PAGEHDRSZ as indx_t;
     }
-    (*(sp as *mut libc::c_void as *mut MDB_page2))
-        .mp2_upper = (*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_lower;
+    (*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_upper =
+        (*(sp as *mut libc::c_void as *mut MDB_page2)).mp2_lower;
     let mut s = 0 as *mut libc::c_ushort;
     let mut d = 0 as *mut libc::c_ushort;
     s = &mut (*mp).mp_p.p_pgno as *mut pgno_t as *mut libc::c_ushort;
@@ -9827,38 +9418,32 @@ unsafe extern "C" fn mdb_node_shrink(mut mp: *mut MDB_page, mut indx: indx_t) {
     memmove(
         base.offset(delta as libc::c_int as isize) as *mut libc::c_void,
         base as *const libc::c_void,
-        (sp as *mut libc::c_char).offset(len as libc::c_int as isize).offset_from(base)
-            as libc::c_long as libc::c_ulong,
+        (sp as *mut libc::c_char)
+            .offset(len as libc::c_int as isize)
+            .offset_from(base) as libc::c_long as libc::c_ulong,
     );
     ptr = *((*mp).mp_ptrs).as_mut_ptr().offset(indx as isize);
-    i = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-        .wrapping_sub(
-            (PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(
-                    (if 0 as libc::c_int != 0 {
-                        PAGEHDRSZ as libc::c_uint
-                    } else {
-                        0 as libc::c_int as libc::c_uint
-                    }),
-                ),
-        ) >> 1 as libc::c_int) as libc::c_int;
+    i = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint).wrapping_sub(
+        (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+            (if 0 as libc::c_int != 0 {
+                PAGEHDRSZ as libc::c_uint
+            } else {
+                0 as libc::c_int as libc::c_uint
+            }),
+        ),
+    ) >> 1 as libc::c_int) as libc::c_int;
     loop {
         i -= 1;
         if !(i >= 0 as libc::c_int) {
             break;
         }
-        if *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize) as libc::c_int
-            <= ptr as libc::c_int
-        {
+        if *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize) as libc::c_int <= ptr as libc::c_int {
             let ref mut fresh56 = *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize);
             *fresh56 = (*fresh56 as libc::c_int + delta as libc::c_int) as indx_t;
         }
     }
-    (*mp)
-        .mp_pb
-        .pb
-        .pb_upper = ((*mp).mp_pb.pb.pb_upper as libc::c_int + delta as libc::c_int)
-        as indx_t;
+    (*mp).mp_pb.pb.pb_upper =
+        ((*mp).mp_pb.pb.pb_upper as libc::c_int + delta as libc::c_int) as indx_t;
 }
 unsafe extern "C" fn mdb_xcursor_init0(mut mc: *mut MDB_cursor) {
     let mut mx = (*mc).mc_xcursor;
@@ -9870,25 +9455,16 @@ unsafe extern "C" fn mdb_xcursor_init0(mut mc: *mut MDB_cursor) {
     (*mx).mx_cursor.mc_dbflag = &mut (*mx).mx_dbflag;
     (*mx).mx_cursor.mc_snum = 0 as libc::c_int as libc::c_ushort;
     (*mx).mx_cursor.mc_top = 0 as libc::c_int as libc::c_ushort;
-    (*mx)
-        .mx_cursor
-        .mc_flags = C_SUB as libc::c_uint
-        | (*mc).mc_flags & (C_ORIG_RDONLY | C_WRITEMAP) as libc::c_uint;
+    (*mx).mx_cursor.mc_flags =
+        C_SUB as libc::c_uint | (*mc).mc_flags & (C_ORIG_RDONLY | C_WRITEMAP) as libc::c_uint;
     (*mx).mx_dbx.md_name.mv_size = 0 as libc::c_int as size_t;
     (*mx).mx_dbx.md_name.mv_data = NULL as *mut libc::c_void;
     (*mx).mx_dbx.md_cmp = (*(*mc).mc_dbx).md_dcmp;
-    (*mx)
-        .mx_dbx
-        .md_dcmp = ::core::mem::transmute::<
-        libc::intptr_t,
-        Option::<MDB_cmp_func>,
-    >(NULL as libc::intptr_t);
+    (*mx).mx_dbx.md_dcmp =
+        ::core::mem::transmute::<libc::intptr_t, Option<MDB_cmp_func>>(NULL as libc::intptr_t);
     (*mx).mx_dbx.md_rel = (*(*mc).mc_dbx).md_rel;
 }
-unsafe extern "C" fn mdb_xcursor_init1(
-    mut mc: *mut MDB_cursor,
-    mut node: *mut MDB_node,
-) {
+unsafe extern "C" fn mdb_xcursor_init1(mut mc: *mut MDB_cursor, mut node: *mut MDB_node) {
     let mut mx = (*mc).mc_xcursor;
     (*mx).mx_cursor.mc_flags &= (C_SUB | C_ORIG_RDONLY | C_WRITEMAP) as libc::c_uint;
     if (*node).mn_flags as libc::c_int & F_SUBDATA != 0 {
@@ -9905,32 +9481,28 @@ unsafe extern "C" fn mdb_xcursor_init1(
     } else {
         let mut fp = ((*node).mn_data)
             .as_mut_ptr()
-            .offset((*node).mn_ksize as libc::c_int as isize) as *mut libc::c_void
-            as *mut MDB_page;
+            .offset((*node).mn_ksize as libc::c_int as isize)
+            as *mut libc::c_void as *mut MDB_page;
         (*mx).mx_db.md_pad = 0 as libc::c_int as uint32_t;
         (*mx).mx_db.md_flags = 0 as libc::c_int as uint16_t;
         (*mx).mx_db.md_depth = 1 as libc::c_int as uint16_t;
         (*mx).mx_db.md_branch_pages = 0 as libc::c_int as pgno_t;
         (*mx).mx_db.md_leaf_pages = 1 as libc::c_int as pgno_t;
         (*mx).mx_db.md_overflow_pages = 0 as libc::c_int as pgno_t;
-        (*mx)
-            .mx_db
-            .md_entries = (((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+        (*mx).mx_db.md_entries = (((*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
             as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int) as mdb_size_t;
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int) as mdb_size_t;
         let mut s = 0 as *mut libc::c_ushort;
         let mut d = 0 as *mut libc::c_ushort;
-        s = &mut (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_p
-            as *mut [uint16_t; 4] as *mut libc::c_ushort;
+        s = &mut (*(fp as *mut libc::c_void as *mut MDB_page2)).mp2_p as *mut [uint16_t; 4]
+            as *mut libc::c_ushort;
         d = &mut (*mx).mx_db.md_root as *mut pgno_t as *mut libc::c_ushort;
         let fresh57 = s;
         s = s.offset(1);
@@ -9957,10 +9529,8 @@ unsafe extern "C" fn mdb_xcursor_init1(
             (*mx).mx_db.md_flags = MDB_DUPFIXED as uint16_t;
             (*mx).mx_db.md_pad = (*fp).mp_pad as uint32_t;
             if (*(*mc).mc_db).md_flags as libc::c_int & MDB_INTEGERDUP != 0 {
-                (*mx)
-                    .mx_db
-                    .md_flags = ((*mx).mx_db.md_flags as libc::c_int | MDB_INTEGERKEY)
-                    as uint16_t;
+                (*mx).mx_db.md_flags =
+                    ((*mx).mx_db.md_flags as libc::c_int | MDB_INTEGERKEY) as uint16_t;
             }
         }
     }
@@ -9987,13 +9557,11 @@ unsafe extern "C" fn mdb_xcursor_init2(
         (*mx).mx_dbflag = (DB_VALID | DB_USRVALID | DB_DUPDATA) as libc::c_uchar;
         (*mx).mx_dbx.md_cmp = (*src_mx).mx_dbx.md_cmp;
     } else if (*mx).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint == 0 {
-        return
+        return;
     }
     (*mx).mx_db = (*src_mx).mx_db;
-    (*mx)
-        .mx_cursor
-        .mc_pg[0 as libc::c_int
-        as usize] = (*src_mx).mx_cursor.mc_pg[0 as libc::c_int as usize];
+    (*mx).mx_cursor.mc_pg[0 as libc::c_int as usize] =
+        (*src_mx).mx_cursor.mc_pg[0 as libc::c_int as usize];
 }
 unsafe extern "C" fn mdb_cursor_init(
     mut mc: *mut MDB_cursor,
@@ -10007,24 +9575,19 @@ unsafe extern "C" fn mdb_cursor_init(
     (*mc).mc_txn = txn;
     (*mc).mc_db = &mut *((*txn).mt_dbs).offset(dbi as isize) as *mut MDB_db;
     (*mc).mc_dbx = &mut *((*txn).mt_dbxs).offset(dbi as isize) as *mut MDB_dbx;
-    (*mc)
-        .mc_dbflag = &mut *((*txn).mt_dbflags).offset(dbi as isize)
-        as *mut libc::c_uchar;
+    (*mc).mc_dbflag = &mut *((*txn).mt_dbflags).offset(dbi as isize) as *mut libc::c_uchar;
     (*mc).mc_snum = 0 as libc::c_int as libc::c_ushort;
     (*mc).mc_top = 0 as libc::c_int as libc::c_ushort;
     (*mc).mc_pg[0 as libc::c_int as usize] = 0 as *mut MDB_page;
     (*mc).mc_ki[0 as libc::c_int as usize] = 0 as libc::c_int as indx_t;
     (*mc).mc_flags = (*txn).mt_flags & (C_ORIG_RDONLY | C_WRITEMAP) as libc::c_uint;
-    if (*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int & MDB_DUPSORT != 0
-    {
-        if !mx.is_null() {} else {
+    if (*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int & MDB_DUPSORT != 0 {
+        if !mx.is_null() {
+        } else {
             mdb_assert_fail(
                 (*txn).mt_env,
                 b"mx != NULL\0" as *const u8 as *const libc::c_char,
-                (*::core::mem::transmute::<
-                    &[u8; 16],
-                    &[libc::c_char; 16],
-                >(b"mdb_cursor_init\0"))
+                (*::core::mem::transmute::<&[u8; 16], &[libc::c_char; 16]>(b"mdb_cursor_init\0"))
                     .as_ptr(),
                 b"mdb.c\0" as *const u8 as *const libc::c_char,
                 8739 as libc::c_int,
@@ -10048,9 +9611,9 @@ pub unsafe extern "C" fn mdb_cursor_open(
     let mut mc = 0 as *mut MDB_cursor;
     let mut size = ::core::mem::size_of::<MDB_cursor>() as libc::c_ulong;
     if ret.is_null()
-        || !(!txn.is_null() && dbi < (*txn).mt_numdbs
-            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int
-                & 0x8 as libc::c_int != 0)
+        || !(!txn.is_null()
+            && dbi < (*txn).mt_numdbs
+            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x8 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -10063,8 +9626,7 @@ pub unsafe extern "C" fn mdb_cursor_open(
     {
         return EINVAL;
     }
-    if (*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int & MDB_DUPSORT != 0
-    {
+    if (*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int & MDB_DUPSORT != 0 {
         size = (size as libc::c_ulong)
             .wrapping_add(::core::mem::size_of::<MDB_xcursor>() as libc::c_ulong)
             as size_t as size_t;
@@ -10084,7 +9646,7 @@ pub unsafe extern "C" fn mdb_cursor_open(
             (*mc).mc_flags |= C_UNTRACK as libc::c_uint;
         }
     } else {
-        return ENOMEM
+        return ENOMEM;
     }
     *ret = mc;
     return MDB_SUCCESS;
@@ -10095,14 +9657,15 @@ pub unsafe extern "C" fn mdb_cursor_renew(
     mut mc: *mut MDB_cursor,
 ) -> libc::c_int {
     if mc.is_null()
-        || !(!txn.is_null() && (*mc).mc_dbi < (*txn).mt_numdbs
+        || !(!txn.is_null()
+            && (*mc).mc_dbi < (*txn).mt_numdbs
             && *((*txn).mt_dbflags).offset((*mc).mc_dbi as isize) as libc::c_int
-                & 0x8 as libc::c_int != 0)
+                & 0x8 as libc::c_int
+                != 0)
     {
         return EINVAL;
     }
-    if (*mc).mc_flags & C_UNTRACK as libc::c_uint != 0 || !((*txn).mt_cursors).is_null()
-    {
+    if (*mc).mc_flags & C_UNTRACK as libc::c_uint != 0 || !((*txn).mt_cursors).is_null() {
         return EINVAL;
     }
     if (*txn).mt_flags & MDB_TXN_BLOCKED as libc::c_uint != 0 {
@@ -10134,19 +9697,16 @@ pub unsafe extern "C" fn mdb_cursor_count(
     }
     if (*mc).mc_flags & C_EOF as libc::c_uint != 0 {
         if (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-            >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
+            >= ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                 .mp2_lower as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int
         {
             return MDB_NOTFOUND;
         }
@@ -10154,8 +9714,7 @@ pub unsafe extern "C" fn mdb_cursor_count(
     }
     leaf = ((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_char)
         .offset(
-            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
+            *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                 .mp2_ptrs)
                 .as_mut_ptr()
                 .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize) as libc::c_int
@@ -10186,7 +9745,8 @@ pub unsafe extern "C" fn mdb_cursor_close(mut mc: *mut MDB_cursor) {
             && !((*(*mc).mc_txn).mt_cursors).is_null()
         {
             let mut prev: *mut *mut MDB_cursor = &mut *((*(*mc).mc_txn).mt_cursors)
-                .offset((*mc).mc_dbi as isize) as *mut *mut MDB_cursor;
+                .offset((*mc).mc_dbi as isize)
+                as *mut *mut MDB_cursor;
             while !(*prev).is_null() && *prev != mc {
                 prev = &mut (**prev).mc_next;
             }
@@ -10208,10 +9768,7 @@ pub unsafe extern "C" fn mdb_cursor_txn(mut mc: *mut MDB_cursor) -> *mut MDB_txn
 pub unsafe extern "C" fn mdb_cursor_dbi(mut mc: *mut MDB_cursor) -> MDB_dbi {
     return (*mc).mc_dbi;
 }
-unsafe extern "C" fn mdb_update_key(
-    mut mc: *mut MDB_cursor,
-    mut key: *mut MDB_val,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_update_key(mut mc: *mut MDB_cursor, mut key: *mut MDB_val) -> libc::c_int {
     let mut mp = 0 as *mut MDB_page;
     let mut node = 0 as *mut MDB_node;
     let mut base = 0 as *mut libc::c_char;
@@ -10247,23 +9804,21 @@ unsafe extern "C" fn mdb_update_key(
     if delta != 0 {
         if delta > 0 as libc::c_int
             && (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_upper as libc::c_int
-                - (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                    as libc::c_int) as indx_t as libc::c_int) < delta
+                - (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_int)
+                as indx_t as libc::c_int)
+                < delta
         {
             let mut pgno: pgno_t = 0;
             pgno = (*node).mn_lo as pgno_t
                 | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
-                | (if (if -(1 as libc::c_int) as pgno_t
-                    > 0xffffffff as libc::c_uint as pgno_t
-                {
+                | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                     32 as libc::c_int
                 } else {
                     0 as libc::c_int
                 }) != 0
                 {
                     ((*node).mn_flags as pgno_t)
-                        << (if -(1 as libc::c_int) as pgno_t
-                            > 0xffffffff as libc::c_uint as pgno_t
+                        << (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t
                         {
                             32 as libc::c_int
                         } else {
@@ -10281,22 +9836,18 @@ unsafe extern "C" fn mdb_update_key(
                 MDB_SPLIT_REPLACE as libc::c_uint,
             );
         }
-        numkeys = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-            as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int) as indx_t;
+        numkeys = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int) as indx_t;
         i = 0 as libc::c_int as indx_t;
         while (i as libc::c_int) < numkeys as libc::c_int {
-            if *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize) as libc::c_int
-                <= ptr as libc::c_int
+            if *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize) as libc::c_int <= ptr as libc::c_int
             {
                 let ref mut fresh64 = *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize);
                 *fresh64 = (*fresh64 as libc::c_int - delta) as indx_t;
@@ -10313,18 +9864,14 @@ unsafe extern "C" fn mdb_update_key(
                     0 as libc::c_int as libc::c_uint
                 }) as isize,
             );
-        len = ((ptr as libc::c_int - (*mp).mp_pb.pb.pb_upper as libc::c_int)
-            as libc::c_ulong)
+        len = ((ptr as libc::c_int - (*mp).mp_pb.pb.pb_upper as libc::c_int) as libc::c_ulong)
             .wrapping_add(NODESIZE);
         memmove(
             base.offset(-(delta as isize)) as *mut libc::c_void,
             base as *const libc::c_void,
             len,
         );
-        (*mp)
-            .mp_pb
-            .pb
-            .pb_upper = ((*mp).mp_pb.pb.pb_upper as libc::c_int - delta) as indx_t;
+        (*mp).mp_pb.pb.pb_upper = ((*mp).mp_pb.pb.pb_upper as libc::c_int - delta) as indx_t;
         node = (mp as *mut libc::c_char)
             .offset(
                 *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
@@ -10384,24 +9931,22 @@ unsafe extern "C" fn mdb_node_move(
     let mut rc: libc::c_int = 0;
     let mut flags: libc::c_ushort = 0;
     rc = mdb_page_touch(csrc);
-    if rc != 0
-        || {
-            rc = mdb_page_touch(cdst);
-            rc != 0
-        }
-    {
+    if rc != 0 || {
+        rc = mdb_page_touch(cdst);
+        rc != 0
+    } {
         return rc;
     }
-    if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+    if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
     {
         key.mv_size = (*(*csrc).mc_db).md_pad as size_t;
-        key
-            .mv_data = ((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_char)
+        key.mv_data = ((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_char)
             .offset(PAGEHDRSZ as libc::c_uint as isize)
-            .offset(
-                ((*csrc).mc_ki[(*csrc).mc_top as usize] as size_t * key.mv_size) as isize,
-            ) as *mut libc::c_void;
+            .offset(((*csrc).mc_ki[(*csrc).mc_top as usize] as size_t * key.mv_size) as isize)
+            as *mut libc::c_void;
         data.mv_size = 0 as libc::c_int as size_t;
         data.mv_data = NULL as *mut libc::c_void;
         srcpg = 0 as libc::c_int as pgno_t;
@@ -10423,14 +9968,12 @@ unsafe extern "C" fn mdb_node_move(
                     0 as libc::c_int as libc::c_uint
                 }) as isize,
             ) as *mut MDB_node;
-        if srcnode as size_t & 1 as libc::c_int as size_t == 0 {} else {
+        if srcnode as size_t & 1 as libc::c_int as size_t == 0 {
+        } else {
             mdb_assert_fail(
                 (*(*csrc).mc_txn).mt_env,
                 b"!((size_t)srcnode & 1)\0" as *const u8 as *const libc::c_char,
-                (*::core::mem::transmute::<
-                    &[u8; 14],
-                    &[libc::c_char; 14],
-                >(b"mdb_node_move\0"))
+                (*::core::mem::transmute::<&[u8; 14], &[libc::c_char; 14]>(b"mdb_node_move\0"))
                     .as_ptr(),
                 b"mdb.c\0" as *const u8 as *const libc::c_char,
                 8997 as libc::c_int,
@@ -10438,18 +9981,14 @@ unsafe extern "C" fn mdb_node_move(
         };
         srcpg = (*srcnode).mn_lo as pgno_t
             | ((*srcnode).mn_hi as pgno_t) << 16 as libc::c_int
-            | (if (if -(1 as libc::c_int) as pgno_t
-                > 0xffffffff as libc::c_uint as pgno_t
-            {
+            | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                 32 as libc::c_int
             } else {
                 0 as libc::c_int
             }) != 0
             {
                 ((*srcnode).mn_flags as pgno_t)
-                    << (if -(1 as libc::c_int) as pgno_t
-                        > 0xffffffff as libc::c_uint as pgno_t
-                    {
+                    << (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                         32 as libc::c_int
                     } else {
                         0 as libc::c_int
@@ -10459,9 +9998,10 @@ unsafe extern "C" fn mdb_node_move(
             });
         flags = (*srcnode).mn_flags;
         if (*csrc).mc_ki[(*csrc).mc_top as usize] as libc::c_int == 0 as libc::c_int
-            && (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
-                .mp2_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int
+            && (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                .mp2_flags as libc::c_int
+                & 0x1 as libc::c_int
+                == 0x1 as libc::c_int
         {
             let mut snum = (*csrc).mc_snum as libc::c_uint;
             let mut s2 = 0 as *mut MDB_node;
@@ -10469,14 +10009,13 @@ unsafe extern "C" fn mdb_node_move(
             if rc != 0 {
                 return rc;
             }
-            if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
-                .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+            if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                .mp2_flags as libc::c_int
+                & 0x20 as libc::c_int
+                == 0x20 as libc::c_int
             {
                 key.mv_size = (*(*csrc).mc_db).md_pad as size_t;
-                key
-                    .mv_data = ((*csrc).mc_pg[(*csrc).mc_top as usize]
-                    as *mut libc::c_char)
+                key.mv_data = ((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_char)
                     .offset(PAGEHDRSZ as libc::c_uint as isize)
                     .offset((0 as libc::c_int as size_t * key.mv_size) as isize)
                     as *mut libc::c_void;
@@ -10487,7 +10026,8 @@ unsafe extern "C" fn mdb_node_move(
                             as *mut MDB_page2))
                             .mp2_ptrs)
                             .as_mut_ptr()
-                            .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                            .offset(0 as libc::c_int as isize)
+                            as libc::c_int as isize,
                     )
                     .offset(
                         (if 0 as libc::c_int != 0 {
@@ -10507,17 +10047,19 @@ unsafe extern "C" fn mdb_node_move(
             key.mv_size = (*srcnode).mn_ksize as size_t;
             key.mv_data = ((*srcnode).mn_data).as_mut_ptr() as *mut libc::c_void;
         }
-        data
-            .mv_size = ((*srcnode).mn_lo as libc::c_uint
-            | ((*srcnode).mn_hi as libc::c_uint) << 16 as libc::c_int) as size_t;
-        data
-            .mv_data = ((*srcnode).mn_data)
+        data.mv_size = ((*srcnode).mn_lo as libc::c_uint
+            | ((*srcnode).mn_hi as libc::c_uint) << 16 as libc::c_int)
+            as size_t;
+        data.mv_data = ((*srcnode).mn_data)
             .as_mut_ptr()
-            .offset((*srcnode).mn_ksize as libc::c_int as isize) as *mut libc::c_void;
+            .offset((*srcnode).mn_ksize as libc::c_int as isize)
+            as *mut libc::c_void;
     }
     mn.mc_xcursor = NULL as *mut MDB_xcursor;
-    if (*((*cdst).mc_pg[(*cdst).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int
+    if (*((*cdst).mc_pg[(*cdst).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x1 as libc::c_int
+        == 0x1 as libc::c_int
         && (*cdst).mc_ki[(*cdst).mc_top as usize] as libc::c_int == 0 as libc::c_int
     {
         let mut snum_0 = (*cdst).mc_snum as libc::c_uint;
@@ -10531,23 +10073,24 @@ unsafe extern "C" fn mdb_node_move(
         if rc != 0 {
             return rc;
         }
-        if (*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-            .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+        if (*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+            as libc::c_int
+            & 0x20 as libc::c_int
+            == 0x20 as libc::c_int
         {
             bkey.mv_size = (*mn.mc_db).md_pad as size_t;
-            bkey
-                .mv_data = (mn.mc_pg[mn.mc_top as usize] as *mut libc::c_char)
+            bkey.mv_data = (mn.mc_pg[mn.mc_top as usize] as *mut libc::c_char)
                 .offset(PAGEHDRSZ as libc::c_uint as isize)
                 .offset((0 as libc::c_int as size_t * bkey.mv_size) as isize)
                 as *mut libc::c_void;
         } else {
             s2_0 = (mn.mc_pg[mn.mc_top as usize] as *mut libc::c_char)
                 .offset(
-                    *((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void
-                        as *mut MDB_page2))
+                    *((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                         .mp2_ptrs)
                         .as_mut_ptr()
-                        .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                        .offset(0 as libc::c_int as isize) as libc::c_int
+                        as isize,
                 )
                 .offset(
                     (if 0 as libc::c_int != 0 {
@@ -10599,62 +10142,51 @@ unsafe extern "C" fn mdb_node_move(
             if !((*m3).mc_flags & C_INITIALIZED as libc::c_uint == 0
                 || ((*m3).mc_top as libc::c_int) < (*csrc).mc_top as libc::c_int)
             {
-                if m3 != cdst && (*m3).mc_pg[(*csrc).mc_top as usize] == mpd
+                if m3 != cdst
+                    && (*m3).mc_pg[(*csrc).mc_top as usize] == mpd
                     && (*m3).mc_ki[(*csrc).mc_top as usize] as libc::c_int
                         >= (*cdst).mc_ki[(*csrc).mc_top as usize] as libc::c_int
                 {
-                    (*m3)
-                        .mc_ki[(*csrc).mc_top
-                        as usize] = ((*m3).mc_ki[(*csrc).mc_top as usize])
-                        .wrapping_add(1);
+                    (*m3).mc_ki[(*csrc).mc_top as usize] =
+                        ((*m3).mc_ki[(*csrc).mc_top as usize]).wrapping_add(1);
                     (*m3).mc_ki[(*csrc).mc_top as usize];
                 }
-                if m3 != csrc && (*m3).mc_pg[(*csrc).mc_top as usize] == mps
+                if m3 != csrc
+                    && (*m3).mc_pg[(*csrc).mc_top as usize] == mps
                     && (*m3).mc_ki[(*csrc).mc_top as usize] as libc::c_int
                         == (*csrc).mc_ki[(*csrc).mc_top as usize] as libc::c_int
                 {
-                    (*m3)
-                        .mc_pg[(*csrc).mc_top
-                        as usize] = (*cdst).mc_pg[(*cdst).mc_top as usize];
-                    (*m3)
-                        .mc_ki[(*csrc).mc_top
-                        as usize] = (*cdst).mc_ki[(*cdst).mc_top as usize];
-                    (*m3)
-                        .mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int)
-                        as usize] = ((*m3)
-                        .mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int)
-                        as usize])
-                        .wrapping_add(1);
-                    (*m3)
-                        .mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int)
-                        as usize];
+                    (*m3).mc_pg[(*csrc).mc_top as usize] = (*cdst).mc_pg[(*cdst).mc_top as usize];
+                    (*m3).mc_ki[(*csrc).mc_top as usize] = (*cdst).mc_ki[(*cdst).mc_top as usize];
+                    (*m3).mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize] =
+                        ((*m3).mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize])
+                            .wrapping_add(1);
+                    (*m3).mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize];
                 }
-                if (*(mps as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                    as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                if (*(mps as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                    & 0x2 as libc::c_int
+                    == 0x2 as libc::c_int
                 {
                     let mut xr_pg = (*m3).mc_pg[(*csrc).mc_top as usize];
                     let mut xr_node = 0 as *mut MDB_node;
                     if !(!(!((*m3).mc_xcursor).is_null()
-                        && (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                            & C_INITIALIZED as libc::c_uint != 0)
+                        && (*(*m3).mc_xcursor).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint
+                            != 0)
                         || (*m3).mc_ki[(*csrc).mc_top as usize] as libc::c_uint
-                            >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                .mp2_lower as libc::c_uint)
-                                .wrapping_sub(
-                                    (PAGEHDRSZ as libc::c_uint)
-                                        .wrapping_sub(
-                                            (if 0 as libc::c_int != 0 {
-                                                PAGEHDRSZ as libc::c_uint
-                                            } else {
-                                                0 as libc::c_int as libc::c_uint
-                                            }),
-                                        ),
-                                ) >> 1 as libc::c_int)
+                            >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                                as libc::c_uint)
+                                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                    (if 0 as libc::c_int != 0 {
+                                        PAGEHDRSZ as libc::c_uint
+                                    } else {
+                                        0 as libc::c_int as libc::c_uint
+                                    }),
+                                ))
+                                >> 1 as libc::c_int)
                     {
                         xr_node = (xr_pg as *mut libc::c_char)
                             .offset(
-                                *((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_ptrs)
+                                *((*(xr_pg as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                     .as_mut_ptr()
                                     .offset((*m3).mc_ki[(*csrc).mc_top as usize] as isize)
                                     as libc::c_int as isize,
@@ -10666,16 +10198,14 @@ unsafe extern "C" fn mdb_node_move(
                                     0 as libc::c_int as libc::c_uint
                                 }) as isize,
                             ) as *mut MDB_node;
-                        if (*xr_node).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA)
-                            == F_DUPDATA
+                        if (*xr_node).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
                         {
-                            (*(*m3).mc_xcursor)
-                                .mx_cursor
-                                .mc_pg[0 as libc::c_int
-                                as usize] = ((*xr_node).mn_data)
-                                .as_mut_ptr()
-                                .offset((*xr_node).mn_ksize as libc::c_int as isize)
-                                as *mut libc::c_void as *mut MDB_page;
+                            (*(*m3).mc_xcursor).mx_cursor.mc_pg[0 as libc::c_int as usize] =
+                                ((*xr_node).mn_data)
+                                    .as_mut_ptr()
+                                    .offset((*xr_node).mn_ksize as libc::c_int as isize)
+                                    as *mut libc::c_void
+                                    as *mut MDB_page;
                         }
                     }
                 }
@@ -10696,49 +10226,44 @@ unsafe extern "C" fn mdb_node_move(
                 {
                     if (*m3).mc_pg[(*csrc).mc_top as usize] == mps {
                         if (*m3).mc_ki[(*csrc).mc_top as usize] == 0 {
-                            (*m3)
-                                .mc_pg[(*csrc).mc_top
-                                as usize] = (*cdst).mc_pg[(*cdst).mc_top as usize];
-                            (*m3)
-                                .mc_ki[(*csrc).mc_top
-                                as usize] = (*cdst).mc_ki[(*cdst).mc_top as usize];
-                            (*m3)
-                                .mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int)
-                                as usize] = ((*m3)
-                                .mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int)
-                                as usize])
-                                .wrapping_sub(1);
-                            (*m3)
-                                .mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int)
-                                as usize];
+                            (*m3).mc_pg[(*csrc).mc_top as usize] =
+                                (*cdst).mc_pg[(*cdst).mc_top as usize];
+                            (*m3).mc_ki[(*csrc).mc_top as usize] =
+                                (*cdst).mc_ki[(*cdst).mc_top as usize];
+                            (*m3).mc_ki
+                                [((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize] =
+                                ((*m3).mc_ki
+                                    [((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize])
+                                    .wrapping_sub(1);
+                            (*m3).mc_ki
+                                [((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize];
                         } else {
-                            (*m3)
-                                .mc_ki[(*csrc).mc_top
-                                as usize] = ((*m3).mc_ki[(*csrc).mc_top as usize])
-                                .wrapping_sub(1);
+                            (*m3).mc_ki[(*csrc).mc_top as usize] =
+                                ((*m3).mc_ki[(*csrc).mc_top as usize]).wrapping_sub(1);
                             (*m3).mc_ki[(*csrc).mc_top as usize];
                         }
-                        if (*(mps as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                            as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                        if (*(mps as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                            & 0x2 as libc::c_int
+                            == 0x2 as libc::c_int
                         {
                             let mut xr_pg_0 = (*m3).mc_pg[(*csrc).mc_top as usize];
                             let mut xr_node_0 = 0 as *mut MDB_node;
                             if !(!(!((*m3).mc_xcursor).is_null()
                                 && (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                                    & C_INITIALIZED as libc::c_uint != 0)
+                                    & C_INITIALIZED as libc::c_uint
+                                    != 0)
                                 || (*m3).mc_ki[(*csrc).mc_top as usize] as libc::c_uint
                                     >= ((*(xr_pg_0 as *mut libc::c_void as *mut MDB_page2))
-                                        .mp2_lower as libc::c_uint)
-                                        .wrapping_sub(
-                                            (PAGEHDRSZ as libc::c_uint)
-                                                .wrapping_sub(
-                                                    (if 0 as libc::c_int != 0 {
-                                                        PAGEHDRSZ as libc::c_uint
-                                                    } else {
-                                                        0 as libc::c_int as libc::c_uint
-                                                    }),
-                                                ),
-                                        ) >> 1 as libc::c_int)
+                                        .mp2_lower
+                                        as libc::c_uint)
+                                        .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                            (if 0 as libc::c_int != 0 {
+                                                PAGEHDRSZ as libc::c_uint
+                                            } else {
+                                                0 as libc::c_int as libc::c_uint
+                                            }),
+                                        ))
+                                        >> 1 as libc::c_int)
                             {
                                 xr_node_0 = (xr_pg_0 as *mut libc::c_char)
                                     .offset(
@@ -10746,7 +10271,8 @@ unsafe extern "C" fn mdb_node_move(
                                             .mp2_ptrs)
                                             .as_mut_ptr()
                                             .offset((*m3).mc_ki[(*csrc).mc_top as usize] as isize)
-                                            as libc::c_int as isize,
+                                            as libc::c_int
+                                            as isize,
                                     )
                                     .offset(
                                         (if 0 as libc::c_int != 0 {
@@ -10755,16 +10281,15 @@ unsafe extern "C" fn mdb_node_move(
                                             0 as libc::c_int as libc::c_uint
                                         }) as isize,
                                     ) as *mut MDB_node;
-                                if (*xr_node_0).mn_flags as libc::c_int
-                                    & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
+                                if (*xr_node_0).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA)
+                                    == F_DUPDATA
                                 {
-                                    (*(*m3).mc_xcursor)
-                                        .mx_cursor
-                                        .mc_pg[0 as libc::c_int
-                                        as usize] = ((*xr_node_0).mn_data)
+                                    (*(*m3).mc_xcursor).mx_cursor.mc_pg
+                                        [0 as libc::c_int as usize] = ((*xr_node_0).mn_data)
                                         .as_mut_ptr()
                                         .offset((*xr_node_0).mn_ksize as libc::c_int as isize)
-                                        as *mut libc::c_void as *mut MDB_page;
+                                        as *mut libc::c_void
+                                        as *mut MDB_page;
                                 }
                             }
                         }
@@ -10775,16 +10300,15 @@ unsafe extern "C" fn mdb_node_move(
         }
     }
     if (*csrc).mc_ki[(*csrc).mc_top as usize] as libc::c_int == 0 as libc::c_int {
-        if (*csrc).mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize]
-            as libc::c_int != 0 as libc::c_int
+        if (*csrc).mc_ki[((*csrc).mc_top as libc::c_int - 1 as libc::c_int) as usize] as libc::c_int
+            != 0 as libc::c_int
         {
-            if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
-                .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+            if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                .mp2_flags as libc::c_int
+                & 0x20 as libc::c_int
+                == 0x20 as libc::c_int
             {
-                key
-                    .mv_data = ((*csrc).mc_pg[(*csrc).mc_top as usize]
-                    as *mut libc::c_char)
+                key.mv_data = ((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_char)
                     .offset(PAGEHDRSZ as libc::c_uint as isize)
                     .offset((0 as libc::c_int as size_t * key.mv_size) as isize)
                     as *mut libc::c_void;
@@ -10795,7 +10319,8 @@ unsafe extern "C" fn mdb_node_move(
                             as *mut MDB_page2))
                             .mp2_ptrs)
                             .as_mut_ptr()
-                            .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                            .offset(0 as libc::c_int as isize)
+                            as libc::c_int as isize,
                     )
                     .offset(
                         (if 0 as libc::c_int != 0 {
@@ -10828,8 +10353,8 @@ unsafe extern "C" fn mdb_node_move(
                 mc_ki: [0; 32],
             };
             let mut tracked = 0 as *mut MDB_cursor;
-            let mut tp: *mut *mut MDB_cursor = &mut *((*mn.mc_txn).mt_cursors)
-                .offset(mn.mc_dbi as isize) as *mut *mut MDB_cursor;
+            let mut tp: *mut *mut MDB_cursor =
+                &mut *((*mn.mc_txn).mt_cursors).offset(mn.mc_dbi as isize) as *mut *mut MDB_cursor;
             if mn.mc_flags & C_SUB as libc::c_uint != 0 {
                 dummy.mc_flags = C_INITIALIZED as libc::c_uint;
                 dummy.mc_xcursor = &mut mn as *mut MDB_cursor as *mut MDB_xcursor;
@@ -10845,9 +10370,10 @@ unsafe extern "C" fn mdb_node_move(
                 return rc;
             }
         }
-        if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void
-            as *mut MDB_page2))
-            .mp2_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int
+        if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+            .mp2_flags as libc::c_int
+            & 0x1 as libc::c_int
+            == 0x1 as libc::c_int
         {
             let mut nullkey = MDB_val {
                 mv_size: 0,
@@ -10858,14 +10384,12 @@ unsafe extern "C" fn mdb_node_move(
             (*csrc).mc_ki[(*csrc).mc_top as usize] = 0 as libc::c_int as indx_t;
             rc = mdb_update_key(csrc, &mut nullkey);
             (*csrc).mc_ki[(*csrc).mc_top as usize] = ix;
-            if rc == 0 as libc::c_int {} else {
+            if rc == 0 as libc::c_int {
+            } else {
                 mdb_assert_fail(
                     (*(*csrc).mc_txn).mt_env,
                     b"rc == MDB_SUCCESS\0" as *const u8 as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 14],
-                        &[libc::c_char; 14],
-                    >(b"mdb_node_move\0"))
+                    (*::core::mem::transmute::<&[u8; 14], &[libc::c_char; 14]>(b"mdb_node_move\0"))
                         .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     9154 as libc::c_int,
@@ -10874,16 +10398,15 @@ unsafe extern "C" fn mdb_node_move(
         }
     }
     if (*cdst).mc_ki[(*cdst).mc_top as usize] as libc::c_int == 0 as libc::c_int {
-        if (*cdst).mc_ki[((*cdst).mc_top as libc::c_int - 1 as libc::c_int) as usize]
-            as libc::c_int != 0 as libc::c_int
+        if (*cdst).mc_ki[((*cdst).mc_top as libc::c_int - 1 as libc::c_int) as usize] as libc::c_int
+            != 0 as libc::c_int
         {
-            if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void
-                as *mut MDB_page2))
-                .mp2_flags as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+            if (*((*csrc).mc_pg[(*csrc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                .mp2_flags as libc::c_int
+                & 0x20 as libc::c_int
+                == 0x20 as libc::c_int
             {
-                key
-                    .mv_data = ((*cdst).mc_pg[(*cdst).mc_top as usize]
-                    as *mut libc::c_char)
+                key.mv_data = ((*cdst).mc_pg[(*cdst).mc_top as usize] as *mut libc::c_char)
                     .offset(PAGEHDRSZ as libc::c_uint as isize)
                     .offset((0 as libc::c_int as size_t * key.mv_size) as isize)
                     as *mut libc::c_void;
@@ -10894,7 +10417,8 @@ unsafe extern "C" fn mdb_node_move(
                             as *mut MDB_page2))
                             .mp2_ptrs)
                             .as_mut_ptr()
-                            .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                            .offset(0 as libc::c_int as isize)
+                            as libc::c_int as isize,
                     )
                     .offset(
                         (if 0 as libc::c_int != 0 {
@@ -10927,8 +10451,8 @@ unsafe extern "C" fn mdb_node_move(
                 mc_ki: [0; 32],
             };
             let mut tracked_0 = 0 as *mut MDB_cursor;
-            let mut tp_0: *mut *mut MDB_cursor = &mut *((*mn.mc_txn).mt_cursors)
-                .offset(mn.mc_dbi as isize) as *mut *mut MDB_cursor;
+            let mut tp_0: *mut *mut MDB_cursor =
+                &mut *((*mn.mc_txn).mt_cursors).offset(mn.mc_dbi as isize) as *mut *mut MDB_cursor;
             if mn.mc_flags & C_SUB as libc::c_uint != 0 {
                 dummy_0.mc_flags = C_INITIALIZED as libc::c_uint;
                 dummy_0.mc_xcursor = &mut mn as *mut MDB_cursor as *mut MDB_xcursor;
@@ -10944,9 +10468,10 @@ unsafe extern "C" fn mdb_node_move(
                 return rc;
             }
         }
-        if (*((*cdst).mc_pg[(*cdst).mc_top as usize] as *mut libc::c_void
-            as *mut MDB_page2))
-            .mp2_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int
+        if (*((*cdst).mc_pg[(*cdst).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+            .mp2_flags as libc::c_int
+            & 0x1 as libc::c_int
+            == 0x1 as libc::c_int
         {
             let mut nullkey_0 = MDB_val {
                 mv_size: 0,
@@ -10957,14 +10482,12 @@ unsafe extern "C" fn mdb_node_move(
             (*cdst).mc_ki[(*cdst).mc_top as usize] = 0 as libc::c_int as indx_t;
             rc = mdb_update_key(cdst, &mut nullkey_0);
             (*cdst).mc_ki[(*cdst).mc_top as usize] = ix_0;
-            if rc == 0 as libc::c_int {} else {
+            if rc == 0 as libc::c_int {
+            } else {
                 mdb_assert_fail(
                     (*(*cdst).mc_txn).mt_env,
                     b"rc == MDB_SUCCESS\0" as *const u8 as *const libc::c_char,
-                    (*::core::mem::transmute::<
-                        &[u8; 14],
-                        &[libc::c_char; 14],
-                    >(b"mdb_node_move\0"))
+                    (*::core::mem::transmute::<&[u8; 14], &[libc::c_char; 14]>(b"mdb_node_move\0"))
                         .as_ptr(),
                     b"mdb.c\0" as *const u8 as *const libc::c_char,
                     9185 as libc::c_int,
@@ -10995,27 +10518,23 @@ unsafe extern "C" fn mdb_page_merge(
     let mut j: indx_t = 0;
     psrc = (*csrc).mc_pg[(*csrc).mc_top as usize];
     pdst = (*cdst).mc_pg[(*cdst).mc_top as usize];
-    if (*csrc).mc_snum as libc::c_int > 1 as libc::c_int {} else {
+    if (*csrc).mc_snum as libc::c_int > 1 as libc::c_int {
+    } else {
         mdb_assert_fail(
             (*(*csrc).mc_txn).mt_env,
             b"csrc->mc_snum > 1\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 15],
-                &[libc::c_char; 15],
-            >(b"mdb_page_merge\0"))
+            (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(b"mdb_page_merge\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             9215 as libc::c_int,
         );
     };
-    if (*cdst).mc_snum as libc::c_int > 1 as libc::c_int {} else {
+    if (*cdst).mc_snum as libc::c_int > 1 as libc::c_int {
+    } else {
         mdb_assert_fail(
             (*(*csrc).mc_txn).mt_env,
             b"cdst->mc_snum > 1\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 15],
-                &[libc::c_char; 15],
-            >(b"mdb_page_merge\0"))
+            (*::core::mem::transmute::<&[u8; 15], &[libc::c_char; 15]>(b"mdb_page_merge\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             9216 as libc::c_int,
@@ -11027,38 +10546,33 @@ unsafe extern "C" fn mdb_page_merge(
     }
     pdst = (*cdst).mc_pg[(*cdst).mc_top as usize];
     nkeys = ((*(pdst as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-        .wrapping_sub(
-            (PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(
+        .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+            (if 0 as libc::c_int != 0 {
+                PAGEHDRSZ as libc::c_uint
+            } else {
+                0 as libc::c_int as libc::c_uint
+            }),
+        ))
+        >> 1 as libc::c_int;
+    j = nkeys as indx_t;
+    if (*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+        & 0x20 as libc::c_int
+        == 0x20 as libc::c_int
+    {
+        key.mv_size = (*(*csrc).mc_db).md_pad as size_t;
+        key.mv_data = (psrc as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
+            as *mut libc::c_void;
+        i = 0 as libc::c_int as indx_t;
+        while (i as libc::c_uint)
+            < ((*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
                     (if 0 as libc::c_int != 0 {
                         PAGEHDRSZ as libc::c_uint
                     } else {
                         0 as libc::c_int as libc::c_uint
                     }),
-                ),
-        ) >> 1 as libc::c_int;
-    j = nkeys as indx_t;
-    if (*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x20 as libc::c_int == 0x20 as libc::c_int
-    {
-        key.mv_size = (*(*csrc).mc_db).md_pad as size_t;
-        key
-            .mv_data = (psrc as *mut libc::c_char)
-            .offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void;
-        i = 0 as libc::c_int as indx_t;
-        while (i as libc::c_uint)
-            < ((*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int
+                ))
+                >> 1 as libc::c_int
         {
             rc = mdb_node_add(
                 cdst,
@@ -11071,9 +10585,8 @@ unsafe extern "C" fn mdb_page_merge(
             if rc != MDB_SUCCESS {
                 return rc;
             }
-            key
-                .mv_data = (key.mv_data as *mut libc::c_char)
-                .offset(key.mv_size as isize) as *mut libc::c_void;
+            key.mv_data = (key.mv_data as *mut libc::c_char).offset(key.mv_size as isize)
+                as *mut libc::c_void;
             i = i.wrapping_add(1);
             i;
             j = j.wrapping_add(1);
@@ -11082,18 +10595,15 @@ unsafe extern "C" fn mdb_page_merge(
     } else {
         i = 0 as libc::c_int as indx_t;
         while (i as libc::c_uint)
-            < ((*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int
+            < ((*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int
         {
             srcnode = (psrc as *mut libc::c_char)
                 .offset(
@@ -11109,8 +10619,9 @@ unsafe extern "C" fn mdb_page_merge(
                     }) as isize,
                 ) as *mut MDB_node;
             if i as libc::c_int == 0 as libc::c_int
-                && (*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                    as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int
+                && (*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                    & 0x1 as libc::c_int
+                    == 0x1 as libc::c_int
             {
                 let mut mn = MDB_cursor {
                     mc_next: 0 as *mut MDB_cursor,
@@ -11134,14 +10645,13 @@ unsafe extern "C" fn mdb_page_merge(
                 if rc != 0 {
                     return rc;
                 }
-                if (*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void
-                    as *mut MDB_page2))
-                    .mp2_flags as libc::c_int & 0x20 as libc::c_int
+                if (*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                    .mp2_flags as libc::c_int
+                    & 0x20 as libc::c_int
                     == 0x20 as libc::c_int
                 {
                     key.mv_size = (*mn.mc_db).md_pad as size_t;
-                    key
-                        .mv_data = (mn.mc_pg[mn.mc_top as usize] as *mut libc::c_char)
+                    key.mv_data = (mn.mc_pg[mn.mc_top as usize] as *mut libc::c_char)
                         .offset(PAGEHDRSZ as libc::c_uint as isize)
                         .offset((0 as libc::c_int as size_t * key.mv_size) as isize)
                         as *mut libc::c_void;
@@ -11152,7 +10662,8 @@ unsafe extern "C" fn mdb_page_merge(
                                 as *mut MDB_page2))
                                 .mp2_ptrs)
                                 .as_mut_ptr()
-                                .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                                .offset(0 as libc::c_int as isize)
+                                as libc::c_int as isize,
                         )
                         .offset(
                             (if 0 as libc::c_int != 0 {
@@ -11168,11 +10679,10 @@ unsafe extern "C" fn mdb_page_merge(
                 key.mv_size = (*srcnode).mn_ksize as size_t;
                 key.mv_data = ((*srcnode).mn_data).as_mut_ptr() as *mut libc::c_void;
             }
-            data
-                .mv_size = ((*srcnode).mn_lo as libc::c_uint
-                | ((*srcnode).mn_hi as libc::c_uint) << 16 as libc::c_int) as size_t;
-            data
-                .mv_data = ((*srcnode).mn_data)
+            data.mv_size = ((*srcnode).mn_lo as libc::c_uint
+                | ((*srcnode).mn_hi as libc::c_uint) << 16 as libc::c_int)
+                as size_t;
+            data.mv_data = ((*srcnode).mn_data)
                 .as_mut_ptr()
                 .offset((*srcnode).mn_ksize as libc::c_int as isize)
                 as *mut libc::c_void;
@@ -11183,9 +10693,7 @@ unsafe extern "C" fn mdb_page_merge(
                 &mut data,
                 (*srcnode).mn_lo as pgno_t
                     | ((*srcnode).mn_hi as pgno_t) << 16 as libc::c_int
-                    | (if (if -(1 as libc::c_int) as pgno_t
-                        > 0xffffffff as libc::c_uint as pgno_t
-                    {
+                    | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                         32 as libc::c_int
                     } else {
                         0 as libc::c_int
@@ -11233,14 +10741,13 @@ unsafe extern "C" fn mdb_page_merge(
         return rc;
     }
     if (*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-        & 0x2 as libc::c_int == 0x2 as libc::c_int
+        & 0x2 as libc::c_int
+        == 0x2 as libc::c_int
     {
-        (*(*csrc).mc_db)
-            .md_leaf_pages = ((*(*csrc).mc_db).md_leaf_pages).wrapping_sub(1);
+        (*(*csrc).mc_db).md_leaf_pages = ((*(*csrc).mc_db).md_leaf_pages).wrapping_sub(1);
         (*(*csrc).mc_db).md_leaf_pages;
     } else {
-        (*(*csrc).mc_db)
-            .md_branch_pages = ((*(*csrc).mc_db).md_branch_pages).wrapping_sub(1);
+        (*(*csrc).mc_db).md_branch_pages = ((*(*csrc).mc_db).md_branch_pages).wrapping_sub(1);
         (*(*csrc).mc_db).md_branch_pages;
     }
     let mut m2 = 0 as *mut MDB_cursor;
@@ -11258,66 +10765,50 @@ unsafe extern "C" fn mdb_page_merge(
             if !(((*m3).mc_snum as libc::c_int) < (*csrc).mc_snum as libc::c_int) {
                 if (*m3).mc_pg[top as usize] == psrc {
                     (*m3).mc_pg[top as usize] = pdst;
-                    (*m3)
-                        .mc_ki[top
-                        as usize] = ((*m3).mc_ki[top as usize] as libc::c_uint)
-                        .wrapping_add(nkeys) as indx_t as indx_t;
-                    (*m3)
-                        .mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                        as usize] = (*cdst)
-                        .mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                        as usize];
-                } else if (*m3)
-                    .mc_pg[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize]
-                    == (*csrc)
-                        .mc_pg[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                        as usize]
-                    && (*m3)
-                        .mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                        as usize] as libc::c_int
-                        > (*csrc)
-                            .mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                            as usize] as libc::c_int
+                    (*m3).mc_ki[top as usize] = ((*m3).mc_ki[top as usize] as libc::c_uint)
+                        .wrapping_add(nkeys)
+                        as indx_t as indx_t;
+                    (*m3).mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize] =
+                        (*cdst).mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize];
+                } else if (*m3).mc_pg[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize]
+                    == (*csrc).mc_pg[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize]
+                    && (*m3).mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize]
+                        as libc::c_int
+                        > (*csrc).mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize]
+                            as libc::c_int
                 {
-                    (*m3)
-                        .mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                        as usize] = ((*m3)
-                        .mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                        as usize])
-                        .wrapping_sub(1);
-                    (*m3)
-                        .mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint)
-                        as usize];
+                    (*m3).mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize] =
+                        ((*m3).mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize])
+                            .wrapping_sub(1);
+                    (*m3).mc_ki[top.wrapping_sub(1 as libc::c_int as libc::c_uint) as usize];
                 }
-                if (*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                    as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                if (*(psrc as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                    & 0x2 as libc::c_int
+                    == 0x2 as libc::c_int
                 {
                     let mut xr_pg = (*m3).mc_pg[top as usize];
                     let mut xr_node = 0 as *mut MDB_node;
                     if !(!(!((*m3).mc_xcursor).is_null()
-                        && (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                            & C_INITIALIZED as libc::c_uint != 0)
+                        && (*(*m3).mc_xcursor).mx_cursor.mc_flags & C_INITIALIZED as libc::c_uint
+                            != 0)
                         || (*m3).mc_ki[top as usize] as libc::c_uint
-                            >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                .mp2_lower as libc::c_uint)
-                                .wrapping_sub(
-                                    (PAGEHDRSZ as libc::c_uint)
-                                        .wrapping_sub(
-                                            (if 0 as libc::c_int != 0 {
-                                                PAGEHDRSZ as libc::c_uint
-                                            } else {
-                                                0 as libc::c_int as libc::c_uint
-                                            }),
-                                        ),
-                                ) >> 1 as libc::c_int)
+                            >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                                as libc::c_uint)
+                                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                    (if 0 as libc::c_int != 0 {
+                                        PAGEHDRSZ as libc::c_uint
+                                    } else {
+                                        0 as libc::c_int as libc::c_uint
+                                    }),
+                                ))
+                                >> 1 as libc::c_int)
                     {
                         xr_node = (xr_pg as *mut libc::c_char)
                             .offset(
-                                *((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_ptrs)
+                                *((*(xr_pg as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                     .as_mut_ptr()
-                                    .offset((*m3).mc_ki[top as usize] as isize) as libc::c_int
-                                    as isize,
+                                    .offset((*m3).mc_ki[top as usize] as isize)
+                                    as libc::c_int as isize,
                             )
                             .offset(
                                 (if 0 as libc::c_int != 0 {
@@ -11326,16 +10817,14 @@ unsafe extern "C" fn mdb_page_merge(
                                     0 as libc::c_int as libc::c_uint
                                 }) as isize,
                             ) as *mut MDB_node;
-                        if (*xr_node).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA)
-                            == F_DUPDATA
+                        if (*xr_node).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
                         {
-                            (*(*m3).mc_xcursor)
-                                .mx_cursor
-                                .mc_pg[0 as libc::c_int
-                                as usize] = ((*xr_node).mn_data)
-                                .as_mut_ptr()
-                                .offset((*xr_node).mn_ksize as libc::c_int as isize)
-                                as *mut libc::c_void as *mut MDB_page;
+                            (*(*m3).mc_xcursor).mx_cursor.mc_pg[0 as libc::c_int as usize] =
+                                ((*xr_node).mn_data)
+                                    .as_mut_ptr()
+                                    .offset((*xr_node).mn_ksize as libc::c_int as isize)
+                                    as *mut libc::c_void
+                                    as *mut MDB_page;
                         }
                     }
                 }
@@ -11348,21 +10837,15 @@ unsafe extern "C" fn mdb_page_merge(
     mdb_cursor_pop(cdst);
     rc = mdb_rebalance(cdst);
     if depth as libc::c_int != (*(*cdst).mc_db).md_depth as libc::c_int {
-        snum = snum
-            .wrapping_add(
-                ((*(*cdst).mc_db).md_depth as libc::c_int - depth as libc::c_int)
-                    as libc::c_uint,
-            );
+        snum = snum.wrapping_add(
+            ((*(*cdst).mc_db).md_depth as libc::c_int - depth as libc::c_int) as libc::c_uint,
+        );
     }
     (*cdst).mc_snum = snum as libc::c_ushort;
-    (*cdst)
-        .mc_top = snum.wrapping_sub(1 as libc::c_int as libc::c_uint) as libc::c_ushort;
+    (*cdst).mc_top = snum.wrapping_sub(1 as libc::c_int as libc::c_uint) as libc::c_ushort;
     return rc;
 }
-unsafe extern "C" fn mdb_cursor_copy(
-    mut csrc: *const MDB_cursor,
-    mut cdst: *mut MDB_cursor,
-) {
+unsafe extern "C" fn mdb_cursor_copy(mut csrc: *const MDB_cursor, mut cdst: *mut MDB_cursor) {
     let mut i: libc::c_uint = 0;
     (*cdst).mc_txn = (*csrc).mc_txn;
     (*cdst).mc_dbi = (*csrc).mc_dbi;
@@ -11402,8 +10885,10 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
         mc_ki: [0; 32],
     };
     let mut oldki: indx_t = 0;
-    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-        .mp2_flags as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int
+    if (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+        as libc::c_int
+        & 0x1 as libc::c_int
+        == 0x1 as libc::c_int
     {
         minkeys = 2 as libc::c_int as libc::c_uint;
         thresh = 1 as libc::c_int as libc::c_uint;
@@ -11415,49 +10900,46 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
         * ((*(*(*mc).mc_txn).mt_env).me_psize)
             .wrapping_sub(PAGEHDRSZ as libc::c_uint)
             .wrapping_sub(
-                ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                    as *mut MDB_page2))
+                ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                     .mp2_upper as libc::c_int
-                    - (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-                        as *mut MDB_page2))
+                    - (*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                         .mp2_lower as libc::c_int) as indx_t as libc::c_uint,
             ) as libc::c_long
         / ((*(*(*mc).mc_txn).mt_env).me_psize).wrapping_sub(PAGEHDRSZ as libc::c_uint)
-            as libc::c_long >= thresh as libc::c_long
-        && ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-            as *mut MDB_page2))
-            .mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int >= minkeys
+            as libc::c_long
+        >= thresh as libc::c_long
+        && ((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+            as libc::c_uint)
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int
+            >= minkeys
     {
         return MDB_SUCCESS;
     }
     if ((*mc).mc_snum as libc::c_int) < 2 as libc::c_int {
         let mut mp = (*mc).mc_pg[0 as libc::c_int as usize];
         if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-            & 0x40 as libc::c_int == 0x40 as libc::c_int
+            & 0x40 as libc::c_int
+            == 0x40 as libc::c_int
         {
             return MDB_SUCCESS;
         }
-        if ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int == 0 as libc::c_int as libc::c_uint
+        if ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint).wrapping_sub(
+            (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ),
+        ) >> 1 as libc::c_int
+            == 0 as libc::c_int as libc::c_uint
         {
             (*(*mc).mc_db).md_root = P_INVALID;
             (*(*mc).mc_db).md_depth = 0 as libc::c_int as uint16_t;
@@ -11491,30 +10973,30 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
                 m2 = (*m2).mc_next;
             }
         } else if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-            & 0x1 as libc::c_int == 0x1 as libc::c_int
+            & 0x1 as libc::c_int
+            == 0x1 as libc::c_int
             && ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int == 1 as libc::c_int as libc::c_uint
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int
+                == 1 as libc::c_int as libc::c_uint
         {
             let mut i: libc::c_int = 0;
             rc = mdb_midl_append(&mut (*(*mc).mc_txn).mt_free_pgs, (*mp).mp_p.p_pgno);
             if rc != 0 {
                 return rc;
             }
-            (*(*mc).mc_db)
-                .md_root = (*((mp as *mut libc::c_char)
+            (*(*mc).mc_db).md_root = (*((mp as *mut libc::c_char)
                 .offset(
                     *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                         .as_mut_ptr()
-                        .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                        .offset(0 as libc::c_int as isize) as libc::c_int
+                        as isize,
                 )
                 .offset(
                     (if 0 as libc::c_int != 0 {
@@ -11528,7 +11010,8 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
                     .offset(
                         *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                             .as_mut_ptr()
-                            .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                            .offset(0 as libc::c_int as isize)
+                            as libc::c_int as isize,
                     )
                     .offset(
                         (if 0 as libc::c_int != 0 {
@@ -11537,10 +11020,9 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
                             0 as libc::c_int as libc::c_uint
                         }) as isize,
                     ) as *mut MDB_node))
-                    .mn_hi as pgno_t) << 16 as libc::c_int
-                | (if (if -(1 as libc::c_int) as pgno_t
-                    > 0xffffffff as libc::c_uint as pgno_t
-                {
+                    .mn_hi as pgno_t)
+                    << 16 as libc::c_int
+                | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                     32 as libc::c_int
                 } else {
                     0 as libc::c_int
@@ -11550,7 +11032,8 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
                         .offset(
                             *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                 .as_mut_ptr()
-                                .offset(0 as libc::c_int as isize) as libc::c_int as isize,
+                                .offset(0 as libc::c_int as isize)
+                                as libc::c_int as isize,
                         )
                         .offset(
                             (if 0 as libc::c_int != 0 {
@@ -11560,8 +11043,7 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
                             }) as isize,
                         ) as *mut MDB_node))
                         .mn_flags as pgno_t)
-                        << (if -(1 as libc::c_int) as pgno_t
-                            > 0xffffffff as libc::c_uint as pgno_t
+                        << (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t
                         {
                             32 as libc::c_int
                         } else {
@@ -11581,12 +11063,9 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
             }
             (*(*mc).mc_db).md_depth = ((*(*mc).mc_db).md_depth).wrapping_sub(1);
             (*(*mc).mc_db).md_depth;
-            (*(*mc).mc_db)
-                .md_branch_pages = ((*(*mc).mc_db).md_branch_pages).wrapping_sub(1);
+            (*(*mc).mc_db).md_branch_pages = ((*(*mc).mc_db).md_branch_pages).wrapping_sub(1);
             (*(*mc).mc_db).md_branch_pages;
-            (*mc)
-                .mc_ki[0 as libc::c_int
-                as usize] = (*mc).mc_ki[1 as libc::c_int as usize];
+            (*mc).mc_ki[0 as libc::c_int as usize] = (*mc).mc_ki[1 as libc::c_int as usize];
             i = 1 as libc::c_int;
             while i < (*(*mc).mc_db).md_depth as libc::c_int {
                 (*mc).mc_pg[i as usize] = (*mc).mc_pg[(i + 1 as libc::c_int) as usize];
@@ -11609,12 +11088,10 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
                         if (*m3_0).mc_pg[0 as libc::c_int as usize] == mp {
                             i = 0 as libc::c_int;
                             while i < (*(*mc).mc_db).md_depth as libc::c_int {
-                                (*m3_0)
-                                    .mc_pg[i
-                                    as usize] = (*m3_0).mc_pg[(i + 1 as libc::c_int) as usize];
-                                (*m3_0)
-                                    .mc_ki[i
-                                    as usize] = (*m3_0).mc_ki[(i + 1 as libc::c_int) as usize];
+                                (*m3_0).mc_pg[i as usize] =
+                                    (*m3_0).mc_pg[(i + 1 as libc::c_int) as usize];
+                                (*m3_0).mc_ki[i as usize] =
+                                    (*m3_0).mc_ki[(i + 1 as libc::c_int) as usize];
                                 i += 1;
                                 i;
                             }
@@ -11633,24 +11110,21 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
     ptop = ((*mc).mc_top as libc::c_int - 1 as libc::c_int) as libc::c_uint;
     if ((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_lower
         as libc::c_uint)
-        .wrapping_sub(
-            (16 as libc::c_ulong as libc::c_uint)
-                .wrapping_sub(
-                    (if 0 as libc::c_int != 0 {
-                        16 as libc::c_ulong as libc::c_uint
-                    } else {
-                        0 as libc::c_int as libc::c_uint
-                    }),
-                ),
-        ) >> 1 as libc::c_int > 1 as libc::c_int as libc::c_uint
-    {} else {
+        .wrapping_sub((16 as libc::c_ulong as libc::c_uint).wrapping_sub(
+            (if 0 as libc::c_int != 0 {
+                16 as libc::c_ulong as libc::c_uint
+            } else {
+                0 as libc::c_int as libc::c_uint
+            }),
+        ))
+        >> 1 as libc::c_int
+        > 1 as libc::c_int as libc::c_uint
+    {
+    } else {
         mdb_assert_fail(
             (*(*mc).mc_txn).mt_env,
             b"NUMKEYS(mc->mc_pg[ptop]) > 1\0" as *const u8 as *const libc::c_char,
-            (*::core::mem::transmute::<
-                &[u8; 14],
-                &[libc::c_char; 14],
-            >(b"mdb_rebalance\0"))
+            (*::core::mem::transmute::<&[u8; 14], &[libc::c_char; 14]>(b"mdb_rebalance\0"))
                 .as_ptr(),
             b"mdb.c\0" as *const u8 as *const libc::c_char,
             9480 as libc::c_int,
@@ -11664,10 +11138,10 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
         mn.mc_ki[ptop as usize];
         node = ((*mc).mc_pg[ptop as usize] as *mut libc::c_char)
             .offset(
-                *((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void as *mut MDB_page2))
-                    .mp2_ptrs)
+                *((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
-                    .offset(mn.mc_ki[ptop as usize] as isize) as libc::c_int as isize,
+                    .offset(mn.mc_ki[ptop as usize] as isize) as libc::c_int
+                    as isize,
             )
             .offset(
                 (if 0 as libc::c_int != 0 {
@@ -11678,18 +11152,16 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
             ) as *mut MDB_node;
         rc = mdb_page_get(
             mc,
-            (*node).mn_lo as pgno_t | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
-                | (if (if -(1 as libc::c_int) as pgno_t
-                    > 0xffffffff as libc::c_uint as pgno_t
-                {
+            (*node).mn_lo as pgno_t
+                | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
+                | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                     32 as libc::c_int
                 } else {
                     0 as libc::c_int
                 }) != 0
                 {
                     ((*node).mn_flags as pgno_t)
-                        << (if -(1 as libc::c_int) as pgno_t
-                            > 0xffffffff as libc::c_uint as pgno_t
+                        << (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t
                         {
                             32 as libc::c_int
                         } else {
@@ -11705,31 +11177,27 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
             return rc;
         }
         mn.mc_ki[mn.mc_top as usize] = 0 as libc::c_int as indx_t;
-        (*mc)
-            .mc_ki[(*mc).mc_top
-            as usize] = (((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
-            as *mut MDB_page2))
-            .mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int) as indx_t;
+        (*mc).mc_ki[(*mc).mc_top as usize] =
+            (((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
+                .mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int) as indx_t;
         fromleft = 0 as libc::c_int;
     } else {
         mn.mc_ki[ptop as usize] = (mn.mc_ki[ptop as usize]).wrapping_sub(1);
         mn.mc_ki[ptop as usize];
         node = ((*mc).mc_pg[ptop as usize] as *mut libc::c_char)
             .offset(
-                *((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void as *mut MDB_page2))
-                    .mp2_ptrs)
+                *((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
-                    .offset(mn.mc_ki[ptop as usize] as isize) as libc::c_int as isize,
+                    .offset(mn.mc_ki[ptop as usize] as isize) as libc::c_int
+                    as isize,
             )
             .offset(
                 (if 0 as libc::c_int != 0 {
@@ -11740,18 +11208,16 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
             ) as *mut MDB_node;
         rc = mdb_page_get(
             mc,
-            (*node).mn_lo as pgno_t | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
-                | (if (if -(1 as libc::c_int) as pgno_t
-                    > 0xffffffff as libc::c_uint as pgno_t
-                {
+            (*node).mn_lo as pgno_t
+                | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
+                | (if (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                     32 as libc::c_int
                 } else {
                     0 as libc::c_int
                 }) != 0
                 {
                     ((*node).mn_flags as pgno_t)
-                        << (if -(1 as libc::c_int) as pgno_t
-                            > 0xffffffff as libc::c_uint as pgno_t
+                        << (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t
                         {
                             32 as libc::c_int
                         } else {
@@ -11766,22 +11232,18 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
         if rc != 0 {
             return rc;
         }
-        mn
-            .mc_ki[mn.mc_top
-            as usize] = (((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void
-            as *mut MDB_page2))
-            .mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int)
-            .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
+        mn.mc_ki[mn.mc_top as usize] =
+            (((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int)
+                .wrapping_sub(1 as libc::c_int as libc::c_uint) as indx_t;
         (*mc).mc_ki[(*mc).mc_top as usize] = 0 as libc::c_int as indx_t;
         fromleft = 1 as libc::c_int;
     }
@@ -11789,26 +11251,25 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
         * ((*(*(*mc).mc_txn).mt_env).me_psize)
             .wrapping_sub(PAGEHDRSZ as libc::c_uint)
             .wrapping_sub(
-                ((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-                    .mp2_upper as libc::c_int
-                    - (*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void
-                        as *mut MDB_page2))
+                ((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_upper
+                    as libc::c_int
+                    - (*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
                         .mp2_lower as libc::c_int) as indx_t as libc::c_uint,
             ) as libc::c_long
         / ((*(*(*mc).mc_txn).mt_env).me_psize).wrapping_sub(PAGEHDRSZ as libc::c_uint)
-            as libc::c_long >= thresh as libc::c_long
-        && ((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2))
-            .mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int > minkeys
+            as libc::c_long
+        >= thresh as libc::c_long
+        && ((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+            as libc::c_uint)
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int
+            > minkeys
     {
         rc = mdb_node_move(&mut mn, mc, fromleft);
         if fromleft != 0 {
@@ -11819,25 +11280,19 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
         if fromleft == 0 {
             rc = mdb_page_merge(&mut mn, mc);
         } else {
-            oldki = (oldki as libc::c_uint)
-                .wrapping_add(
-                    ((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void
-                        as *mut MDB_page2))
-                        .mp2_lower as libc::c_uint)
-                        .wrapping_sub(
-                            (PAGEHDRSZ as libc::c_uint)
-                                .wrapping_sub(
-                                    (if 0 as libc::c_int != 0 {
-                                        PAGEHDRSZ as libc::c_uint
-                                    } else {
-                                        0 as libc::c_int as libc::c_uint
-                                    }),
-                                ),
-                        ) >> 1 as libc::c_int,
-                ) as indx_t as indx_t;
-            mn
-                .mc_ki[mn.mc_top
-                as usize] = (mn.mc_ki[mn.mc_top as usize] as libc::c_int
+            oldki = (oldki as libc::c_uint).wrapping_add(
+                ((*(mn.mc_pg[mn.mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                    as libc::c_uint)
+                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                        (if 0 as libc::c_int != 0 {
+                            PAGEHDRSZ as libc::c_uint
+                        } else {
+                            0 as libc::c_int as libc::c_uint
+                        }),
+                    ))
+                    >> 1 as libc::c_int,
+            ) as indx_t as indx_t;
+            mn.mc_ki[mn.mc_top as usize] = (mn.mc_ki[mn.mc_top as usize] as libc::c_int
                 + ((*mc).mc_ki[mn.mc_top as usize] as libc::c_int + 1 as libc::c_int))
                 as indx_t;
             let mut dummy = MDB_cursor {
@@ -11856,8 +11311,8 @@ unsafe extern "C" fn mdb_rebalance(mut mc: *mut MDB_cursor) -> libc::c_int {
                 mc_ki: [0; 32],
             };
             let mut tracked = 0 as *mut MDB_cursor;
-            let mut tp: *mut *mut MDB_cursor = &mut *((*mn.mc_txn).mt_cursors)
-                .offset(mn.mc_dbi as isize) as *mut *mut MDB_cursor;
+            let mut tp: *mut *mut MDB_cursor =
+                &mut *((*mn.mc_txn).mt_cursors).offset(mn.mc_dbi as isize) as *mut *mut MDB_cursor;
             if mn.mc_flags & C_SUB as libc::c_uint != 0 {
                 dummy.mc_flags = C_INITIALIZED as libc::c_uint;
                 dummy.mc_xcursor = &mut mn as *mut MDB_cursor as *mut MDB_xcursor;
@@ -11898,51 +11353,41 @@ unsafe extern "C" fn mdb_cursor_del0(mut mc: *mut MDB_cursor) -> libc::c_int {
             m2
         };
         if !((*m2).mc_flags & (*m3).mc_flags & C_INITIALIZED as libc::c_uint == 0) {
-            if !(m3 == mc
-                || ((*m3).mc_snum as libc::c_int) < (*mc).mc_snum as libc::c_int)
-            {
+            if !(m3 == mc || ((*m3).mc_snum as libc::c_int) < (*mc).mc_snum as libc::c_int) {
                 if (*m3).mc_pg[(*mc).mc_top as usize] == mp {
-                    if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_int
-                        == ki as libc::c_int
-                    {
+                    if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_int == ki as libc::c_int {
                         (*m3).mc_flags |= C_DEL as libc::c_uint;
                         if (*(*mc).mc_db).md_flags as libc::c_int & MDB_DUPSORT != 0 {
-                            (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                                &= !(C_INITIALIZED | C_EOF) as libc::c_uint;
+                            (*(*m3).mc_xcursor).mx_cursor.mc_flags &=
+                                !(C_INITIALIZED | C_EOF) as libc::c_uint;
                         }
                     } else {
-                        if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_int
-                            > ki as libc::c_int
-                        {
-                            (*m3)
-                                .mc_ki[(*mc).mc_top
-                                as usize] = ((*m3).mc_ki[(*mc).mc_top as usize])
-                                .wrapping_sub(1);
+                        if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_int > ki as libc::c_int {
+                            (*m3).mc_ki[(*mc).mc_top as usize] =
+                                ((*m3).mc_ki[(*mc).mc_top as usize]).wrapping_sub(1);
                             (*m3).mc_ki[(*mc).mc_top as usize];
                         }
                         let mut xr_pg = mp;
                         let mut xr_node = 0 as *mut MDB_node;
                         if !(!(!((*m3).mc_xcursor).is_null()
                             && (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                                & C_INITIALIZED as libc::c_uint != 0)
+                                & C_INITIALIZED as libc::c_uint
+                                != 0)
                             || (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-                                >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_lower as libc::c_uint)
-                                    .wrapping_sub(
-                                        (PAGEHDRSZ as libc::c_uint)
-                                            .wrapping_sub(
-                                                (if 0 as libc::c_int != 0 {
-                                                    PAGEHDRSZ as libc::c_uint
-                                                } else {
-                                                    0 as libc::c_int as libc::c_uint
-                                                }),
-                                            ),
-                                    ) >> 1 as libc::c_int)
+                                >= ((*(xr_pg as *mut libc::c_void as *mut MDB_page2)).mp2_lower
+                                    as libc::c_uint)
+                                    .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                        (if 0 as libc::c_int != 0 {
+                                            PAGEHDRSZ as libc::c_uint
+                                        } else {
+                                            0 as libc::c_int as libc::c_uint
+                                        }),
+                                    ))
+                                    >> 1 as libc::c_int)
                         {
                             xr_node = (xr_pg as *mut libc::c_char)
                                 .offset(
-                                    *((*(xr_pg as *mut libc::c_void as *mut MDB_page2))
-                                        .mp2_ptrs)
+                                    *((*(xr_pg as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                         .as_mut_ptr()
                                         .offset((*m3).mc_ki[(*mc).mc_top as usize] as isize)
                                         as libc::c_int as isize,
@@ -11954,16 +11399,15 @@ unsafe extern "C" fn mdb_cursor_del0(mut mc: *mut MDB_cursor) -> libc::c_int {
                                         0 as libc::c_int as libc::c_uint
                                     }) as isize,
                                 ) as *mut MDB_node;
-                            if (*xr_node).mn_flags as libc::c_int
-                                & (F_DUPDATA | F_SUBDATA) == F_DUPDATA
+                            if (*xr_node).mn_flags as libc::c_int & (F_DUPDATA | F_SUBDATA)
+                                == F_DUPDATA
                             {
-                                (*(*m3).mc_xcursor)
-                                    .mx_cursor
-                                    .mc_pg[0 as libc::c_int
-                                    as usize] = ((*xr_node).mn_data)
-                                    .as_mut_ptr()
-                                    .offset((*xr_node).mn_ksize as libc::c_int as isize)
-                                    as *mut libc::c_void as *mut MDB_page;
+                                (*(*m3).mc_xcursor).mx_cursor.mc_pg[0 as libc::c_int as usize] =
+                                    ((*xr_node).mn_data)
+                                        .as_mut_ptr()
+                                        .offset((*xr_node).mn_ksize as libc::c_int as isize)
+                                        as *mut libc::c_void
+                                        as *mut MDB_page;
                             }
                         }
                     }
@@ -11979,18 +11423,15 @@ unsafe extern "C" fn mdb_cursor_del0(mut mc: *mut MDB_cursor) -> libc::c_int {
             return rc;
         }
         mp = (*mc).mc_pg[(*mc).mc_top as usize];
-        nkeys = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-            as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int;
+        nkeys = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int;
         m2 = *((*(*mc).mc_txn).mt_cursors).offset(dbi as isize);
         loop {
             if !(rc == 0 && !m2.is_null()) {
@@ -12008,9 +11449,7 @@ unsafe extern "C" fn mdb_cursor_del0(mut mc: *mut MDB_cursor) -> libc::c_int {
                         if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_int
                             >= (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int
                         {
-                            if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_uint
-                                >= nkeys
-                            {
+                            if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_uint >= nkeys {
                                 rc = mdb_cursor_sibling(m3, 1 as libc::c_int);
                                 if rc == MDB_NOTFOUND {
                                     (*m3).mc_flags |= C_EOF as libc::c_uint;
@@ -12035,32 +11474,41 @@ unsafe extern "C" fn mdb_cursor_del0(mut mc: *mut MDB_cursor) -> libc::c_int {
                                         let mut node = ((*m3).mc_pg[(*m3).mc_top as usize]
                                             as *mut libc::c_char)
                                             .offset(
-                                                *((*((*m3).mc_pg[(*m3).mc_top as usize] as *mut libc::c_void
+                                                *((*((*m3).mc_pg[(*m3).mc_top as usize]
+                                                    as *mut libc::c_void
                                                     as *mut MDB_page2))
                                                     .mp2_ptrs)
                                                     .as_mut_ptr()
-                                                    .offset((*m3).mc_ki[(*m3).mc_top as usize] as isize)
-                                                    as libc::c_int as isize,
+                                                    .offset(
+                                                        (*m3).mc_ki[(*m3).mc_top as usize] as isize,
+                                                    )
+                                                    as libc::c_int
+                                                    as isize,
                                             )
                                             .offset(
                                                 (if 0 as libc::c_int != 0 {
                                                     PAGEHDRSZ as libc::c_uint
                                                 } else {
                                                     0 as libc::c_int as libc::c_uint
-                                                }) as isize,
-                                            ) as *mut MDB_node;
+                                                })
+                                                    as isize,
+                                            )
+                                            as *mut MDB_node;
                                         if (*node).mn_flags as libc::c_int & F_DUPDATA != 0 {
                                             if (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                                                & C_INITIALIZED as libc::c_uint != 0
+                                                & C_INITIALIZED as libc::c_uint
+                                                != 0
                                             {
-                                                if (*node).mn_flags as libc::c_int & F_SUBDATA == 0 {
-                                                    (*(*m3).mc_xcursor)
-                                                        .mx_cursor
-                                                        .mc_pg[0 as libc::c_int
-                                                        as usize] = ((*node).mn_data)
-                                                        .as_mut_ptr()
-                                                        .offset((*node).mn_ksize as libc::c_int as isize)
-                                                        as *mut libc::c_void as *mut MDB_page;
+                                                if (*node).mn_flags as libc::c_int & F_SUBDATA == 0
+                                                {
+                                                    (*(*m3).mc_xcursor).mx_cursor.mc_pg
+                                                        [0 as libc::c_int as usize] =
+                                                        ((*node).mn_data).as_mut_ptr().offset(
+                                                            (*node).mn_ksize as libc::c_int
+                                                                as isize,
+                                                        )
+                                                            as *mut libc::c_void
+                                                            as *mut MDB_page;
                                                 }
                                             } else {
                                                 mdb_xcursor_init1(m3, node);
@@ -12075,8 +11523,8 @@ unsafe extern "C" fn mdb_cursor_del0(mut mc: *mut MDB_cursor) -> libc::c_int {
                                                 }
                                             }
                                         }
-                                        (*(*m3).mc_xcursor).mx_cursor.mc_flags
-                                            |= C_DEL as libc::c_uint;
+                                        (*(*m3).mc_xcursor).mx_cursor.mc_flags |=
+                                            C_DEL as libc::c_uint;
                                     }
                                 }
                             }
@@ -12106,9 +11554,9 @@ pub unsafe extern "C" fn mdb_del(
     mut data: *mut MDB_val,
 ) -> libc::c_int {
     if key.is_null()
-        || !(!txn.is_null() && dbi < (*txn).mt_numdbs
-            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int
-                & 0x10 as libc::c_int != 0)
+        || !(!txn.is_null()
+            && dbi < (*txn).mt_numdbs
+            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -12119,8 +11567,8 @@ pub unsafe extern "C" fn mdb_del(
             MDB_BAD_TXN
         };
     }
-    if !((*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int
-        & 0x4 as libc::c_int == 0x4 as libc::c_int)
+    if !((*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int & 0x4 as libc::c_int
+        == 0x4 as libc::c_int)
     {
         data = NULL as *mut MDB_val;
     }
@@ -12272,16 +11720,14 @@ unsafe extern "C" fn mdb_page_split(
     mp = (*mc).mc_pg[(*mc).mc_top as usize];
     newindx = (*mc).mc_ki[(*mc).mc_top as usize];
     nkeys = (((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-        .wrapping_sub(
-            (PAGEHDRSZ as libc::c_uint)
-                .wrapping_sub(
-                    (if 0 as libc::c_int != 0 {
-                        PAGEHDRSZ as libc::c_uint
-                    } else {
-                        0 as libc::c_int as libc::c_uint
-                    }),
-                ),
-        ) >> 1 as libc::c_int) as libc::c_int;
+        .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+            (if 0 as libc::c_int != 0 {
+                PAGEHDRSZ as libc::c_uint
+            } else {
+                0 as libc::c_int as libc::c_uint
+            }),
+        ))
+        >> 1 as libc::c_int) as libc::c_int;
     rc = mdb_page_new(mc, (*mp).mp_flags as uint32_t, 1 as libc::c_int, &mut rp);
     if rc != 0 {
         return rc;
@@ -12314,12 +11760,8 @@ unsafe extern "C" fn mdb_page_split(
                 0 as libc::c_int as libc::c_uint,
             );
             if rc != MDB_SUCCESS {
-                (*mc)
-                    .mc_pg[0 as libc::c_int
-                    as usize] = (*mc).mc_pg[1 as libc::c_int as usize];
-                (*mc)
-                    .mc_ki[0 as libc::c_int
-                    as usize] = (*mc).mc_ki[1 as libc::c_int as usize];
+                (*mc).mc_pg[0 as libc::c_int as usize] = (*mc).mc_pg[1 as libc::c_int as usize];
+                (*mc).mc_ki[0 as libc::c_int as usize] = (*mc).mc_ki[1 as libc::c_int as usize];
                 (*(*mc).mc_db).md_root = (*mp).mp_p.p_pgno;
                 (*(*mc).mc_db).md_depth = ((*(*mc).mc_db).md_depth).wrapping_sub(1);
                 (*(*mc).mc_db).md_depth;
@@ -12342,10 +11784,8 @@ unsafe extern "C" fn mdb_page_split(
             mdb_cursor_copy(mc, &mut mn);
             mn.mc_xcursor = NULL as *mut MDB_xcursor;
             mn.mc_pg[mn.mc_top as usize] = rp;
-            mn
-                .mc_ki[ptop
-                as usize] = ((*mc).mc_ki[ptop as usize] as libc::c_int
-                + 1 as libc::c_int) as indx_t;
+            mn.mc_ki[ptop as usize] =
+                ((*mc).mc_ki[ptop as usize] as libc::c_int + 1 as libc::c_int) as indx_t;
             if nflags & MDB_APPEND as libc::c_uint != 0 {
                 mn.mc_ki[mn.mc_top as usize] = 0 as libc::c_int as indx_t;
                 sepkey = *newkey;
@@ -12354,8 +11794,9 @@ unsafe extern "C" fn mdb_page_split(
                 current_block = 4804377075063615140;
             } else {
                 split_indx = (nkeys + 1 as libc::c_int) / 2 as libc::c_int;
-                if (*(rp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                    as libc::c_int & 0x20 as libc::c_int == 0x20 as libc::c_int
+                if (*(rp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                    & 0x20 as libc::c_int
+                    == 0x20 as libc::c_int
                 {
                     let mut split = 0 as *mut libc::c_char;
                     let mut ins = 0 as *mut libc::c_char;
@@ -12367,33 +11808,23 @@ unsafe extern "C" fn mdb_page_split(
                     ksize = (*(*mc).mc_db).md_pad;
                     split = (mp as *mut libc::c_char)
                         .offset(PAGEHDRSZ as libc::c_uint as isize)
-                        .offset(
-                            (split_indx as libc::c_uint).wrapping_mul(ksize) as isize,
-                        );
+                        .offset((split_indx as libc::c_uint).wrapping_mul(ksize) as isize);
                     rsize = ((nkeys - split_indx) as libc::c_uint).wrapping_mul(ksize);
                     lsize = ((nkeys - split_indx) as libc::c_ulong)
                         .wrapping_mul(::core::mem::size_of::<indx_t>() as libc::c_ulong)
                         as libc::c_uint;
-                    (*mp)
-                        .mp_pb
-                        .pb
-                        .pb_lower = ((*mp).mp_pb.pb.pb_lower as libc::c_uint)
-                        .wrapping_sub(lsize) as indx_t as indx_t;
-                    (*rp)
-                        .mp_pb
-                        .pb
-                        .pb_lower = ((*rp).mp_pb.pb.pb_lower as libc::c_uint)
-                        .wrapping_add(lsize) as indx_t as indx_t;
-                    (*mp)
-                        .mp_pb
-                        .pb
-                        .pb_upper = ((*mp).mp_pb.pb.pb_upper as libc::c_uint)
-                        .wrapping_add(rsize.wrapping_sub(lsize)) as indx_t as indx_t;
-                    (*rp)
-                        .mp_pb
-                        .pb
-                        .pb_upper = ((*rp).mp_pb.pb.pb_upper as libc::c_uint)
-                        .wrapping_sub(rsize.wrapping_sub(lsize)) as indx_t as indx_t;
+                    (*mp).mp_pb.pb.pb_lower = ((*mp).mp_pb.pb.pb_lower as libc::c_uint)
+                        .wrapping_sub(lsize) as indx_t
+                        as indx_t;
+                    (*rp).mp_pb.pb.pb_lower = ((*rp).mp_pb.pb.pb_lower as libc::c_uint)
+                        .wrapping_add(lsize) as indx_t
+                        as indx_t;
+                    (*mp).mp_pb.pb.pb_upper = ((*mp).mp_pb.pb.pb_upper as libc::c_uint)
+                        .wrapping_add(rsize.wrapping_sub(lsize))
+                        as indx_t as indx_t;
+                    (*rp).mp_pb.pb.pb_upper = ((*rp).mp_pb.pb.pb_upper as libc::c_uint)
+                        .wrapping_sub(rsize.wrapping_sub(lsize))
+                        as indx_t as indx_t;
                     sepkey.mv_size = ksize as size_t;
                     if newindx as libc::c_int == split_indx {
                         sepkey.mv_data = (*newkey).mv_data;
@@ -12412,13 +11843,11 @@ unsafe extern "C" fn mdb_page_split(
                             split as *const libc::c_void,
                             rsize as libc::c_ulong,
                         );
-                        sepkey
-                            .mv_data = ((*rp).mp_ptrs).as_mut_ptr() as *mut libc::c_void;
+                        sepkey.mv_data = ((*rp).mp_ptrs).as_mut_ptr() as *mut libc::c_void;
                         memmove(
                             ins.offset(ksize as isize) as *mut libc::c_void,
                             ins as *const libc::c_void,
-                            ((split_indx
-                                - (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int)
+                            ((split_indx - (*mc).mc_ki[(*mc).mc_top as usize] as libc::c_int)
                                 as libc::c_uint)
                                 .wrapping_mul(ksize) as libc::c_ulong,
                         );
@@ -12427,23 +11856,14 @@ unsafe extern "C" fn mdb_page_split(
                             (*newkey).mv_data,
                             ksize as libc::c_ulong,
                         );
-                        (*mp)
-                            .mp_pb
-                            .pb
-                            .pb_lower = ((*mp).mp_pb.pb.pb_lower as libc::c_ulong)
-                            .wrapping_add(
-                                ::core::mem::size_of::<indx_t>() as libc::c_ulong,
-                            ) as indx_t as indx_t;
-                        (*mp)
-                            .mp_pb
-                            .pb
-                            .pb_upper = ((*mp).mp_pb.pb.pb_upper as libc::c_ulong)
+                        (*mp).mp_pb.pb.pb_lower = ((*mp).mp_pb.pb.pb_lower as libc::c_ulong)
+                            .wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong)
+                            as indx_t as indx_t;
+                        (*mp).mp_pb.pb.pb_upper = ((*mp).mp_pb.pb.pb_upper as libc::c_ulong)
                             .wrapping_sub(
-                                (ksize as libc::c_ulong)
-                                    .wrapping_sub(
-                                        ::core::mem::size_of::<indx_t>() as libc::c_ulong,
-                                    ),
-                            ) as indx_t as indx_t;
+                            (ksize as libc::c_ulong)
+                                .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong),
+                        ) as indx_t as indx_t;
                     } else {
                         if x != 0 {
                             memcpy(
@@ -12462,29 +11882,19 @@ unsafe extern "C" fn mdb_page_split(
                         );
                         memcpy(
                             ins.offset(ksize as isize) as *mut libc::c_void,
-                            split
-                                .offset((x as libc::c_uint).wrapping_mul(ksize) as isize)
+                            split.offset((x as libc::c_uint).wrapping_mul(ksize) as isize)
                                 as *const libc::c_void,
                             rsize.wrapping_sub((x as libc::c_uint).wrapping_mul(ksize))
                                 as libc::c_ulong,
                         );
-                        (*rp)
-                            .mp_pb
-                            .pb
-                            .pb_lower = ((*rp).mp_pb.pb.pb_lower as libc::c_ulong)
-                            .wrapping_add(
-                                ::core::mem::size_of::<indx_t>() as libc::c_ulong,
-                            ) as indx_t as indx_t;
-                        (*rp)
-                            .mp_pb
-                            .pb
-                            .pb_upper = ((*rp).mp_pb.pb.pb_upper as libc::c_ulong)
+                        (*rp).mp_pb.pb.pb_lower = ((*rp).mp_pb.pb.pb_lower as libc::c_ulong)
+                            .wrapping_add(::core::mem::size_of::<indx_t>() as libc::c_ulong)
+                            as indx_t as indx_t;
+                        (*rp).mp_pb.pb.pb_upper = ((*rp).mp_pb.pb.pb_upper as libc::c_ulong)
                             .wrapping_sub(
-                                (ksize as libc::c_ulong)
-                                    .wrapping_sub(
-                                        ::core::mem::size_of::<indx_t>() as libc::c_ulong,
-                                    ),
-                            ) as indx_t as indx_t;
+                            (ksize as libc::c_ulong)
+                                .wrapping_sub(::core::mem::size_of::<indx_t>() as libc::c_ulong),
+                        ) as indx_t as indx_t;
                         (*mc).mc_ki[(*mc).mc_top as usize] = x as indx_t;
                     }
                     current_block = 4804377075063615140;
@@ -12493,71 +11903,58 @@ unsafe extern "C" fn mdb_page_split(
                     let mut nsize: libc::c_int = 0;
                     let mut k: libc::c_int = 0;
                     let mut keythresh: libc::c_int = 0;
-                    pmax = ((*env).me_psize).wrapping_sub(PAGEHDRSZ as libc::c_uint)
-                        as libc::c_int;
+                    pmax = ((*env).me_psize).wrapping_sub(PAGEHDRSZ as libc::c_uint) as libc::c_int;
                     keythresh = ((*env).me_psize >> 7 as libc::c_int) as libc::c_int;
-                    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                        as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                    if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                        & 0x2 as libc::c_int
+                        == 0x2 as libc::c_int
                     {
                         nsize = mdb_leaf_size(env, newkey, newdata) as libc::c_int;
                     } else {
                         nsize = mdb_branch_size(env, newkey) as libc::c_int;
                     }
                     nsize = ((nsize as libc::c_uint).wrapping_add(1 as libc::c_uint)
-                        & -(2 as libc::c_int) as libc::c_uint) as libc::c_int;
-                    copy = mdb_page_malloc(
-                        (*mc).mc_txn,
-                        1 as libc::c_int as libc::c_uint,
-                    );
+                        & -(2 as libc::c_int) as libc::c_uint)
+                        as libc::c_int;
+                    copy = mdb_page_malloc((*mc).mc_txn, 1 as libc::c_int as libc::c_uint);
                     if copy.is_null() {
                         rc = ENOMEM;
                         current_block = 9884865637931044769;
                     } else {
                         (*copy).mp_p.p_pgno = (*mp).mp_p.p_pgno;
                         (*copy).mp_flags = (*mp).mp_flags;
-                        (*copy)
-                            .mp_pb
-                            .pb
-                            .pb_lower = (PAGEHDRSZ as libc::c_uint)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ) as indx_t;
-                        (*copy)
-                            .mp_pb
-                            .pb
-                            .pb_upper = ((*env).me_psize)
-                            .wrapping_sub(
-                                (if 0 as libc::c_int != 0 {
-                                    PAGEHDRSZ as libc::c_uint
-                                } else {
-                                    0 as libc::c_int as libc::c_uint
-                                }),
-                            ) as indx_t;
+                        (*copy).mp_pb.pb.pb_lower = (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                            (if 0 as libc::c_int != 0 {
+                                PAGEHDRSZ as libc::c_uint
+                            } else {
+                                0 as libc::c_int as libc::c_uint
+                            }),
+                        ) as indx_t;
+                        (*copy).mp_pb.pb.pb_upper = ((*env).me_psize).wrapping_sub(
+                            (if 0 as libc::c_int != 0 {
+                                PAGEHDRSZ as libc::c_uint
+                            } else {
+                                0 as libc::c_int as libc::c_uint
+                            }),
+                        ) as indx_t;
                         i = 0 as libc::c_int;
                         j = 0 as libc::c_int;
                         while i < nkeys {
                             if i == newindx as libc::c_int {
                                 let fresh70 = j;
                                 j = j + 1;
-                                *((*copy).mp_ptrs)
-                                    .as_mut_ptr()
-                                    .offset(fresh70 as isize) = 0 as libc::c_int as indx_t;
+                                *((*copy).mp_ptrs).as_mut_ptr().offset(fresh70 as isize) =
+                                    0 as libc::c_int as indx_t;
                             }
                             let fresh71 = j;
                             j = j + 1;
-                            *((*copy).mp_ptrs)
-                                .as_mut_ptr()
-                                .offset(
-                                    fresh71 as isize,
-                                ) = *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize);
+                            *((*copy).mp_ptrs).as_mut_ptr().offset(fresh71 as isize) =
+                                *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize);
                             i += 1;
                             i;
                         }
-                        if nkeys < keythresh || nsize > pmax / 16 as libc::c_int
+                        if nkeys < keythresh
+                            || nsize > pmax / 16 as libc::c_int
                             || newindx as libc::c_int >= nkeys
                         {
                             psize = 0 as libc::c_int;
@@ -12569,9 +11966,12 @@ unsafe extern "C" fn mdb_page_split(
                                 k = if newindx as libc::c_int >= nkeys {
                                     nkeys
                                 } else {
-                                    split_indx + 1 as libc::c_int
+                                    split_indx
+                                        + 1 as libc::c_int
                                         + ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                                            as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int)
+                                            as libc::c_int
+                                            & 0x2 as libc::c_int
+                                            == 0x2 as libc::c_int)
                                             as libc::c_int
                                 };
                             } else {
@@ -12585,46 +11985,52 @@ unsafe extern "C" fn mdb_page_split(
                                     node = NULL as *mut MDB_node;
                                 } else {
                                     node = (mp as *mut libc::c_char)
-                                        .offset(
-                                            *((*copy).mp_ptrs).as_mut_ptr().offset(i as isize)
-                                                as libc::c_int as isize,
-                                        )
+                                        .offset(*((*copy).mp_ptrs).as_mut_ptr().offset(i as isize)
+                                            as libc::c_int
+                                            as isize)
                                         .offset(
                                             (if 0 as libc::c_int != 0 {
                                                 PAGEHDRSZ as libc::c_uint
                                             } else {
                                                 0 as libc::c_int as libc::c_uint
                                             }) as isize,
-                                        ) as *mut MDB_node;
-                                    psize = (psize as libc::c_ulong)
-                                        .wrapping_add(
-                                            NODESIZE
-                                                .wrapping_add((*node).mn_ksize as libc::c_ulong)
-                                                .wrapping_add(
-                                                    ::core::mem::size_of::<indx_t>() as libc::c_ulong,
-                                                ),
-                                        ) as libc::c_int as libc::c_int;
+                                        )
+                                        as *mut MDB_node;
+                                    psize = (psize as libc::c_ulong).wrapping_add(
+                                        NODESIZE
+                                            .wrapping_add((*node).mn_ksize as libc::c_ulong)
+                                            .wrapping_add(
+                                                ::core::mem::size_of::<indx_t>() as libc::c_ulong
+                                            ),
+                                    ) as libc::c_int
+                                        as libc::c_int;
                                     if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                                        as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                                        as libc::c_int
+                                        & 0x2 as libc::c_int
+                                        == 0x2 as libc::c_int
                                     {
                                         if (*node).mn_flags as libc::c_int & 0x1 as libc::c_int
                                             == 0x1 as libc::c_int
                                         {
                                             psize = (psize as libc::c_ulong)
-                                                .wrapping_add(
-                                                    ::core::mem::size_of::<pgno_t>() as libc::c_ulong,
-                                                ) as libc::c_int as libc::c_int;
+                                                .wrapping_add(::core::mem::size_of::<pgno_t>()
+                                                    as libc::c_ulong)
+                                                as libc::c_int
+                                                as libc::c_int;
                                         } else {
-                                            psize = (psize as libc::c_uint)
-                                                .wrapping_add(
-                                                    (*node).mn_lo as libc::c_uint
-                                                        | ((*node).mn_hi as libc::c_uint) << 16 as libc::c_int,
-                                                ) as libc::c_int as libc::c_int;
+                                            psize = (psize as libc::c_uint).wrapping_add(
+                                                (*node).mn_lo as libc::c_uint
+                                                    | ((*node).mn_hi as libc::c_uint)
+                                                        << 16 as libc::c_int,
+                                            )
+                                                as libc::c_int
+                                                as libc::c_int;
                                         }
                                     }
                                     psize = ((psize as libc::c_uint)
                                         .wrapping_add(1 as libc::c_uint)
-                                        & -(2 as libc::c_int) as libc::c_uint) as libc::c_int;
+                                        & -(2 as libc::c_int) as libc::c_uint)
+                                        as libc::c_int;
                                 }
                                 if psize > pmax || i == k - j {
                                     split_indx = i + (j < 0 as libc::c_int) as libc::c_int;
@@ -12639,10 +12045,8 @@ unsafe extern "C" fn mdb_page_split(
                             sepkey.mv_data = (*newkey).mv_data;
                         } else {
                             node = (mp as *mut libc::c_char)
-                                .offset(
-                                    *((*copy).mp_ptrs).as_mut_ptr().offset(split_indx as isize)
-                                        as libc::c_int as isize,
-                                )
+                                .offset(*((*copy).mp_ptrs).as_mut_ptr().offset(split_indx as isize)
+                                    as libc::c_int as isize)
                                 .offset(
                                     (if 0 as libc::c_int != 0 {
                                         PAGEHDRSZ as libc::c_uint
@@ -12651,9 +12055,7 @@ unsafe extern "C" fn mdb_page_split(
                                     }) as isize,
                                 ) as *mut MDB_node;
                             sepkey.mv_size = (*node).mn_ksize as size_t;
-                            sepkey
-                                .mv_data = ((*node).mn_data).as_mut_ptr()
-                                as *mut libc::c_void;
+                            sepkey.mv_data = ((*node).mn_data).as_mut_ptr() as *mut libc::c_void;
                         }
                         current_block = 4804377075063615140;
                     }
@@ -12662,11 +12064,9 @@ unsafe extern "C" fn mdb_page_split(
             match current_block {
                 9884865637931044769 => {}
                 _ => {
-                    if (((*(mn.mc_pg[ptop as usize] as *mut libc::c_void
-                        as *mut MDB_page2))
+                    if (((*(mn.mc_pg[ptop as usize] as *mut libc::c_void as *mut MDB_page2))
                         .mp2_upper as libc::c_int
-                        - (*(mn.mc_pg[ptop as usize] as *mut libc::c_void
-                            as *mut MDB_page2))
+                        - (*(mn.mc_pg[ptop as usize] as *mut libc::c_void as *mut MDB_page2))
                             .mp2_lower as libc::c_int) as indx_t as size_t)
                         < mdb_branch_size(env, &mut sepkey)
                     {
@@ -12692,14 +12092,12 @@ unsafe extern "C" fn mdb_page_split(
                             mc_ki: [0; 32],
                         };
                         let mut tracked = 0 as *mut MDB_cursor;
-                        let mut tp: *mut *mut MDB_cursor = &mut *((*mn.mc_txn)
-                            .mt_cursors)
-                            .offset(mn.mc_dbi as isize) as *mut *mut MDB_cursor;
+                        let mut tp: *mut *mut MDB_cursor = &mut *((*mn.mc_txn).mt_cursors)
+                            .offset(mn.mc_dbi as isize)
+                            as *mut *mut MDB_cursor;
                         if mn.mc_flags & C_SUB as libc::c_uint != 0 {
                             dummy.mc_flags = C_INITIALIZED as libc::c_uint;
-                            dummy
-                                .mc_xcursor = &mut mn as *mut MDB_cursor
-                                as *mut MDB_xcursor;
+                            dummy.mc_xcursor = &mut mn as *mut MDB_cursor as *mut MDB_xcursor;
                             tracked = &mut dummy;
                         } else {
                             tracked = &mut mn;
@@ -12725,17 +12123,16 @@ unsafe extern "C" fn mdb_page_split(
                                 && (*mc).mc_ki[ptop as usize] as libc::c_uint
                                     >= ((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void
                                         as *mut MDB_page2))
-                                        .mp2_lower as libc::c_uint)
-                                        .wrapping_sub(
-                                            (PAGEHDRSZ as libc::c_uint)
-                                                .wrapping_sub(
-                                                    (if 0 as libc::c_int != 0 {
-                                                        PAGEHDRSZ as libc::c_uint
-                                                    } else {
-                                                        0 as libc::c_int as libc::c_uint
-                                                    }),
-                                                ),
-                                        ) >> 1 as libc::c_int
+                                        .mp2_lower
+                                        as libc::c_uint)
+                                        .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                            (if 0 as libc::c_int != 0 {
+                                                PAGEHDRSZ as libc::c_uint
+                                            } else {
+                                                0 as libc::c_int as libc::c_uint
+                                            }),
+                                        ))
+                                        >> 1 as libc::c_int
                             {
                                 i = 0 as libc::c_int;
                                 while i < ptop {
@@ -12746,10 +12143,9 @@ unsafe extern "C" fn mdb_page_split(
                                 }
                                 (*mc).mc_pg[ptop as usize] = mn.mc_pg[ptop as usize];
                                 if mn.mc_ki[ptop as usize] != 0 {
-                                    (*mc)
-                                        .mc_ki[ptop
-                                        as usize] = (mn.mc_ki[ptop as usize] as libc::c_int
-                                        - 1 as libc::c_int) as indx_t;
+                                    (*mc).mc_ki[ptop as usize] =
+                                        (mn.mc_ki[ptop as usize] as libc::c_int - 1 as libc::c_int)
+                                            as indx_t;
                                 } else {
                                     (*mc).mc_ki[ptop as usize] = mn.mc_ki[ptop as usize];
                                     rc = mdb_cursor_sibling(mc, 0 as libc::c_int);
@@ -12782,8 +12178,7 @@ unsafe extern "C" fn mdb_page_split(
                             } else {
                                 if nflags & MDB_APPEND as libc::c_uint != 0 {
                                     (*mc).mc_pg[(*mc).mc_top as usize] = rp;
-                                    (*mc)
-                                        .mc_ki[(*mc).mc_top as usize] = 0 as libc::c_int as indx_t;
+                                    (*mc).mc_ki[(*mc).mc_top as usize] = 0 as libc::c_int as indx_t;
                                     rc = mdb_node_add(
                                         mc,
                                         0 as libc::c_int as indx_t,
@@ -12803,8 +12198,9 @@ unsafe extern "C" fn mdb_page_split(
                                         }
                                         current_block = 6091595930016798176;
                                     }
-                                } else if !((*(mp as *mut libc::c_void as *mut MDB_page2))
-                                    .mp2_flags as libc::c_int & 0x20 as libc::c_int
+                                } else if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
+                                    as libc::c_int
+                                    & 0x20 as libc::c_int
                                     == 0x20 as libc::c_int)
                                 {
                                     (*mc).mc_pg[(*mc).mc_top as usize] = rp;
@@ -12814,8 +12210,11 @@ unsafe extern "C" fn mdb_page_split(
                                         if i == newindx as libc::c_int {
                                             rkey.mv_data = (*newkey).mv_data;
                                             rkey.mv_size = (*newkey).mv_size;
-                                            if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                                                as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                                            if (*(mp as *mut libc::c_void as *mut MDB_page2))
+                                                .mp2_flags
+                                                as libc::c_int
+                                                & 0x2 as libc::c_int
+                                                == 0x2 as libc::c_int
                                             {
                                                 rdata = newdata;
                                             } else {
@@ -12826,36 +12225,44 @@ unsafe extern "C" fn mdb_page_split(
                                         } else {
                                             node = (mp as *mut libc::c_char)
                                                 .offset(
-                                                    *((*copy).mp_ptrs).as_mut_ptr().offset(i as isize)
-                                                        as libc::c_int as isize,
+                                                    *((*copy).mp_ptrs)
+                                                        .as_mut_ptr()
+                                                        .offset(i as isize)
+                                                        as libc::c_int
+                                                        as isize,
                                                 )
                                                 .offset(
                                                     (if 0 as libc::c_int != 0 {
                                                         PAGEHDRSZ as libc::c_uint
                                                     } else {
                                                         0 as libc::c_int as libc::c_uint
-                                                    }) as isize,
-                                                ) as *mut MDB_node;
-                                            rkey
-                                                .mv_data = ((*node).mn_data).as_mut_ptr()
-                                                as *mut libc::c_void;
+                                                    })
+                                                        as isize,
+                                                )
+                                                as *mut MDB_node;
+                                            rkey.mv_data =
+                                                ((*node).mn_data).as_mut_ptr() as *mut libc::c_void;
                                             rkey.mv_size = (*node).mn_ksize as size_t;
-                                            if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                                                as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                                            if (*(mp as *mut libc::c_void as *mut MDB_page2))
+                                                .mp2_flags
+                                                as libc::c_int
+                                                & 0x2 as libc::c_int
+                                                == 0x2 as libc::c_int
                                             {
-                                                xdata
-                                                    .mv_data = ((*node).mn_data)
-                                                    .as_mut_ptr()
-                                                    .offset((*node).mn_ksize as libc::c_int as isize)
-                                                    as *mut libc::c_void;
-                                                xdata
-                                                    .mv_size = ((*node).mn_lo as libc::c_uint
-                                                    | ((*node).mn_hi as libc::c_uint) << 16 as libc::c_int)
+                                                xdata.mv_data =
+                                                    ((*node).mn_data).as_mut_ptr().offset(
+                                                        (*node).mn_ksize as libc::c_int as isize,
+                                                    )
+                                                        as *mut libc::c_void;
+                                                xdata.mv_size = ((*node).mn_lo as libc::c_uint
+                                                    | ((*node).mn_hi as libc::c_uint)
+                                                        << 16 as libc::c_int)
                                                     as size_t;
                                                 rdata = &mut xdata;
                                             } else {
                                                 pgno = (*node).mn_lo as pgno_t
-                                                    | ((*node).mn_hi as pgno_t) << 16 as libc::c_int
+                                                    | ((*node).mn_hi as pgno_t)
+                                                        << 16 as libc::c_int
                                                     | (if (if -(1 as libc::c_int) as pgno_t
                                                         > 0xffffffff as libc::c_uint as pgno_t
                                                     {
@@ -12866,7 +12273,8 @@ unsafe extern "C" fn mdb_page_split(
                                                     {
                                                         ((*node).mn_flags as pgno_t)
                                                             << (if -(1 as libc::c_int) as pgno_t
-                                                                > 0xffffffff as libc::c_uint as pgno_t
+                                                                > 0xffffffff as libc::c_uint
+                                                                    as pgno_t
                                                             {
                                                                 32 as libc::c_int
                                                             } else {
@@ -12879,8 +12287,11 @@ unsafe extern "C" fn mdb_page_split(
                                             flags = (*node).mn_flags as libc::c_uint;
                                         }
                                         if !((*(mp as *mut libc::c_void as *mut MDB_page2))
-                                            .mp2_flags as libc::c_int & 0x2 as libc::c_int
-                                            == 0x2 as libc::c_int) && j == 0 as libc::c_int
+                                            .mp2_flags
+                                            as libc::c_int
+                                            & 0x2 as libc::c_int
+                                            == 0x2 as libc::c_int)
+                                            && j == 0 as libc::c_int
                                         {
                                             rkey.mv_size = 0 as libc::c_int as size_t;
                                         }
@@ -12914,25 +12325,27 @@ unsafe extern "C" fn mdb_page_split(
                                     match current_block {
                                         9884865637931044769 => {}
                                         _ => {
-                                            nkeys = (((*(copy as *mut libc::c_void as *mut MDB_page2))
-                                                .mp2_lower as libc::c_uint)
+                                            nkeys = (((*(copy as *mut libc::c_void
+                                                as *mut MDB_page2))
+                                                .mp2_lower
+                                                as libc::c_uint)
                                                 .wrapping_sub(
-                                                    (PAGEHDRSZ as libc::c_uint)
-                                                        .wrapping_sub(
-                                                            (if 0 as libc::c_int != 0 {
-                                                                PAGEHDRSZ as libc::c_uint
-                                                            } else {
-                                                                0 as libc::c_int as libc::c_uint
-                                                            }),
-                                                        ),
-                                                ) >> 1 as libc::c_int) as libc::c_int;
+                                                    (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                                        (if 0 as libc::c_int != 0 {
+                                                            PAGEHDRSZ as libc::c_uint
+                                                        } else {
+                                                            0 as libc::c_int as libc::c_uint
+                                                        }),
+                                                    ),
+                                                )
+                                                >> 1 as libc::c_int)
+                                                as libc::c_int;
                                             i = 0 as libc::c_int;
                                             while i < nkeys {
-                                                *((*mp).mp_ptrs)
-                                                    .as_mut_ptr()
-                                                    .offset(
-                                                        i as isize,
-                                                    ) = *((*copy).mp_ptrs).as_mut_ptr().offset(i as isize);
+                                                *((*mp).mp_ptrs).as_mut_ptr().offset(i as isize) =
+                                                    *((*copy).mp_ptrs)
+                                                        .as_mut_ptr()
+                                                        .offset(i as isize);
                                                 i += 1;
                                                 i;
                                             }
@@ -12941,9 +12354,14 @@ unsafe extern "C" fn mdb_page_split(
                                             memcpy(
                                                 (mp as *mut libc::c_char)
                                                     .offset(
-                                                        *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
+                                                        *((*(mp as *mut libc::c_void
+                                                            as *mut MDB_page2))
+                                                            .mp2_ptrs)
                                                             .as_mut_ptr()
-                                                            .offset((nkeys - 1 as libc::c_int) as isize) as libc::c_int
+                                                            .offset(
+                                                                (nkeys - 1 as libc::c_int) as isize,
+                                                            )
+                                                            as libc::c_int
                                                             as isize,
                                                     )
                                                     .offset(
@@ -12951,13 +12369,21 @@ unsafe extern "C" fn mdb_page_split(
                                                             PAGEHDRSZ as libc::c_uint
                                                         } else {
                                                             0 as libc::c_int as libc::c_uint
-                                                        }) as isize,
-                                                    ) as *mut MDB_node as *mut libc::c_void,
+                                                        })
+                                                            as isize,
+                                                    )
+                                                    as *mut MDB_node
+                                                    as *mut libc::c_void,
                                                 (copy as *mut libc::c_char)
                                                     .offset(
-                                                        *((*(copy as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
+                                                        *((*(copy as *mut libc::c_void
+                                                            as *mut MDB_page2))
+                                                            .mp2_ptrs)
                                                             .as_mut_ptr()
-                                                            .offset((nkeys - 1 as libc::c_int) as isize) as libc::c_int
+                                                            .offset(
+                                                                (nkeys - 1 as libc::c_int) as isize,
+                                                            )
+                                                            as libc::c_int
                                                             as isize,
                                                     )
                                                     .offset(
@@ -12965,46 +12391,59 @@ unsafe extern "C" fn mdb_page_split(
                                                             PAGEHDRSZ as libc::c_uint
                                                         } else {
                                                             0 as libc::c_int as libc::c_uint
-                                                        }) as isize,
-                                                    ) as *mut MDB_node as *const libc::c_void,
+                                                        })
+                                                            as isize,
+                                                    )
+                                                    as *mut MDB_node
+                                                    as *const libc::c_void,
                                                 ((*env).me_psize)
-                                                    .wrapping_sub((*copy).mp_pb.pb.pb_upper as libc::c_uint)
+                                                    .wrapping_sub(
+                                                        (*copy).mp_pb.pb.pb_upper as libc::c_uint,
+                                                    )
                                                     .wrapping_sub(
                                                         (if 0 as libc::c_int != 0 {
                                                             PAGEHDRSZ as libc::c_uint
                                                         } else {
                                                             0 as libc::c_int as libc::c_uint
                                                         }),
-                                                    ) as libc::c_ulong,
+                                                    )
+                                                    as libc::c_ulong,
                                             );
                                             if (newindx as libc::c_int) < split_indx {
                                                 (*mc).mc_pg[(*mc).mc_top as usize] = mp;
                                             } else {
                                                 (*mc).mc_pg[(*mc).mc_top as usize] = rp;
-                                                (*mc)
-                                                    .mc_ki[ptop
-                                                    as usize] = ((*mc).mc_ki[ptop as usize]).wrapping_add(1);
+                                                (*mc).mc_ki[ptop as usize] =
+                                                    ((*mc).mc_ki[ptop as usize]).wrapping_add(1);
                                                 (*mc).mc_ki[ptop as usize];
-                                                if mn.mc_pg[ptop as usize] != (*mc).mc_pg[ptop as usize]
+                                                if mn.mc_pg[ptop as usize]
+                                                    != (*mc).mc_pg[ptop as usize]
                                                     && (*mc).mc_ki[ptop as usize] as libc::c_uint
-                                                        >= ((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void
+                                                        >= ((*((*mc).mc_pg[ptop as usize]
+                                                            as *mut libc::c_void
                                                             as *mut MDB_page2))
-                                                            .mp2_lower as libc::c_uint)
+                                                            .mp2_lower
+                                                            as libc::c_uint)
                                                             .wrapping_sub(
                                                                 (PAGEHDRSZ as libc::c_uint)
                                                                     .wrapping_sub(
                                                                         (if 0 as libc::c_int != 0 {
-                                                                            PAGEHDRSZ as libc::c_uint
+                                                                            PAGEHDRSZ
+                                                                                as libc::c_uint
                                                                         } else {
-                                                                            0 as libc::c_int as libc::c_uint
+                                                                            0 as libc::c_int
+                                                                                as libc::c_uint
                                                                         }),
                                                                     ),
-                                                            ) >> 1 as libc::c_int
+                                                            )
+                                                            >> 1 as libc::c_int
                                                 {
                                                     i = 0 as libc::c_int;
                                                     while i <= ptop {
-                                                        (*mc).mc_pg[i as usize] = mn.mc_pg[i as usize];
-                                                        (*mc).mc_ki[i as usize] = mn.mc_ki[i as usize];
+                                                        (*mc).mc_pg[i as usize] =
+                                                            mn.mc_pg[i as usize];
+                                                        (*mc).mc_ki[i as usize] =
+                                                            mn.mc_ki[i as usize];
                                                         i += 1;
                                                         i;
                                                     }
@@ -13014,26 +12453,35 @@ unsafe extern "C" fn mdb_page_split(
                                                 node = ((*mc).mc_pg[(*mc).mc_top as usize]
                                                     as *mut libc::c_char)
                                                     .offset(
-                                                        *((*((*mc).mc_pg[(*mc).mc_top as usize] as *mut libc::c_void
+                                                        *((*((*mc).mc_pg[(*mc).mc_top as usize]
+                                                            as *mut libc::c_void
                                                             as *mut MDB_page2))
                                                             .mp2_ptrs)
                                                             .as_mut_ptr()
-                                                            .offset((*mc).mc_ki[(*mc).mc_top as usize] as isize)
-                                                            as libc::c_int as isize,
+                                                            .offset(
+                                                                (*mc).mc_ki[(*mc).mc_top as usize]
+                                                                    as isize,
+                                                            )
+                                                            as libc::c_int
+                                                            as isize,
                                                     )
                                                     .offset(
                                                         (if 0 as libc::c_int != 0 {
                                                             PAGEHDRSZ as libc::c_uint
                                                         } else {
                                                             0 as libc::c_int as libc::c_uint
-                                                        }) as isize,
-                                                    ) as *mut MDB_node;
-                                                if (*node).mn_flags as libc::c_int & F_BIGDATA == 0 {
-                                                    (*newdata)
-                                                        .mv_data = ((*node).mn_data)
-                                                        .as_mut_ptr()
-                                                        .offset((*node).mn_ksize as libc::c_int as isize)
-                                                        as *mut libc::c_void;
+                                                        })
+                                                            as isize,
+                                                    )
+                                                    as *mut MDB_node;
+                                                if (*node).mn_flags as libc::c_int & F_BIGDATA == 0
+                                                {
+                                                    (*newdata).mv_data =
+                                                        ((*node).mn_data).as_mut_ptr().offset(
+                                                            (*node).mn_ksize as libc::c_int
+                                                                as isize,
+                                                        )
+                                                            as *mut libc::c_void;
                                                 }
                                             }
                                             current_block = 6091595930016798176;
@@ -13042,25 +12490,26 @@ unsafe extern "C" fn mdb_page_split(
                                 } else {
                                     if newindx as libc::c_int >= split_indx {
                                         (*mc).mc_pg[(*mc).mc_top as usize] = rp;
-                                        (*mc)
-                                            .mc_ki[ptop
-                                            as usize] = ((*mc).mc_ki[ptop as usize]).wrapping_add(1);
+                                        (*mc).mc_ki[ptop as usize] =
+                                            ((*mc).mc_ki[ptop as usize]).wrapping_add(1);
                                         (*mc).mc_ki[ptop as usize];
                                         if mn.mc_pg[ptop as usize] != (*mc).mc_pg[ptop as usize]
                                             && (*mc).mc_ki[ptop as usize] as libc::c_uint
-                                                >= ((*((*mc).mc_pg[ptop as usize] as *mut libc::c_void
+                                                >= ((*((*mc).mc_pg[ptop as usize]
+                                                    as *mut libc::c_void
                                                     as *mut MDB_page2))
-                                                    .mp2_lower as libc::c_uint)
+                                                    .mp2_lower
+                                                    as libc::c_uint)
                                                     .wrapping_sub(
-                                                        (PAGEHDRSZ as libc::c_uint)
-                                                            .wrapping_sub(
-                                                                (if 0 as libc::c_int != 0 {
-                                                                    PAGEHDRSZ as libc::c_uint
-                                                                } else {
-                                                                    0 as libc::c_int as libc::c_uint
-                                                                }),
-                                                            ),
-                                                    ) >> 1 as libc::c_int
+                                                        (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                                            (if 0 as libc::c_int != 0 {
+                                                                PAGEHDRSZ as libc::c_uint
+                                                            } else {
+                                                                0 as libc::c_int as libc::c_uint
+                                                            }),
+                                                        ),
+                                                    )
+                                                    >> 1 as libc::c_int
                                         {
                                             i = 0 as libc::c_int;
                                             while i <= ptop {
@@ -13080,17 +12529,19 @@ unsafe extern "C" fn mdb_page_split(
                                         let mut m3 = 0 as *mut MDB_cursor;
                                         let mut dbi = (*mc).mc_dbi;
                                         nkeys = (((*(mp as *mut libc::c_void as *mut MDB_page2))
-                                            .mp2_lower as libc::c_uint)
+                                            .mp2_lower
+                                            as libc::c_uint)
                                             .wrapping_sub(
-                                                (PAGEHDRSZ as libc::c_uint)
-                                                    .wrapping_sub(
-                                                        (if 0 as libc::c_int != 0 {
-                                                            PAGEHDRSZ as libc::c_uint
-                                                        } else {
-                                                            0 as libc::c_int as libc::c_uint
-                                                        }),
-                                                    ),
-                                            ) >> 1 as libc::c_int) as libc::c_int;
+                                                (PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                                                    (if 0 as libc::c_int != 0 {
+                                                        PAGEHDRSZ as libc::c_uint
+                                                    } else {
+                                                        0 as libc::c_int as libc::c_uint
+                                                    }),
+                                                ),
+                                            )
+                                            >> 1 as libc::c_int)
+                                            as libc::c_int;
                                         let mut current_block_285: u64;
                                         m2 = *((*(*mc).mc_txn).mt_cursors).offset(dbi as isize);
                                         while !m2.is_null() {
@@ -13100,44 +12551,55 @@ unsafe extern "C" fn mdb_page_split(
                                                 m3 = m2;
                                             }
                                             if !(m3 == mc) {
-                                                if !((*m2).mc_flags & (*m3).mc_flags
-                                                    & C_INITIALIZED as libc::c_uint == 0)
+                                                if !((*m2).mc_flags
+                                                    & (*m3).mc_flags
+                                                    & C_INITIALIZED as libc::c_uint
+                                                    == 0)
                                                 {
                                                     if new_root != 0 {
                                                         let mut k_0: libc::c_int = 0;
-                                                        if (*m3).mc_pg[0 as libc::c_int as usize] != mp {
-                                                            current_block_285 = 14303212209785889906;
+                                                        if (*m3).mc_pg[0 as libc::c_int as usize]
+                                                            != mp
+                                                        {
+                                                            current_block_285 =
+                                                                14303212209785889906;
                                                         } else {
                                                             k_0 = new_root;
                                                             while k_0 >= 0 as libc::c_int {
-                                                                (*m3)
-                                                                    .mc_ki[(k_0 + 1 as libc::c_int)
-                                                                    as usize] = (*m3).mc_ki[k_0 as usize];
-                                                                (*m3)
-                                                                    .mc_pg[(k_0 + 1 as libc::c_int)
-                                                                    as usize] = (*m3).mc_pg[k_0 as usize];
+                                                                (*m3).mc_ki[(k_0 + 1 as libc::c_int)
+                                                                    as usize] =
+                                                                    (*m3).mc_ki[k_0 as usize];
+                                                                (*m3).mc_pg[(k_0 + 1 as libc::c_int)
+                                                                    as usize] =
+                                                                    (*m3).mc_pg[k_0 as usize];
                                                                 k_0 -= 1;
                                                                 k_0;
                                                             }
-                                                            if (*m3).mc_ki[0 as libc::c_int as usize] as libc::c_int
+                                                            if (*m3).mc_ki
+                                                                [0 as libc::c_int as usize]
+                                                                as libc::c_int
                                                                 >= nkeys
                                                             {
-                                                                (*m3)
-                                                                    .mc_ki[0 as libc::c_int
-                                                                    as usize] = 1 as libc::c_int as indx_t;
+                                                                (*m3).mc_ki
+                                                                    [0 as libc::c_int as usize] =
+                                                                    1 as libc::c_int as indx_t;
                                                             } else {
-                                                                (*m3)
-                                                                    .mc_ki[0 as libc::c_int
-                                                                    as usize] = 0 as libc::c_int as indx_t;
+                                                                (*m3).mc_ki
+                                                                    [0 as libc::c_int as usize] =
+                                                                    0 as libc::c_int as indx_t;
                                                             }
-                                                            (*m3)
-                                                                .mc_pg[0 as libc::c_int
-                                                                as usize] = (*mc).mc_pg[0 as libc::c_int as usize];
-                                                            (*m3).mc_snum = ((*m3).mc_snum).wrapping_add(1);
+                                                            (*m3).mc_pg
+                                                                [0 as libc::c_int as usize] = (*mc)
+                                                                .mc_pg
+                                                                [0 as libc::c_int as usize];
+                                                            (*m3).mc_snum =
+                                                                ((*m3).mc_snum).wrapping_add(1);
                                                             (*m3).mc_snum;
-                                                            (*m3).mc_top = ((*m3).mc_top).wrapping_add(1);
+                                                            (*m3).mc_top =
+                                                                ((*m3).mc_top).wrapping_add(1);
                                                             (*m3).mc_top;
-                                                            current_block_285 = 14723615986260991866;
+                                                            current_block_285 =
+                                                                14723615986260991866;
                                                         }
                                                     } else {
                                                         current_block_285 = 14723615986260991866;
@@ -13147,50 +12609,81 @@ unsafe extern "C" fn mdb_page_split(
                                                         _ => {
                                                             if (*m3).mc_top as libc::c_int
                                                                 >= (*mc).mc_top as libc::c_int
-                                                                && (*m3).mc_pg[(*mc).mc_top as usize] == mp
+                                                                && (*m3).mc_pg
+                                                                    [(*mc).mc_top as usize]
+                                                                    == mp
                                                             {
-                                                                if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_int
+                                                                if (*m3).mc_ki
+                                                                    [(*mc).mc_top as usize]
+                                                                    as libc::c_int
                                                                     >= newindx as libc::c_int
-                                                                    && nflags & MDB_SPLIT_REPLACE as libc::c_uint == 0
+                                                                    && nflags
+                                                                        & MDB_SPLIT_REPLACE
+                                                                            as libc::c_uint
+                                                                        == 0
                                                                 {
-                                                                    (*m3)
-                                                                        .mc_ki[(*mc).mc_top
-                                                                        as usize] = ((*m3).mc_ki[(*mc).mc_top as usize])
-                                                                        .wrapping_add(1);
-                                                                    (*m3).mc_ki[(*mc).mc_top as usize];
+                                                                    (*m3).mc_ki
+                                                                        [(*mc).mc_top as usize] =
+                                                                        ((*m3).mc_ki[(*mc).mc_top
+                                                                            as usize])
+                                                                            .wrapping_add(1);
+                                                                    (*m3).mc_ki
+                                                                        [(*mc).mc_top as usize];
                                                                 }
-                                                                if (*m3).mc_ki[(*mc).mc_top as usize] as libc::c_int
+                                                                if (*m3).mc_ki
+                                                                    [(*mc).mc_top as usize]
+                                                                    as libc::c_int
                                                                     >= nkeys
                                                                 {
-                                                                    (*m3).mc_pg[(*mc).mc_top as usize] = rp;
-                                                                    (*m3)
-                                                                        .mc_ki[(*mc).mc_top
-                                                                        as usize] = ((*m3).mc_ki[(*mc).mc_top as usize]
-                                                                        as libc::c_int - nkeys) as indx_t;
+                                                                    (*m3).mc_pg
+                                                                        [(*mc).mc_top as usize] =
+                                                                        rp;
+                                                                    (*m3).mc_ki
+                                                                        [(*mc).mc_top as usize] =
+                                                                        ((*m3).mc_ki
+                                                                            [(*mc).mc_top as usize]
+                                                                            as libc::c_int
+                                                                            - nkeys)
+                                                                            as indx_t;
                                                                     i = 0 as libc::c_int;
-                                                                    while i < (*mc).mc_top as libc::c_int {
-                                                                        (*m3).mc_ki[i as usize] = mn.mc_ki[i as usize];
-                                                                        (*m3).mc_pg[i as usize] = mn.mc_pg[i as usize];
+                                                                    while i
+                                                                        < (*mc).mc_top
+                                                                            as libc::c_int
+                                                                    {
+                                                                        (*m3).mc_ki[i as usize] =
+                                                                            mn.mc_ki[i as usize];
+                                                                        (*m3).mc_pg[i as usize] =
+                                                                            mn.mc_pg[i as usize];
                                                                         i += 1;
                                                                         i;
                                                                     }
                                                                 }
                                                             } else if did_split == 0
-                                                                && (*m3).mc_top as libc::c_int >= ptop
-                                                                && (*m3).mc_pg[ptop as usize] == (*mc).mc_pg[ptop as usize]
-                                                                && (*m3).mc_ki[ptop as usize] as libc::c_int
-                                                                    >= (*mc).mc_ki[ptop as usize] as libc::c_int
+                                                                && (*m3).mc_top as libc::c_int
+                                                                    >= ptop
+                                                                && (*m3).mc_pg[ptop as usize]
+                                                                    == (*mc).mc_pg[ptop as usize]
+                                                                && (*m3).mc_ki[ptop as usize]
+                                                                    as libc::c_int
+                                                                    >= (*mc).mc_ki[ptop as usize]
+                                                                        as libc::c_int
                                                             {
-                                                                (*m3)
-                                                                    .mc_ki[ptop
-                                                                    as usize] = ((*m3).mc_ki[ptop as usize]).wrapping_add(1);
+                                                                (*m3).mc_ki[ptop as usize] =
+                                                                    ((*m3).mc_ki[ptop as usize])
+                                                                        .wrapping_add(1);
                                                                 (*m3).mc_ki[ptop as usize];
                                                             }
-                                                            if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                                                                as libc::c_int & 0x2 as libc::c_int == 0x2 as libc::c_int
+                                                            if (*(mp as *mut libc::c_void
+                                                                as *mut MDB_page2))
+                                                                .mp2_flags
+                                                                as libc::c_int
+                                                                & 0x2 as libc::c_int
+                                                                == 0x2 as libc::c_int
                                                             {
-                                                                let mut xr_pg = (*m3).mc_pg[(*mc).mc_top as usize];
-                                                                let mut xr_node = 0 as *mut MDB_node;
+                                                                let mut xr_pg = (*m3).mc_pg
+                                                                    [(*mc).mc_top as usize];
+                                                                let mut xr_node =
+                                                                    0 as *mut MDB_node;
                                                                 if !(!(!((*m3).mc_xcursor).is_null()
                                                                     && (*(*m3).mc_xcursor).mx_cursor.mc_flags
                                                                         & C_INITIALIZED as libc::c_uint != 0)
@@ -13322,16 +12815,18 @@ pub unsafe extern "C" fn mdb_put(
         mx_dbflag: 0,
     };
     let mut rc: libc::c_int = 0;
-    if key.is_null() || data.is_null()
-        || !(!txn.is_null() && dbi < (*txn).mt_numdbs
-            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int
-                & 0x10 as libc::c_int != 0)
+    if key.is_null()
+        || data.is_null()
+        || !(!txn.is_null()
+            && dbi < (*txn).mt_numdbs
+            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
     if flags
         & !(MDB_NOOVERWRITE | MDB_NODUPDATA | MDB_RESERVE | MDB_APPEND | MDB_APPENDDUP)
-            as libc::c_uint != 0
+            as libc::c_uint
+        != 0
     {
         return EINVAL;
     }
@@ -13385,8 +12880,8 @@ unsafe extern "C" fn mdb_env_copythr(mut arg: *mut libc::c_void) -> *mut libc::c
         loop {
             rc = MDB_SUCCESS;
             while wsize > 0 as libc::c_int && (*my).mc_error == 0 {
-                len = write((*my).mc_fd, ptr as *const libc::c_void, wsize as size_t)
-                    as libc::c_int;
+                len =
+                    write((*my).mc_fd, ptr as *const libc::c_void, wsize as size_t) as libc::c_int;
                 rc = (len >= 0 as libc::c_int) as libc::c_int;
                 if rc == 0 {
                     rc = *__error();
@@ -13477,9 +12972,7 @@ unsafe extern "C" fn mdb_env_cwalk(
     }
     mc.mc_snum = 1 as libc::c_int as libc::c_ushort;
     mc.mc_txn = (*my).mc_txn;
-    mc
-        .mc_flags = (*(*my).mc_txn).mt_flags
-        & (C_ORIG_RDONLY | C_WRITEMAP) as libc::c_uint;
+    mc.mc_flags = (*(*my).mc_txn).mt_flags & (C_ORIG_RDONLY | C_WRITEMAP) as libc::c_uint;
     rc = mdb_page_get(
         &mut mc,
         *pg,
@@ -13494,8 +12987,7 @@ unsafe extern "C" fn mdb_env_cwalk(
         return rc;
     }
     ptr = malloc(
-        ((*(*my).mc_env).me_psize).wrapping_mul(mc.mc_snum as libc::c_uint)
-            as libc::c_ulong,
+        ((*(*my).mc_env).me_psize).wrapping_mul(mc.mc_snum as libc::c_uint) as libc::c_ulong,
     ) as *mut libc::c_char;
     buf = ptr;
     if buf.is_null() {
@@ -13519,21 +13011,22 @@ unsafe extern "C" fn mdb_env_cwalk(
         let mut n: libc::c_uint = 0;
         mp = mc.mc_pg[mc.mc_top as usize];
         n = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
-            .wrapping_sub(
-                (PAGEHDRSZ as libc::c_uint)
-                    .wrapping_sub(
-                        (if 0 as libc::c_int != 0 {
-                            PAGEHDRSZ as libc::c_uint
-                        } else {
-                            0 as libc::c_int as libc::c_uint
-                        }),
-                    ),
-            ) >> 1 as libc::c_int;
+            .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                (if 0 as libc::c_int != 0 {
+                    PAGEHDRSZ as libc::c_uint
+                } else {
+                    0 as libc::c_int as libc::c_uint
+                }),
+            ))
+            >> 1 as libc::c_int;
         if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-            & 0x2 as libc::c_int == 0x2 as libc::c_int
+            & 0x2 as libc::c_int
+            == 0x2 as libc::c_int
         {
             if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-                & 0x20 as libc::c_int == 0x20 as libc::c_int) && flags & F_DUPDATA == 0
+                & 0x20 as libc::c_int
+                == 0x20 as libc::c_int)
+                && flags & F_DUPDATA == 0
             {
                 i = 0 as libc::c_int as libc::c_uint;
                 while i < n {
@@ -13541,7 +13034,8 @@ unsafe extern "C" fn mdb_env_cwalk(
                         .offset(
                             *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                 .as_mut_ptr()
-                                .offset(i as isize) as libc::c_int as isize,
+                                .offset(i as isize) as libc::c_int
+                                as isize,
                         )
                         .offset(
                             (if 0 as libc::c_int != 0 {
@@ -13561,7 +13055,8 @@ unsafe extern "C" fn mdb_env_cwalk(
                                 .offset(
                                     *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                         .as_mut_ptr()
-                                        .offset(i as isize) as libc::c_int as isize,
+                                        .offset(i as isize)
+                                        as libc::c_int as isize,
                                 )
                                 .offset(
                                     (if 0 as libc::c_int != 0 {
@@ -13584,16 +13079,10 @@ unsafe extern "C" fn mdb_env_cwalk(
                                 .as_mut_ptr()
                                 .offset((*ni).mn_ksize as libc::c_int as isize)
                                 as *mut libc::c_void,
-                            &mut (*my).mc_next_pgno as *mut pgno_t
-                                as *const libc::c_void,
+                            &mut (*my).mc_next_pgno as *mut pgno_t as *const libc::c_void,
                             ::core::mem::size_of::<pgno_t>() as libc::c_ulong,
                         );
-                        rc = mdb_page_get(
-                            &mut mc,
-                            pg_0,
-                            &mut omp,
-                            NULL as *mut libc::c_int,
-                        );
+                        rc = mdb_page_get(&mut mc, pg_0, &mut omp, NULL as *mut libc::c_int);
                         if rc != 0 {
                             break 's_89;
                         }
@@ -13613,25 +13102,19 @@ unsafe extern "C" fn mdb_env_cwalk(
                             (*(*my).mc_env).me_psize as libc::c_ulong,
                         );
                         (*mo).mp_p.p_pgno = (*my).mc_next_pgno;
-                        (*my)
-                            .mc_next_pgno = ((*my).mc_next_pgno)
-                            .wrapping_add((*omp).mp_pb.pb_pages as pgno_t);
-                        (*my)
-                            .mc_wlen[toggle
-                            as usize] = ((*my).mc_wlen[toggle as usize] as libc::c_uint)
-                            .wrapping_add((*(*my).mc_env).me_psize) as libc::c_int
-                            as libc::c_int;
+                        (*my).mc_next_pgno =
+                            ((*my).mc_next_pgno).wrapping_add((*omp).mp_pb.pb_pages as pgno_t);
+                        (*my).mc_wlen[toggle as usize] =
+                            ((*my).mc_wlen[toggle as usize] as libc::c_uint)
+                                .wrapping_add((*(*my).mc_env).me_psize)
+                                as libc::c_int as libc::c_int;
                         if (*omp).mp_pb.pb_pages > 1 as libc::c_int as uint32_t {
-                            (*my)
-                                .mc_olen[toggle
-                                as usize] = ((*(*my).mc_env).me_psize)
-                                .wrapping_mul(
+                            (*my).mc_olen[toggle as usize] =
+                                ((*(*my).mc_env).me_psize).wrapping_mul(
                                     ((*omp).mp_pb.pb_pages)
                                         .wrapping_sub(1 as libc::c_int as uint32_t),
                                 ) as libc::c_int;
-                            (*my)
-                                .mc_over[toggle
-                                as usize] = (omp as *mut libc::c_char)
+                            (*my).mc_over[toggle as usize] = (omp as *mut libc::c_char)
                                 .offset((*(*my).mc_env).me_psize as isize);
                             rc = mdb_env_cthr_toggle(my, 1 as libc::c_int);
                             if rc != 0 {
@@ -13658,7 +13141,8 @@ unsafe extern "C" fn mdb_env_cwalk(
                                 .offset(
                                     *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                         .as_mut_ptr()
-                                        .offset(i as isize) as libc::c_int as isize,
+                                        .offset(i as isize)
+                                        as libc::c_int as isize,
                                 )
                                 .offset(
                                     (if 0 as libc::c_int != 0 {
@@ -13700,9 +13184,7 @@ unsafe extern "C" fn mdb_env_cwalk(
                 }
             }
         } else {
-            mc
-                .mc_ki[mc.mc_top
-                as usize] = (mc.mc_ki[mc.mc_top as usize]).wrapping_add(1);
+            mc.mc_ki[mc.mc_top as usize] = (mc.mc_ki[mc.mc_top as usize]).wrapping_add(1);
             mc.mc_ki[mc.mc_top as usize];
             if (mc.mc_ki[mc.mc_top as usize] as libc::c_uint) < n {
                 let mut pg_1: pgno_t = 0;
@@ -13751,16 +13233,13 @@ unsafe extern "C" fn mdb_env_cwalk(
                     mc.mc_snum = (mc.mc_snum).wrapping_add(1);
                     mc.mc_snum;
                     mc.mc_ki[mc.mc_top as usize] = 0 as libc::c_int as indx_t;
-                    if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                        as libc::c_int & 0x1 as libc::c_int == 0x1 as libc::c_int)
+                    if !((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                        & 0x1 as libc::c_int
+                        == 0x1 as libc::c_int)
                     {
                         break;
                     }
-                    mdb_page_copy(
-                        mc.mc_pg[mc.mc_top as usize],
-                        mp,
-                        (*(*my).mc_env).me_psize,
-                    );
+                    mdb_page_copy(mc.mc_pg[mc.mc_top as usize], mp, (*(*my).mc_env).me_psize);
                 }
                 mc.mc_pg[mc.mc_top as usize] = mp;
                 continue;
@@ -13773,16 +13252,15 @@ unsafe extern "C" fn mdb_env_cwalk(
             }
             toggle = (*my).mc_toggle;
         }
-        mo = ((*my).mc_wbuf[toggle as usize])
-            .offset((*my).mc_wlen[toggle as usize] as isize) as *mut MDB_page;
+        mo = ((*my).mc_wbuf[toggle as usize]).offset((*my).mc_wlen[toggle as usize] as isize)
+            as *mut MDB_page;
         mdb_page_copy(mo, mp, (*(*my).mc_env).me_psize);
         let fresh74 = (*my).mc_next_pgno;
         (*my).mc_next_pgno = ((*my).mc_next_pgno).wrapping_add(1);
         (*mo).mp_p.p_pgno = fresh74;
-        (*my)
-            .mc_wlen[toggle
-            as usize] = ((*my).mc_wlen[toggle as usize] as libc::c_uint)
-            .wrapping_add((*(*my).mc_env).me_psize) as libc::c_int as libc::c_int;
+        (*my).mc_wlen[toggle as usize] = ((*my).mc_wlen[toggle as usize] as libc::c_uint)
+            .wrapping_add((*(*my).mc_env).me_psize)
+            as libc::c_int as libc::c_int;
         if mc.mc_top != 0 {
             ni = (mc.mc_pg[(mc.mc_top as libc::c_int - 1 as libc::c_int) as usize]
                 as *mut libc::c_char)
@@ -13792,9 +13270,8 @@ unsafe extern "C" fn mdb_env_cwalk(
                         .mp2_ptrs)
                         .as_mut_ptr()
                         .offset(
-                            mc
-                                .mc_ki[(mc.mc_top as libc::c_int - 1 as libc::c_int)
-                                as usize] as isize,
+                            mc.mc_ki[(mc.mc_top as libc::c_int - 1 as libc::c_int) as usize]
+                                as isize,
                         ) as libc::c_int as isize,
                 )
                 .offset(
@@ -13804,9 +13281,7 @@ unsafe extern "C" fn mdb_env_cwalk(
                         0 as libc::c_int as libc::c_uint
                     }) as isize,
                 ) as *mut MDB_node;
-            (*ni)
-                .mn_lo = ((*mo).mp_p.p_pgno & 0xffff as libc::c_int as pgno_t)
-                as libc::c_ushort;
+            (*ni).mn_lo = ((*mo).mp_p.p_pgno & 0xffff as libc::c_int as pgno_t) as libc::c_ushort;
             (*ni).mn_hi = ((*mo).mp_p.p_pgno >> 16 as libc::c_int) as libc::c_ushort;
             if if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                 32 as libc::c_int
@@ -13814,11 +13289,8 @@ unsafe extern "C" fn mdb_env_cwalk(
                 0 as libc::c_int
             } != 0
             {
-                (*ni)
-                    .mn_flags = ((*mo).mp_p.p_pgno
-                    >> (if -(1 as libc::c_int) as pgno_t
-                        > 0xffffffff as libc::c_uint as pgno_t
-                    {
+                (*ni).mn_flags = ((*mo).mp_p.p_pgno
+                    >> (if -(1 as libc::c_int) as pgno_t > 0xffffffff as libc::c_uint as pgno_t {
                         32 as libc::c_int
                     } else {
                         0 as libc::c_int
@@ -13834,10 +13306,7 @@ unsafe extern "C" fn mdb_env_cwalk(
     return rc;
 }
 #[cold]
-unsafe extern "C" fn mdb_env_copyfd1(
-    mut env: *mut MDB_env,
-    mut fd: libc::c_int,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_env_copyfd1(mut env: *mut MDB_env, mut fd: libc::c_int) -> libc::c_int {
     let mut current_block: u64;
     let mut mm = 0 as *mut MDB_meta;
     let mut mp = 0 as *mut MDB_page;
@@ -13889,10 +13358,8 @@ unsafe extern "C" fn mdb_env_copyfd1(
                 0 as libc::c_int,
                 (MDB_WBUF * 2 as libc::c_int) as libc::c_ulong,
             );
-            my
-                .mc_wbuf[1 as libc::c_int
-                as usize] = (my.mc_wbuf[0 as libc::c_int as usize])
-                .offset(MDB_WBUF as isize);
+            my.mc_wbuf[1 as libc::c_int as usize] =
+                (my.mc_wbuf[0 as libc::c_int as usize]).offset(MDB_WBUF as isize);
             my.mc_next_pgno = NUM_METAS as pgno_t;
             my.mc_env = env;
             my.mc_fd = fd;
@@ -13900,8 +13367,7 @@ unsafe extern "C" fn mdb_env_copyfd1(
                 &mut thr,
                 NULL as *const pthread_attr_t,
                 Some(
-                    mdb_env_copythr
-                        as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+                    mdb_env_copythr as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
                 ),
                 &mut my as *mut mdb_copy as *mut libc::c_void,
             );
@@ -13917,28 +13383,22 @@ unsafe extern "C" fn mdb_env_copyfd1(
                     memset(
                         mp as *mut libc::c_void,
                         0 as libc::c_int,
-                        (NUM_METAS as libc::c_uint).wrapping_mul((*env).me_psize)
-                            as libc::c_ulong,
+                        (NUM_METAS as libc::c_uint).wrapping_mul((*env).me_psize) as libc::c_ulong,
                     );
                     (*mp).mp_p.p_pgno = 0 as libc::c_int as pgno_t;
                     (*mp).mp_flags = P_META as uint16_t;
-                    mm = (mp as *mut libc::c_char)
-                        .offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void
-                        as *mut MDB_meta;
+                    mm = (mp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
+                        as *mut libc::c_void as *mut MDB_meta;
                     mdb_env_init_meta0(env, mm);
-                    (*mm)
-                        .mm_address = (*(*env).me_metas[0 as libc::c_int as usize])
-                        .mm_address;
-                    mp = (my.mc_wbuf[0 as libc::c_int as usize])
-                        .offset((*env).me_psize as isize) as *mut MDB_page;
+                    (*mm).mm_address = (*(*env).me_metas[0 as libc::c_int as usize]).mm_address;
+                    mp = (my.mc_wbuf[0 as libc::c_int as usize]).offset((*env).me_psize as isize)
+                        as *mut MDB_page;
                     (*mp).mp_p.p_pgno = 1 as libc::c_int as pgno_t;
                     (*mp).mp_flags = P_META as uint16_t;
-                    *((mp as *mut libc::c_char)
-                        .offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void
-                        as *mut MDB_meta) = *mm;
-                    mm = (mp as *mut libc::c_char)
-                        .offset(PAGEHDRSZ as libc::c_uint as isize) as *mut libc::c_void
-                        as *mut MDB_meta;
+                    *((mp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
+                        as *mut libc::c_void as *mut MDB_meta) = *mm;
+                    mm = (mp as *mut libc::c_char).offset(PAGEHDRSZ as libc::c_uint as isize)
+                        as *mut libc::c_void as *mut MDB_meta;
                     new_root = (*((*txn).mt_dbs).offset(MAIN_DBI as isize)).md_root;
                     root = new_root;
                     if root != P_INVALID {
@@ -13977,57 +13437,49 @@ unsafe extern "C" fn mdb_env_copyfd1(
                             if !(rc == 0 as libc::c_int) {
                                 break;
                             }
-                            freecount = freecount
-                                .wrapping_add(*(data.mv_data as *mut MDB_ID));
+                            freecount = freecount.wrapping_add(*(data.mv_data as *mut MDB_ID));
                         }
                         if rc != MDB_NOTFOUND {
                             current_block = 4695762913923507500;
                         } else {
-                            freecount = freecount
-                                .wrapping_add(
-                                    ((*((*txn).mt_dbs).offset(FREE_DBI as isize))
-                                        .md_branch_pages)
-                                        .wrapping_add(
-                                            (*((*txn).mt_dbs).offset(FREE_DBI as isize)).md_leaf_pages,
-                                        )
-                                        .wrapping_add(
-                                            (*((*txn).mt_dbs).offset(FREE_DBI as isize))
-                                                .md_overflow_pages,
-                                        ),
-                                );
+                            freecount = freecount.wrapping_add(
+                                ((*((*txn).mt_dbs).offset(FREE_DBI as isize)).md_branch_pages)
+                                    .wrapping_add(
+                                        (*((*txn).mt_dbs).offset(FREE_DBI as isize)).md_leaf_pages,
+                                    )
+                                    .wrapping_add(
+                                        (*((*txn).mt_dbs).offset(FREE_DBI as isize))
+                                            .md_overflow_pages,
+                                    ),
+                            );
                             new_root = ((*txn).mt_next_pgno)
                                 .wrapping_sub(1 as libc::c_int as pgno_t)
                                 .wrapping_sub(freecount);
                             (*mm).mm_last_pg = new_root;
-                            (*mm)
-                                .mm_dbs[MAIN_DBI
-                                as usize] = *((*txn).mt_dbs).offset(MAIN_DBI as isize);
+                            (*mm).mm_dbs[MAIN_DBI as usize] =
+                                *((*txn).mt_dbs).offset(MAIN_DBI as isize);
                             (*mm).mm_dbs[MAIN_DBI as usize].md_root = new_root;
                             current_block = 652864300344834934;
                         }
                     } else {
-                        (*mm)
-                            .mm_dbs[MAIN_DBI as usize]
-                            .md_flags = (*((*txn).mt_dbs).offset(MAIN_DBI as isize))
-                            .md_flags;
+                        (*mm).mm_dbs[MAIN_DBI as usize].md_flags =
+                            (*((*txn).mt_dbs).offset(MAIN_DBI as isize)).md_flags;
                         current_block = 652864300344834934;
                     }
                     match current_block {
                         4695762913923507500 => {}
                         _ => {
                             if root != P_INVALID
-                                || (*mm).mm_dbs[MAIN_DBI as usize].md_flags as libc::c_int
-                                    != 0
+                                || (*mm).mm_dbs[MAIN_DBI as usize].md_flags as libc::c_int != 0
                             {
                                 ::core::ptr::write_volatile(
                                     &mut (*mm).mm_txnid as *mut txnid_t,
                                     1 as libc::c_int as txnid_t,
                                 );
                             }
-                            my
-                                .mc_wlen[0 as libc::c_int
-                                as usize] = ((*env).me_psize)
-                                .wrapping_mul(NUM_METAS as libc::c_uint) as libc::c_int;
+                            my.mc_wlen[0 as libc::c_int as usize] = ((*env).me_psize)
+                                .wrapping_mul(NUM_METAS as libc::c_uint)
+                                as libc::c_int;
                             my.mc_txn = txn;
                             rc = mdb_env_cwalk(&mut my, &mut root, 0 as libc::c_int);
                             if rc == MDB_SUCCESS && root != new_root {
@@ -14037,10 +13489,7 @@ unsafe extern "C" fn mdb_env_copyfd1(
                     }
                 }
                 if rc != 0 {
-                    ::core::ptr::write_volatile(
-                        &mut my.mc_error as *mut libc::c_int,
-                        rc,
-                    );
+                    ::core::ptr::write_volatile(&mut my.mc_error as *mut libc::c_int, rc);
                 }
                 mdb_env_cthr_toggle(&mut my, 1 as libc::c_int | MDB_EOF);
                 rc = pthread_join(thr, NULL as *mut *mut libc::c_void);
@@ -14054,10 +13503,7 @@ unsafe extern "C" fn mdb_env_copyfd1(
     return if rc != 0 { rc } else { my.mc_error };
 }
 #[cold]
-unsafe extern "C" fn mdb_env_copyfd0(
-    mut env: *mut MDB_env,
-    mut fd: libc::c_int,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_env_copyfd0(mut env: *mut MDB_env, mut fd: libc::c_int) -> libc::c_int {
     let mut current_block: u64;
     let mut txn = NULL as *mut MDB_txn;
     let mut wmutex = NULL as mdb_mutexref_t;
@@ -14067,7 +13513,12 @@ unsafe extern "C" fn mdb_env_copyfd0(
     let mut ptr = 0 as *mut libc::c_char;
     let mut len: ssize_t = 0;
     let mut w2: size_t = 0;
-    rc = mdb_txn_begin(env, NULL as *mut MDB_txn, MDB_RDONLY as libc::c_uint, &mut txn);
+    rc = mdb_txn_begin(
+        env,
+        NULL as *mut MDB_txn,
+        MDB_RDONLY as libc::c_uint,
+        &mut txn,
+    );
     if rc != 0 {
         return rc;
     }
@@ -14075,12 +13526,10 @@ unsafe extern "C" fn mdb_env_copyfd0(
         mdb_txn_end(txn, MDB_END_RESET_TMP as libc::c_int as libc::c_uint);
         wmutex = ((*env).me_wmutex).as_mut_ptr();
         rc = mdb_sem_wait(wmutex);
-        if rc != 0
-            && {
-                rc = mdb_mutex_failed(env, wmutex, rc);
-                rc != 0
-            }
-        {
+        if rc != 0 && {
+            rc = mdb_mutex_failed(env, wmutex, rc);
+            rc != 0
+        } {
             current_block = 2682935144166745456;
         } else {
             rc = mdb_txn_renew0(txn);
@@ -14106,8 +13555,7 @@ unsafe extern "C" fn mdb_env_copyfd0(
     }
     match current_block {
         12349973810996921269 => {
-            wsize = ((*env).me_psize).wrapping_mul(NUM_METAS as libc::c_uint)
-                as mdb_size_t;
+            wsize = ((*env).me_psize).wrapping_mul(NUM_METAS as libc::c_uint) as mdb_size_t;
             ptr = (*env).me_map;
             w2 = wsize;
             while w2 > 0 as libc::c_int as size_t {
@@ -14183,17 +13631,14 @@ pub unsafe extern "C" fn mdb_env_copyfd2(
     mut flags: libc::c_uint,
 ) -> libc::c_int {
     if flags & MDB_CP_COMPACT as libc::c_uint != 0 {
-        return mdb_env_copyfd1(env, fd)
+        return mdb_env_copyfd1(env, fd);
     } else {
-        return mdb_env_copyfd0(env, fd)
+        return mdb_env_copyfd0(env, fd);
     };
 }
 #[no_mangle]
 #[cold]
-pub unsafe extern "C" fn mdb_env_copyfd(
-    mut env: *mut MDB_env,
-    mut fd: libc::c_int,
-) -> libc::c_int {
+pub unsafe extern "C" fn mdb_env_copyfd(mut env: *mut MDB_env, mut fd: libc::c_int) -> libc::c_int {
     return mdb_env_copyfd2(env, fd, 0 as libc::c_int as libc::c_uint);
 }
 #[no_mangle]
@@ -14282,16 +13727,18 @@ pub unsafe extern "C" fn mdb_env_set_userctx(
 }
 #[no_mangle]
 #[cold]
-pub unsafe extern "C" fn mdb_env_get_userctx(
-    mut env: *mut MDB_env,
-) -> *mut libc::c_void {
-    return if !env.is_null() { (*env).me_userctx } else { NULL as *mut libc::c_void };
+pub unsafe extern "C" fn mdb_env_get_userctx(mut env: *mut MDB_env) -> *mut libc::c_void {
+    return if !env.is_null() {
+        (*env).me_userctx
+    } else {
+        NULL as *mut libc::c_void
+    };
 }
 #[no_mangle]
 #[cold]
 pub unsafe extern "C" fn mdb_env_set_assert(
     mut env: *mut MDB_env,
-    mut func: Option::<MDB_assert_func>,
+    mut func: Option<MDB_assert_func>,
 ) -> libc::c_int {
     if env.is_null() {
         return EINVAL;
@@ -14370,8 +13817,7 @@ pub unsafe extern "C" fn mdb_env_info(
     (*arg).me_last_txnid = (*meta).mm_txnid;
     (*arg).me_mapsize = (*env).me_mapsize;
     (*arg).me_maxreaders = (*env).me_maxreaders;
-    (*arg)
-        .me_numreaders = if !((*env).me_txns).is_null() {
+    (*arg).me_numreaders = if !((*env).me_txns).is_null() {
         (*(*env).me_txns).mt1.mtb.mtb_numreaders
     } else {
         0 as libc::c_int as libc::c_uint
@@ -14465,8 +13911,7 @@ pub unsafe extern "C" fn mdb_dbi_open(
                 | f2 as libc::c_int
                 != (*((*txn).mt_dbs).offset(MAIN_DBI as isize)).md_flags as libc::c_int
             {
-                let ref mut fresh77 = (*((*txn).mt_dbs).offset(MAIN_DBI as isize))
-                    .md_flags;
+                let ref mut fresh77 = (*((*txn).mt_dbs).offset(MAIN_DBI as isize)).md_flags;
                 *fresh77 = (*fresh77 as libc::c_int | f2 as libc::c_int) as uint16_t;
                 (*txn).mt_flags |= MDB_TXN_DIRTY as libc::c_uint;
             }
@@ -14487,8 +13932,7 @@ pub unsafe extern "C" fn mdb_dbi_open(
         } else if len == (*((*txn).mt_dbxs).offset(i as isize)).md_name.mv_size
             && strncmp(
                 name,
-                (*((*txn).mt_dbxs).offset(i as isize)).md_name.mv_data
-                    as *const libc::c_char,
+                (*((*txn).mt_dbxs).offset(i as isize)).md_name.mv_data as *const libc::c_char,
                 len,
             ) == 0
         {
@@ -14502,7 +13946,8 @@ pub unsafe extern "C" fn mdb_dbi_open(
         return MDB_DBS_FULL;
     }
     if (*((*txn).mt_dbs).offset(MAIN_DBI as isize)).md_flags as libc::c_int
-        & (MDB_DUPSORT | MDB_INTEGERKEY) != 0
+        & (MDB_DUPSORT | MDB_INTEGERKEY)
+        != 0
     {
         return if flags & MDB_CREATE as libc::c_uint != 0 {
             MDB_INCOMPATIBLE
@@ -14519,9 +13964,7 @@ pub unsafe extern "C" fn mdb_dbi_open(
     if rc == MDB_SUCCESS {
         let mut node = (mc.mc_pg[mc.mc_top as usize] as *mut libc::c_char)
             .offset(
-                *((*(mc.mc_pg[mc.mc_top as usize] as *mut libc::c_void
-                    as *mut MDB_page2))
-                    .mp2_ptrs)
+                *((*(mc.mc_pg[mc.mc_top as usize] as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                     .as_mut_ptr()
                     .offset(mc.mc_ki[mc.mc_top as usize] as isize) as libc::c_int
                     as isize,
@@ -14576,8 +14019,8 @@ pub unsafe extern "C" fn mdb_dbi_open(
             mc_ki: [0; 32],
         };
         let mut tracked = 0 as *mut MDB_cursor;
-        let mut tp: *mut *mut MDB_cursor = &mut *((*mc.mc_txn).mt_cursors)
-            .offset(mc.mc_dbi as isize) as *mut *mut MDB_cursor;
+        let mut tp: *mut *mut MDB_cursor =
+            &mut *((*mc.mc_txn).mt_cursors).offset(mc.mc_dbi as isize) as *mut *mut MDB_cursor;
         if mc.mc_flags & C_SUB as libc::c_uint != 0 {
             dummy_0.mc_flags = C_INITIALIZED as libc::c_uint;
             dummy_0.mc_xcursor = &mut mc as *mut MDB_cursor as *mut MDB_xcursor;
@@ -14599,23 +14042,24 @@ pub unsafe extern "C" fn mdb_dbi_open(
     if rc != 0 {
         free(namedup as *mut libc::c_void);
     } else {
-        let mut slot = if unused != 0 { unused } else { (*txn).mt_numdbs };
+        let mut slot = if unused != 0 {
+            unused
+        } else {
+            (*txn).mt_numdbs
+        };
         let ref mut fresh78 = (*((*txn).mt_dbxs).offset(slot as isize)).md_name.mv_data;
         *fresh78 = namedup as *mut libc::c_void;
         (*((*txn).mt_dbxs).offset(slot as isize)).md_name.mv_size = len;
         let ref mut fresh79 = (*((*txn).mt_dbxs).offset(slot as isize)).md_rel;
-        *fresh79 = ::core::mem::transmute::<
-            libc::intptr_t,
-            Option::<MDB_rel_func>,
-        >(NULL as libc::intptr_t);
+        *fresh79 =
+            ::core::mem::transmute::<libc::intptr_t, Option<MDB_rel_func>>(NULL as libc::intptr_t);
         *((*txn).mt_dbflags).offset(slot as isize) = dbflag as libc::c_uchar;
         let ref mut fresh80 = *((*(*txn).mt_env).me_dbiseqs).offset(slot as isize);
         *fresh80 = (*fresh80).wrapping_add(1);
         seq = *fresh80;
         *((*txn).mt_dbiseqs).offset(slot as isize) = seq;
         memcpy(
-            &mut *((*txn).mt_dbs).offset(slot as isize) as *mut MDB_db
-                as *mut libc::c_void,
+            &mut *((*txn).mt_dbs).offset(slot as isize) as *mut MDB_db as *mut libc::c_void,
             data.mv_data,
             ::core::mem::size_of::<MDB_db>() as libc::c_ulong,
         );
@@ -14636,9 +14080,9 @@ pub unsafe extern "C" fn mdb_stat(
     mut arg: *mut MDB_stat,
 ) -> libc::c_int {
     if arg.is_null()
-        || !(!txn.is_null() && dbi < (*txn).mt_numdbs
-            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int
-                & 0x8 as libc::c_int != 0)
+        || !(!txn.is_null()
+            && dbi < (*txn).mt_numdbs
+            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x8 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -14701,7 +14145,11 @@ pub unsafe extern "C" fn mdb_stat(
         };
         mdb_cursor_init(&mut mc, txn, dbi, &mut mx);
     }
-    return mdb_stat0((*txn).mt_env, &mut *((*txn).mt_dbs).offset(dbi as isize), arg);
+    return mdb_stat0(
+        (*txn).mt_env,
+        &mut *((*txn).mt_dbs).offset(dbi as isize),
+        arg,
+    );
 }
 #[no_mangle]
 pub unsafe extern "C" fn mdb_dbi_close(mut env: *mut MDB_env, mut dbi: MDB_dbi) {
@@ -14713,9 +14161,7 @@ pub unsafe extern "C" fn mdb_dbi_close(mut env: *mut MDB_env, mut dbi: MDB_dbi) 
     if !ptr.is_null() {
         let ref mut fresh81 = (*((*env).me_dbxs).offset(dbi as isize)).md_name.mv_data;
         *fresh81 = NULL as *mut libc::c_void;
-        (*((*env).me_dbxs).offset(dbi as isize))
-            .md_name
-            .mv_size = 0 as libc::c_int as size_t;
+        (*((*env).me_dbxs).offset(dbi as isize)).md_name.mv_size = 0 as libc::c_int as size_t;
         *((*env).me_dbflags).offset(dbi as isize) = 0 as libc::c_int as uint16_t;
         let ref mut fresh82 = *((*env).me_dbiseqs).offset(dbi as isize);
         *fresh82 = (*fresh82).wrapping_add(1);
@@ -14729,20 +14175,17 @@ pub unsafe extern "C" fn mdb_dbi_flags(
     mut dbi: MDB_dbi,
     mut flags: *mut libc::c_uint,
 ) -> libc::c_int {
-    if !(!txn.is_null() && dbi < (*txn).mt_numdbs
-        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int
-            != 0)
+    if !(!txn.is_null()
+        && dbi < (*txn).mt_numdbs
+        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
-    *flags = ((*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int
-        & PERSISTENT_FLAGS) as libc::c_uint;
+    *flags = ((*((*txn).mt_dbs).offset(dbi as isize)).md_flags as libc::c_int & PERSISTENT_FLAGS)
+        as libc::c_uint;
     return MDB_SUCCESS;
 }
-unsafe extern "C" fn mdb_drop0(
-    mut mc: *mut MDB_cursor,
-    mut subs: libc::c_int,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_drop0(mut mc: *mut MDB_cursor, mut subs: libc::c_int) -> libc::c_int {
     let mut current_block: u64;
     let mut rc: libc::c_int = 0;
     rc = mdb_page_search(mc, NULL as *mut MDB_val, MDB_PS_FIRST);
@@ -14777,20 +14220,18 @@ unsafe extern "C" fn mdb_drop0(
                 break;
             }
             let mut mp = (*mc).mc_pg[(*mc).mc_top as usize];
-            let mut n = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower
-                as libc::c_uint)
-                .wrapping_sub(
-                    (PAGEHDRSZ as libc::c_uint)
-                        .wrapping_sub(
-                            (if 0 as libc::c_int != 0 {
-                                PAGEHDRSZ as libc::c_uint
-                            } else {
-                                0 as libc::c_int as libc::c_uint
-                            }),
-                        ),
-                ) >> 1 as libc::c_int;
+            let mut n = ((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_lower as libc::c_uint)
+                .wrapping_sub((PAGEHDRSZ as libc::c_uint).wrapping_sub(
+                    (if 0 as libc::c_int != 0 {
+                        PAGEHDRSZ as libc::c_uint
+                    } else {
+                        0 as libc::c_int as libc::c_uint
+                    }),
+                ))
+                >> 1 as libc::c_int;
             if (*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
-                & 0x2 as libc::c_int == 0x2 as libc::c_int
+                & 0x2 as libc::c_int
+                == 0x2 as libc::c_int
             {
                 i = 0 as libc::c_int as libc::c_uint;
                 while i < n {
@@ -14798,7 +14239,8 @@ unsafe extern "C" fn mdb_drop0(
                         .offset(
                             *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                 .as_mut_ptr()
-                                .offset(i as isize) as libc::c_int as isize,
+                                .offset(i as isize) as libc::c_int
+                                as isize,
                         )
                         .offset(
                             (if 0 as libc::c_int != 0 {
@@ -14823,17 +14265,18 @@ unsafe extern "C" fn mdb_drop0(
                             current_block = 10762829585299754077;
                             break 's_29;
                         }
-                        if (*(omp as *mut libc::c_void as *mut MDB_page2)).mp2_flags
-                            as libc::c_int & 0x4 as libc::c_int == 0x4 as libc::c_int
-                        {} else {
+                        if (*(omp as *mut libc::c_void as *mut MDB_page2)).mp2_flags as libc::c_int
+                            & 0x4 as libc::c_int
+                            == 0x4 as libc::c_int
+                        {
+                        } else {
                             mdb_assert_fail(
                                 (*(*mc).mc_txn).mt_env,
                                 b"IS_OVERFLOW(omp)\0" as *const u8 as *const libc::c_char,
-                                (*::core::mem::transmute::<
-                                    &[u8; 10],
-                                    &[libc::c_char; 10],
-                                >(b"mdb_drop0\0"))
-                                    .as_ptr(),
+                                (*::core::mem::transmute::<&[u8; 10], &[libc::c_char; 10]>(
+                                    b"mdb_drop0\0",
+                                ))
+                                .as_ptr(),
                                 b"mdb.c\0" as *const u8 as *const libc::c_char,
                                 11089 as libc::c_int,
                             );
@@ -14847,19 +14290,14 @@ unsafe extern "C" fn mdb_drop0(
                             current_block = 10762829585299754077;
                             break 's_29;
                         }
-                        (*(*mc).mc_db)
-                            .md_overflow_pages = ((*(*mc).mc_db).md_overflow_pages)
+                        (*(*mc).mc_db).md_overflow_pages = ((*(*mc).mc_db).md_overflow_pages)
                             .wrapping_sub((*omp).mp_pb.pb_pages as pgno_t);
                         if (*(*mc).mc_db).md_overflow_pages == 0 && subs == 0 {
                             break;
                         }
-                    } else if subs != 0 && (*ni).mn_flags as libc::c_int & F_SUBDATA != 0
-                    {
+                    } else if subs != 0 && (*ni).mn_flags as libc::c_int & F_SUBDATA != 0 {
                         mdb_xcursor_init1(mc, ni);
-                        rc = mdb_drop0(
-                            &mut (*(*mc).mc_xcursor).mx_cursor,
-                            0 as libc::c_int,
-                        );
+                        rc = mdb_drop0(&mut (*(*mc).mc_xcursor).mx_cursor, 0 as libc::c_int);
                         if rc != 0 {
                             current_block = 10762829585299754077;
                             break 's_29;
@@ -14886,7 +14324,8 @@ unsafe extern "C" fn mdb_drop0(
                         .offset(
                             *((*(mp as *mut libc::c_void as *mut MDB_page2)).mp2_ptrs)
                                 .as_mut_ptr()
-                                .offset(i as isize) as libc::c_int as isize,
+                                .offset(i as isize) as libc::c_int
+                                as isize,
                         )
                         .offset(
                             (if 0 as libc::c_int != 0 {
@@ -14979,9 +14418,9 @@ pub unsafe extern "C" fn mdb_drop(
     let mut m2 = 0 as *mut MDB_cursor;
     let mut rc: libc::c_int = 0;
     if del as libc::c_uint > 1 as libc::c_int as libc::c_uint
-        || !(!txn.is_null() && dbi < (*txn).mt_numdbs
-            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int
-                & 0x10 as libc::c_int != 0)
+        || !(!txn.is_null()
+            && dbi < (*txn).mt_numdbs
+            && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -15023,16 +14462,11 @@ pub unsafe extern "C" fn mdb_drop(
         } else {
             let ref mut fresh84 = *((*txn).mt_dbflags).offset(dbi as isize);
             *fresh84 = (*fresh84 as libc::c_int | DB_DIRTY) as libc::c_uchar;
-            (*((*txn).mt_dbs).offset(dbi as isize))
-                .md_depth = 0 as libc::c_int as uint16_t;
-            (*((*txn).mt_dbs).offset(dbi as isize))
-                .md_branch_pages = 0 as libc::c_int as pgno_t;
-            (*((*txn).mt_dbs).offset(dbi as isize))
-                .md_leaf_pages = 0 as libc::c_int as pgno_t;
-            (*((*txn).mt_dbs).offset(dbi as isize))
-                .md_overflow_pages = 0 as libc::c_int as pgno_t;
-            (*((*txn).mt_dbs).offset(dbi as isize))
-                .md_entries = 0 as libc::c_int as mdb_size_t;
+            (*((*txn).mt_dbs).offset(dbi as isize)).md_depth = 0 as libc::c_int as uint16_t;
+            (*((*txn).mt_dbs).offset(dbi as isize)).md_branch_pages = 0 as libc::c_int as pgno_t;
+            (*((*txn).mt_dbs).offset(dbi as isize)).md_leaf_pages = 0 as libc::c_int as pgno_t;
+            (*((*txn).mt_dbs).offset(dbi as isize)).md_overflow_pages = 0 as libc::c_int as pgno_t;
+            (*((*txn).mt_dbs).offset(dbi as isize)).md_entries = 0 as libc::c_int as mdb_size_t;
             (*((*txn).mt_dbs).offset(dbi as isize)).md_root = P_INVALID;
             (*txn).mt_flags |= MDB_TXN_DIRTY as libc::c_uint;
         }
@@ -15044,11 +14478,11 @@ pub unsafe extern "C" fn mdb_drop(
 pub unsafe extern "C" fn mdb_set_compare(
     mut txn: *mut MDB_txn,
     mut dbi: MDB_dbi,
-    mut cmp: Option::<MDB_cmp_func>,
+    mut cmp: Option<MDB_cmp_func>,
 ) -> libc::c_int {
-    if !(!txn.is_null() && dbi < (*txn).mt_numdbs
-        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int
-            != 0)
+    if !(!txn.is_null()
+        && dbi < (*txn).mt_numdbs
+        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -15060,11 +14494,11 @@ pub unsafe extern "C" fn mdb_set_compare(
 pub unsafe extern "C" fn mdb_set_dupsort(
     mut txn: *mut MDB_txn,
     mut dbi: MDB_dbi,
-    mut cmp: Option::<MDB_cmp_func>,
+    mut cmp: Option<MDB_cmp_func>,
 ) -> libc::c_int {
-    if !(!txn.is_null() && dbi < (*txn).mt_numdbs
-        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int
-            != 0)
+    if !(!txn.is_null()
+        && dbi < (*txn).mt_numdbs
+        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -15076,11 +14510,11 @@ pub unsafe extern "C" fn mdb_set_dupsort(
 pub unsafe extern "C" fn mdb_set_relfunc(
     mut txn: *mut MDB_txn,
     mut dbi: MDB_dbi,
-    mut rel: Option::<MDB_rel_func>,
+    mut rel: Option<MDB_rel_func>,
 ) -> libc::c_int {
-    if !(!txn.is_null() && dbi < (*txn).mt_numdbs
-        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int
-            != 0)
+    if !(!txn.is_null()
+        && dbi < (*txn).mt_numdbs
+        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -15094,9 +14528,9 @@ pub unsafe extern "C" fn mdb_set_relctx(
     mut dbi: MDB_dbi,
     mut ctx: *mut libc::c_void,
 ) -> libc::c_int {
-    if !(!txn.is_null() && dbi < (*txn).mt_numdbs
-        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int
-            != 0)
+    if !(!txn.is_null()
+        && dbi < (*txn).mt_numdbs
+        && *((*txn).mt_dbflags).offset(dbi as isize) as libc::c_int & 0x10 as libc::c_int != 0)
     {
         return EINVAL;
     }
@@ -15107,13 +14541,17 @@ pub unsafe extern "C" fn mdb_set_relctx(
 #[no_mangle]
 #[cold]
 pub unsafe extern "C" fn mdb_env_get_maxkeysize(mut env: *mut MDB_env) -> libc::c_int {
-    return if 0 as libc::c_int != 0 { 0 as libc::c_int } else { 511 as libc::c_int };
+    return if 0 as libc::c_int != 0 {
+        0 as libc::c_int
+    } else {
+        511 as libc::c_int
+    };
 }
 #[no_mangle]
 #[cold]
 pub unsafe extern "C" fn mdb_reader_list(
     mut env: *mut MDB_env,
-    mut func: Option::<MDB_msg_func>,
+    mut func: Option<MDB_msg_func>,
     mut ctx: *mut libc::c_void,
 ) -> libc::c_int {
     let mut i: libc::c_uint = 0;
@@ -15126,10 +14564,10 @@ pub unsafe extern "C" fn mdb_reader_list(
         return -(1 as libc::c_int);
     }
     if ((*env).me_txns).is_null() {
-        return func
-            .expect(
-                "non-null function pointer",
-            )(b"(no reader locks)\n\0" as *const u8 as *const libc::c_char, ctx);
+        return func.expect("non-null function pointer")(
+            b"(no reader locks)\n\0" as *const u8 as *const libc::c_char,
+            ctx,
+        );
     }
     rdrs = (*(*env).me_txns).mt1.mtb.mtb_numreaders;
     mr = ((*(*env).me_txns).mti_readers).as_mut_ptr();
@@ -15150,12 +14588,8 @@ pub unsafe extern "C" fn mdb_reader_list(
             );
             if first != 0 {
                 first = 0 as libc::c_int;
-                rc = func
-                    .expect(
-                        "non-null function pointer",
-                    )(
-                    b"    pid     thread     txnid\n\0" as *const u8
-                        as *const libc::c_char,
+                rc = func.expect("non-null function pointer")(
+                    b"    pid     thread     txnid\n\0" as *const u8 as *const libc::c_char,
                     ctx,
                 );
                 if rc < 0 as libc::c_int {
@@ -15171,10 +14605,10 @@ pub unsafe extern "C" fn mdb_reader_list(
         i;
     }
     if first != 0 {
-        rc = func
-            .expect(
-                "non-null function pointer",
-            )(b"(no active readers)\n\0" as *const u8 as *const libc::c_char, ctx);
+        rc = func.expect("non-null function pointer")(
+            b"(no active readers)\n\0" as *const u8 as *const libc::c_char,
+            ctx,
+        );
     }
     return rc;
 }
@@ -15186,7 +14620,9 @@ unsafe extern "C" fn mdb_pid_insert(mut ids: *mut pid_t, mut pid: pid_t) -> libc
     let mut n = *ids.offset(0 as libc::c_int as isize) as libc::c_uint;
     while (0 as libc::c_int as libc::c_uint) < n {
         let mut pivot = n >> 1 as libc::c_int;
-        cursor = base.wrapping_add(pivot).wrapping_add(1 as libc::c_int as libc::c_uint);
+        cursor = base
+            .wrapping_add(pivot)
+            .wrapping_add(1 as libc::c_int as libc::c_uint);
         val = pid - *ids.offset(cursor as isize);
         if val < 0 as libc::c_int {
             n = pivot;
@@ -15194,7 +14630,7 @@ unsafe extern "C" fn mdb_pid_insert(mut ids: *mut pid_t, mut pid: pid_t) -> libc
             base = cursor;
             n = n.wrapping_sub(pivot.wrapping_add(1 as libc::c_int as libc::c_uint));
         } else {
-            return -(1 as libc::c_int)
+            return -(1 as libc::c_int);
         }
     }
     if val > 0 as libc::c_int {
@@ -15206,10 +14642,8 @@ unsafe extern "C" fn mdb_pid_insert(mut ids: *mut pid_t, mut pid: pid_t) -> libc
     *fresh89;
     n = *ids.offset(0 as libc::c_int as isize) as libc::c_uint;
     while n > cursor {
-        *ids
-            .offset(
-                n as isize,
-            ) = *ids.offset(n.wrapping_sub(1 as libc::c_int as libc::c_uint) as isize);
+        *ids.offset(n as isize) =
+            *ids.offset(n.wrapping_sub(1 as libc::c_int as libc::c_uint) as isize);
         n = n.wrapping_sub(1);
         n;
     }
@@ -15347,12 +14781,10 @@ unsafe extern "C" fn mdb_mutex_failed(
         if rc2 == 0 as libc::c_int {
             rc2 = 0 as libc::c_int;
         }
-        if rc != 0
-            || {
-                rc = rc2;
-                rc != 0
-            }
-        {
+        if rc != 0 || {
+            rc = rc2;
+            rc != 0
+        } {
             let mut sb = {
                 let mut init = sembuf {
                     sem_num: 0 as libc::c_int as libc::c_ushort,

@@ -197,7 +197,7 @@ pub const MDB_NOSUBDIR: libc::c_int = 0x4000 as libc::c_int;
 pub const MDB_RDONLY: libc::c_int = 0x20000 as libc::c_int;
 pub const MDB_PREVSNAPSHOT: libc::c_int = 0x2000000 as libc::c_int;
 pub const MDB_SUCCESS: libc::c_int = 0 as libc::c_int;
-pub const MDB_NOTFOUND: libc::c_int = -(30798 as libc::c_int);
+pub const MDB_NOTFOUND: libc::c_int = MDB_NOTFOUND;
 pub const NULL: libc::c_int = 0 as libc::c_int;
 unsafe extern "C" fn prstat(mut ms: *mut MDB_stat) {
     printf(b"  Tree depth: %u\n\0" as *const u8 as *const libc::c_char, (*ms).ms_depth);

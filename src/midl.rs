@@ -1,14 +1,6 @@
 use ::libc;
-extern "C" {
-    fn memcpy(
-        _: *mut libc::c_void,
-        _: *const libc::c_void,
-        _: libc::c_ulong,
-    ) -> *mut libc::c_void;
-    fn malloc(_: libc::c_ulong) -> *mut libc::c_void;
-    fn free(_: *mut libc::c_void);
-    fn realloc(_: *mut libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
-}
+use libc::{free, malloc, memcpy, realloc};
+
 pub type __darwin_size_t = libc::c_ulong;
 pub type size_t = __darwin_size_t;
 pub type mdb_size_t = size_t;
@@ -23,21 +15,19 @@ pub struct MDB_ID2 {
 pub type MDB_ID2L = *mut MDB_ID2;
 pub const ENOMEM: libc::c_int = 12 as libc::c_int;
 pub const MDB_IDL_LOGN: libc::c_int = 16 as libc::c_int;
-pub const MDB_IDL_UM_SIZE: libc::c_int = (1 as libc::c_int)
-    << MDB_IDL_LOGN + 1 as libc::c_int;
+pub const MDB_IDL_UM_SIZE: libc::c_int = (1 as libc::c_int) << MDB_IDL_LOGN + 1 as libc::c_int;
 pub const MDB_IDL_UM_MAX: libc::c_int = MDB_IDL_UM_SIZE - 1 as libc::c_int;
 #[no_mangle]
-pub unsafe extern "C" fn mdb_midl_search(
-    mut ids: MDB_IDL,
-    mut id: MDB_ID,
-) -> libc::c_uint {
+pub unsafe extern "C" fn mdb_midl_search(mut ids: MDB_IDL, mut id: MDB_ID) -> libc::c_uint {
     let mut base = 0 as libc::c_int as libc::c_uint;
     let mut cursor = 1 as libc::c_int as libc::c_uint;
     let mut val = 0 as libc::c_int;
     let mut n = *ids.offset(0 as libc::c_int as isize) as libc::c_uint;
     while (0 as libc::c_int as libc::c_uint) < n {
         let mut pivot = n >> 1 as libc::c_int;
-        cursor = base.wrapping_add(pivot).wrapping_add(1 as libc::c_int as libc::c_uint);
+        cursor = base
+            .wrapping_add(pivot)
+            .wrapping_add(1 as libc::c_int as libc::c_uint);
         val = if *ids.offset(cursor as isize) < id {
             -(1 as libc::c_int)
         } else {
@@ -49,7 +39,7 @@ pub unsafe extern "C" fn mdb_midl_search(
             base = cursor;
             n = n.wrapping_sub(pivot.wrapping_add(1 as libc::c_int as libc::c_uint));
         } else {
-            return cursor
+            return cursor;
         }
     }
     if val > 0 as libc::c_int {
@@ -62,7 +52,7 @@ pub unsafe extern "C" fn mdb_midl_search(
 pub unsafe extern "C" fn mdb_midl_alloc(mut num: libc::c_int) -> MDB_IDL {
     let mut ids = malloc(
         ((num + 2 as libc::c_int) as libc::c_ulong)
-            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
+            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong) as usize,
     ) as MDB_IDL;
     if !ids.is_null() {
         let fresh0 = ids;
@@ -82,33 +72,29 @@ pub unsafe extern "C" fn mdb_midl_free(mut ids: MDB_IDL) {
 pub unsafe extern "C" fn mdb_midl_shrink(mut idp: *mut MDB_IDL) {
     let mut ids = *idp;
     ids = ids.offset(-1);
-    if *ids > MDB_IDL_UM_MAX as MDB_ID
-        && {
-            ids = realloc(
-                ids as *mut libc::c_void,
-                ((MDB_IDL_UM_MAX + 2 as libc::c_int) as libc::c_ulong)
-                    .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
-            ) as MDB_IDL;
-            !ids.is_null()
-        }
-    {
+    if *ids > MDB_IDL_UM_MAX as MDB_ID && {
+        ids = realloc(
+            ids as *mut libc::c_void,
+            ((MDB_IDL_UM_MAX + 2 as libc::c_int) as libc::c_ulong)
+                .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong)
+                as usize,
+        ) as MDB_IDL;
+        !ids.is_null()
+    } {
         let fresh1 = ids;
         ids = ids.offset(1);
         *fresh1 = MDB_IDL_UM_MAX as MDB_ID;
         *idp = ids;
     }
 }
-unsafe extern "C" fn mdb_midl_grow(
-    mut idp: *mut MDB_IDL,
-    mut num: libc::c_int,
-) -> libc::c_int {
+unsafe extern "C" fn mdb_midl_grow(mut idp: *mut MDB_IDL, mut num: libc::c_int) -> libc::c_int {
     let mut idn = (*idp).offset(-(1 as libc::c_int as isize));
     idn = realloc(
         idn as *mut libc::c_void,
         (*idn)
             .wrapping_add(num as MDB_ID)
             .wrapping_add(2 as libc::c_int as MDB_ID)
-            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
+            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong) as usize,
     ) as MDB_IDL;
     if idn.is_null() {
         return ENOMEM;
@@ -125,8 +111,8 @@ pub unsafe extern "C" fn mdb_midl_need(
     mut num: libc::c_uint,
 ) -> libc::c_int {
     let mut ids = *idp;
-    num = (num as MDB_ID).wrapping_add(*ids.offset(0 as libc::c_int as isize))
-        as libc::c_uint as libc::c_uint;
+    num = (num as MDB_ID).wrapping_add(*ids.offset(0 as libc::c_int as isize)) as libc::c_uint
+        as libc::c_uint;
     if num as MDB_ID > *ids.offset(-(1 as libc::c_int) as isize) {
         num = num
             .wrapping_add(num.wrapping_div(4 as libc::c_int as libc::c_uint))
@@ -134,8 +120,8 @@ pub unsafe extern "C" fn mdb_midl_need(
             & -(256 as libc::c_int) as libc::c_uint;
         ids = realloc(
             ids.offset(-(1 as libc::c_int as isize)) as *mut libc::c_void,
-            (num as libc::c_ulong)
-                .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
+            (num as libc::c_ulong).wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong)
+                as usize,
         ) as MDB_IDL;
         if ids.is_null() {
             return ENOMEM;
@@ -148,14 +134,9 @@ pub unsafe extern "C" fn mdb_midl_need(
     return 0 as libc::c_int;
 }
 #[no_mangle]
-pub unsafe extern "C" fn mdb_midl_append(
-    mut idp: *mut MDB_IDL,
-    mut id: MDB_ID,
-) -> libc::c_int {
+pub unsafe extern "C" fn mdb_midl_append(mut idp: *mut MDB_IDL, mut id: MDB_ID) -> libc::c_int {
     let mut ids = *idp;
-    if *ids.offset(0 as libc::c_int as isize)
-        >= *ids.offset(-(1 as libc::c_int) as isize)
-    {
+    if *ids.offset(0 as libc::c_int as isize) >= *ids.offset(-(1 as libc::c_int) as isize) {
         if mdb_midl_grow(idp, MDB_IDL_UM_MAX) != 0 {
             return ENOMEM;
         }
@@ -173,26 +154,22 @@ pub unsafe extern "C" fn mdb_midl_append_list(
     mut app: MDB_IDL,
 ) -> libc::c_int {
     let mut ids = *idp;
-    if (*ids.offset(0 as libc::c_int as isize))
-        .wrapping_add(*app.offset(0 as libc::c_int as isize))
+    if (*ids.offset(0 as libc::c_int as isize)).wrapping_add(*app.offset(0 as libc::c_int as isize))
         >= *ids.offset(-(1 as libc::c_int) as isize)
     {
-        if mdb_midl_grow(idp, *app.offset(0 as libc::c_int as isize) as libc::c_int) != 0
-        {
+        if mdb_midl_grow(idp, *app.offset(0 as libc::c_int as isize) as libc::c_int) != 0 {
             return ENOMEM;
         }
         ids = *idp;
     }
     memcpy(
-        &mut *ids
-            .offset(
-                (*ids.offset(0 as libc::c_int as isize))
-                    .wrapping_add(1 as libc::c_int as MDB_ID) as isize,
-            ) as *mut MDB_ID as *mut libc::c_void,
-        &mut *app.offset(1 as libc::c_int as isize) as *mut MDB_ID
-            as *const libc::c_void,
+        &mut *ids.offset(
+            (*ids.offset(0 as libc::c_int as isize)).wrapping_add(1 as libc::c_int as MDB_ID)
+                as isize,
+        ) as *mut MDB_ID as *mut libc::c_void,
+        &mut *app.offset(1 as libc::c_int as isize) as *mut MDB_ID as *const libc::c_void,
         (*app.offset(0 as libc::c_int as isize))
-            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
+            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong) as usize,
     );
     let ref mut fresh5 = *ids.offset(0 as libc::c_int as isize);
     *fresh5 = (*fresh5).wrapping_add(*app.offset(0 as libc::c_int as isize));
@@ -275,10 +252,7 @@ pub unsafe extern "C" fn mdb_midl_sort(mut ids: MDB_IDL) {
                     if *ids.offset(i as isize) >= a {
                         break;
                     }
-                    *ids
-                        .offset(
-                            (i + 1 as libc::c_int) as isize,
-                        ) = *ids.offset(i as isize);
+                    *ids.offset((i + 1 as libc::c_int) as isize) = *ids.offset(i as isize);
                     i -= 1;
                     i;
                 }
@@ -353,20 +327,19 @@ pub unsafe extern "C" fn mdb_midl_sort(mut ids: MDB_IDL) {
                 l = i;
             }
         }
-    };
+    }
 }
 #[no_mangle]
-pub unsafe extern "C" fn mdb_mid2l_search(
-    mut ids: MDB_ID2L,
-    mut id: MDB_ID,
-) -> libc::c_uint {
+pub unsafe extern "C" fn mdb_mid2l_search(mut ids: MDB_ID2L, mut id: MDB_ID) -> libc::c_uint {
     let mut base = 0 as libc::c_int as libc::c_uint;
     let mut cursor = 1 as libc::c_int as libc::c_uint;
     let mut val = 0 as libc::c_int;
     let mut n = (*ids.offset(0 as libc::c_int as isize)).mid as libc::c_uint;
     while (0 as libc::c_int as libc::c_uint) < n {
         let mut pivot = n >> 1 as libc::c_int;
-        cursor = base.wrapping_add(pivot).wrapping_add(1 as libc::c_int as libc::c_uint);
+        cursor = base
+            .wrapping_add(pivot)
+            .wrapping_add(1 as libc::c_int as libc::c_uint);
         val = if id < (*ids.offset(cursor as isize)).mid {
             -(1 as libc::c_int)
         } else {
@@ -378,7 +351,7 @@ pub unsafe extern "C" fn mdb_mid2l_search(
             base = cursor;
             n = n.wrapping_sub(pivot.wrapping_add(1 as libc::c_int as libc::c_uint));
         } else {
-            return cursor
+            return cursor;
         }
     }
     if val > 0 as libc::c_int {
@@ -388,10 +361,7 @@ pub unsafe extern "C" fn mdb_mid2l_search(
     return cursor;
 }
 #[no_mangle]
-pub unsafe extern "C" fn mdb_mid2l_insert(
-    mut ids: MDB_ID2L,
-    mut id: *mut MDB_ID2,
-) -> libc::c_int {
+pub unsafe extern "C" fn mdb_mid2l_insert(mut ids: MDB_ID2L, mut id: *mut MDB_ID2) -> libc::c_int {
     let mut x: libc::c_uint = 0;
     let mut i: libc::c_uint = 0;
     x = mdb_mid2l_search(ids, (*id).mid);
@@ -404,18 +374,15 @@ pub unsafe extern "C" fn mdb_mid2l_insert(
         return -(1 as libc::c_int);
     }
     if (*ids.offset(0 as libc::c_int as isize)).mid >= MDB_IDL_UM_MAX as MDB_ID {
-        return -(2 as libc::c_int)
+        return -(2 as libc::c_int);
     } else {
         let ref mut fresh13 = (*ids.offset(0 as libc::c_int as isize)).mid;
         *fresh13 = (*fresh13).wrapping_add(1);
         *fresh13;
         i = (*ids.offset(0 as libc::c_int as isize)).mid as libc::c_uint;
         while i > x {
-            *ids
-                .offset(
-                    i as isize,
-                ) = *ids
-                .offset(i.wrapping_sub(1 as libc::c_int as libc::c_uint) as isize);
+            *ids.offset(i as isize) =
+                *ids.offset(i.wrapping_sub(1 as libc::c_int as libc::c_uint) as isize);
             i = i.wrapping_sub(1);
             i;
         }
@@ -424,10 +391,7 @@ pub unsafe extern "C" fn mdb_mid2l_insert(
     return 0 as libc::c_int;
 }
 #[no_mangle]
-pub unsafe extern "C" fn mdb_mid2l_append(
-    mut ids: MDB_ID2L,
-    mut id: *mut MDB_ID2,
-) -> libc::c_int {
+pub unsafe extern "C" fn mdb_mid2l_append(mut ids: MDB_ID2L, mut id: *mut MDB_ID2) -> libc::c_int {
     if (*ids.offset(0 as libc::c_int as isize)).mid >= MDB_IDL_UM_MAX as MDB_ID {
         return -(2 as libc::c_int);
     }

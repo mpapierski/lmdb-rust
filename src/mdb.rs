@@ -1,9 +1,12 @@
 #![allow(path_statements)]
+
+use std::mem;
+
 use ::libc;
+use libc::FILE;
 
 use crate::errno;
 extern "C" {
-    pub type __sFILEX;
     fn fstat(_: libc::c_int, _: *mut stat) -> libc::c_int;
     fn writev(_: libc::c_int, _: *const iovec, _: libc::c_int) -> ssize_t;
     fn mmap(
@@ -246,35 +249,7 @@ pub struct __sbuf {
     pub _base: *mut libc::c_uchar,
     pub _size: libc::c_int,
 }
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct __sFILE {
-    pub _p: *mut libc::c_uchar,
-    pub _r: libc::c_int,
-    pub _w: libc::c_int,
-    pub _flags: libc::c_short,
-    pub _file: libc::c_short,
-    pub _bf: __sbuf,
-    pub _lbfsize: libc::c_int,
-    pub _cookie: *mut libc::c_void,
-    pub _close: Option<unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int>,
-    pub _read: Option<
-        unsafe extern "C" fn(*mut libc::c_void, *mut libc::c_char, libc::c_int) -> libc::c_int,
-    >,
-    pub _seek: Option<unsafe extern "C" fn(*mut libc::c_void, fpos_t, libc::c_int) -> fpos_t>,
-    pub _write: Option<
-        unsafe extern "C" fn(*mut libc::c_void, *const libc::c_char, libc::c_int) -> libc::c_int,
-    >,
-    pub _ub: __sbuf,
-    pub _extra: *mut __sFILEX,
-    pub _ur: libc::c_int,
-    pub _ubuf: [libc::c_uchar; 3],
-    pub _nbuf: [libc::c_uchar; 1],
-    pub _lb: __sbuf,
-    pub _blksize: libc::c_int,
-    pub _offset: fpos_t,
-}
-pub type FILE = __sFILE;
+
 #[derive(Copy, Clone)]
 #[repr(C, packed(4))]
 pub struct ipc_perm {
@@ -855,13 +830,13 @@ pub const P_LEAF2: libc::c_int = 0x20 as libc::c_int;
 pub const P_SUBP: libc::c_int = 0x40 as libc::c_int;
 pub const P_LOOSE: libc::c_int = 0x4000 as libc::c_int;
 pub const P_KEEP: libc::c_int = 0x8000 as libc::c_int;
-pub const PAGEHDRSZ: libc::c_ulong = 16 as libc::c_ulong;
+pub const PAGEHDRSZ: libc::c_ulong = std::mem::offset_of!(MDB_page, mp_ptrs) as libc::c_ulong;
 pub const FILL_THRESHOLD: libc::c_int = 250 as libc::c_int;
 pub const F_BIGDATA: libc::c_int = 0x1 as libc::c_int;
 pub const F_SUBDATA: libc::c_int = 0x2 as libc::c_int;
 pub const F_DUPDATA: libc::c_int = 0x4 as libc::c_int;
 pub const NODE_ADD_FLAGS: libc::c_int = F_DUPDATA | F_SUBDATA | MDB_RESERVE | MDB_APPEND;
-pub const NODESIZE: libc::c_ulong = 8 as libc::c_ulong;
+pub const NODESIZE: libc::c_ulong = mem::offset_of!(MDB_node, mn_data) as libc::c_ulong;
 pub const MDB_VALID: libc::c_int = 0x8000 as libc::c_int;
 pub const PERSISTENT_FLAGS: libc::c_int = 0xffff as libc::c_int & !(0x8000 as libc::c_int);
 pub const VALID_FLAGS: libc::c_int = MDB_REVERSEKEY
@@ -3883,7 +3858,7 @@ unsafe extern "C" fn mdb_env_write_meta(mut txn: *mut MDB_txn) -> libc::c_int {
         meta.mm_dbs[MAIN_DBI as usize] = *((*txn).mt_dbs).offset(MAIN_DBI as isize);
         meta.mm_last_pg = ((*txn).mt_next_pgno).wrapping_sub(1 as libc::c_int as pgno_t);
         ::core::ptr::write_volatile(&mut meta.mm_txnid as *mut txnid_t, (*txn).mt_txnid);
-        off = 16 as libc::c_ulong as off_t;
+        off = mem::offset_of!(MDB_meta, mm_mapsize) as libc::off_t;
         ptr = (&mut meta as *mut MDB_meta as *mut libc::c_char).offset(off as isize);
         len = (::core::mem::size_of::<MDB_meta>() as libc::c_ulong as libc::c_ulonglong)
             .wrapping_sub(off as libc::c_ulonglong) as libc::c_int;
@@ -5684,7 +5659,7 @@ unsafe extern "C" fn mdb_page_search(
             }
             memcpy(
                 &mut flags_0 as *mut uint16_t as *mut libc::c_void,
-                (data.mv_data as *mut libc::c_char).offset(4 as libc::c_ulong as isize)
+                (data.mv_data as *mut libc::c_char).offset(mem::offset_of!(MDB_db, md_flags) as _)
                     as *const libc::c_void,
                 ::core::mem::size_of::<uint16_t>() as libc::c_ulong,
             );

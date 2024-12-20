@@ -1,12 +1,13 @@
+#![allow(path_statements, unused_assignments)]
 use std::io;
 
 use ::libc;
 use libc::{free, malloc, printf, rand, sprintf, srand, time, time_t};
 use lmdb_rust::mdb::{
     mdb_cursor_close, mdb_cursor_get, mdb_cursor_open, mdb_cursor_put, mdb_dbi_close, mdb_dbi_open,
-    mdb_del, mdb_env_close, mdb_env_create, mdb_env_open, mdb_env_set_mapsize, mdb_env_set_maxdbs, mdb_env_stat, mdb_mode_t, mdb_size_t,
-    mdb_txn_abort, mdb_txn_begin, mdb_txn_commit, MDB_cursor, MDB_dbi, MDB_env, MDB_stat, MDB_txn,
-    MDB_val, MDB_NEXT, MDB_NOTFOUND, MDB_PREV, NULL,
+    mdb_del, mdb_env_close, mdb_env_create, mdb_env_open, mdb_env_set_mapsize, mdb_env_set_maxdbs,
+    mdb_env_stat, mdb_mode_t, mdb_size_t, mdb_txn_abort, mdb_txn_begin, mdb_txn_commit, MDB_cursor,
+    MDB_dbi, MDB_env, MDB_stat, MDB_txn, MDB_val, MDB_NEXT, MDB_NOTFOUND, MDB_PREV, NULL,
 };
 
 #[path = "mtest_shared.rs"]

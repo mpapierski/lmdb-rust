@@ -1,3 +1,4 @@
+#![allow(path_statements)]
 use ::libc;
 use libc::{free, malloc, memcpy, realloc};
 
@@ -144,7 +145,7 @@ pub unsafe extern "C" fn mdb_midl_append(mut idp: *mut MDB_IDL, mut id: MDB_ID) 
     }
     let ref mut fresh4 = *ids.offset(0 as libc::c_int as isize);
     *fresh4 = (*fresh4).wrapping_add(1);
-    *fresh4;
+    let _ = *fresh4;
     *ids.offset(*ids.offset(0 as libc::c_int as isize) as isize) = id;
     return 0 as libc::c_int;
 }
@@ -378,7 +379,7 @@ pub unsafe extern "C" fn mdb_mid2l_insert(mut ids: MDB_ID2L, mut id: *mut MDB_ID
     } else {
         let ref mut fresh13 = (*ids.offset(0 as libc::c_int as isize)).mid;
         *fresh13 = (*fresh13).wrapping_add(1);
-        *fresh13;
+        let _ = *fresh13;
         i = (*ids.offset(0 as libc::c_int as isize)).mid as libc::c_uint;
         while i > x {
             *ids.offset(i as isize) =
@@ -397,7 +398,7 @@ pub unsafe extern "C" fn mdb_mid2l_append(mut ids: MDB_ID2L, mut id: *mut MDB_ID
     }
     let ref mut fresh14 = (*ids.offset(0 as libc::c_int as isize)).mid;
     *fresh14 = (*fresh14).wrapping_add(1);
-    *fresh14;
+    let _ = *fresh14;
     *ids.offset((*ids.offset(0 as libc::c_int as isize)).mid as isize) = *id;
     return 0 as libc::c_int;
 }

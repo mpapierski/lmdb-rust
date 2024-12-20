@@ -1,12 +1,14 @@
+#![allow(path_statements, unused_assignments)]
 use std::io;
 
 use ::libc;
 use libc::{free, malloc, printf, rand, sprintf, strcpy};
 use lmdb_rust::mdb::{
     mdb_cursor_close, mdb_cursor_get, mdb_cursor_open, mdb_dbi_close, mdb_dbi_open, mdb_del,
-    mdb_env_close, mdb_env_create, mdb_env_open, mdb_env_set_mapsize, mdb_env_set_maxdbs, mdb_env_stat, mdb_mode_t, mdb_put, mdb_size_t,
-    mdb_txn_abort, mdb_txn_begin, mdb_txn_commit, MDB_cursor, MDB_dbi, MDB_env, MDB_stat, MDB_txn,
-    MDB_val, MDB_NEXT, MDB_NEXT_MULTIPLE, MDB_NOTFOUND, MDB_PREV, NULL,
+    mdb_env_close, mdb_env_create, mdb_env_open, mdb_env_set_mapsize, mdb_env_set_maxdbs,
+    mdb_env_stat, mdb_mode_t, mdb_put, mdb_size_t, mdb_txn_abort, mdb_txn_begin, mdb_txn_commit,
+    MDB_cursor, MDB_dbi, MDB_env, MDB_stat, MDB_txn, MDB_val, MDB_NEXT, MDB_NEXT_MULTIPLE,
+    MDB_NOTFOUND, MDB_PREV, NULL,
 };
 
 unsafe fn main_0(_argc: libc::c_int, _argv: *mut *mut libc::c_char) -> libc::c_int {
@@ -211,13 +213,13 @@ unsafe fn main_0(_argc: libc::c_int, _argv: *mut *mut libc::c_char) -> libc::c_i
         &mut data,
         0x20 as libc::c_int as libc::c_uint,
     );
-    (rc == -(30799 as libc::c_int) || {
+    let _ = rc == -(30799 as libc::c_int) || {
         if rc == 0 {
         } else {
             panic!();
         };
         0 as libc::c_int != 0
-    });
+    };
     mdb_txn_abort(txn);
     sprintf(
         sval.as_mut_ptr(),
@@ -241,13 +243,13 @@ unsafe fn main_0(_argc: libc::c_int, _argv: *mut *mut libc::c_char) -> libc::c_i
         &mut data,
         0x20 as libc::c_int as libc::c_uint,
     );
-    (rc == -(30799 as libc::c_int) || {
+    let _ = rc == -(30799 as libc::c_int) || {
         if rc == 0 {
         } else {
             panic!();
         };
         0 as libc::c_int != 0
-    });
+    };
     mdb_txn_abort(txn);
     sprintf(
         sval.as_mut_ptr(),
@@ -271,13 +273,13 @@ unsafe fn main_0(_argc: libc::c_int, _argv: *mut *mut libc::c_char) -> libc::c_i
         &mut data,
         0x20 as libc::c_int as libc::c_uint,
     );
-    (rc == -(30799 as libc::c_int) || {
+    let _ = rc == -(30799 as libc::c_int) || {
         if rc == 0 {
         } else {
             panic!();
         };
         0 as libc::c_int != 0
-    });
+    };
     rc = mdb_txn_commit(txn);
     if rc == 0 as libc::c_int {
     } else {

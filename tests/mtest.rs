@@ -1,3 +1,4 @@
+#![allow(path_statements, unused_assignments)]
 use std::{ffi::CStr, io};
 
 use ::libc;

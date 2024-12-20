@@ -1,8 +1,8 @@
 use std::io;
 
-pub(crate) const TEST_DB: &str = "testdb";
+const TEST_DB: &str = "testdb";
 
-pub(crate) fn mtest_wrapper(
+pub fn mtest_wrapper(
     main_0: unsafe fn(libc::c_int, *mut *mut libc::c_char) -> libc::c_int,
 ) -> io::Result<()> {
     let temp = tempfile::tempdir()?;

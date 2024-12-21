@@ -1,7 +1,10 @@
-#![allow(path_statements)]
 use ::libc;
-use libc::{free, malloc, memcpy, realloc};
-
+extern "C" {
+    fn memcpy(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
+    fn malloc(_: libc::c_ulong) -> *mut libc::c_void;
+    fn free(_: *mut libc::c_void);
+    fn realloc(_: *mut libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
+}
 pub type __darwin_size_t = libc::c_ulong;
 pub type size_t = __darwin_size_t;
 pub type mdb_size_t = size_t;
@@ -53,7 +56,7 @@ pub unsafe extern "C" fn mdb_midl_search(mut ids: MDB_IDL, mut id: MDB_ID) -> li
 pub unsafe extern "C" fn mdb_midl_alloc(mut num: libc::c_int) -> MDB_IDL {
     let mut ids = malloc(
         ((num + 2 as libc::c_int) as libc::c_ulong)
-            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong) as usize,
+            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
     ) as MDB_IDL;
     if !ids.is_null() {
         let fresh0 = ids;
@@ -77,8 +80,7 @@ pub unsafe extern "C" fn mdb_midl_shrink(mut idp: *mut MDB_IDL) {
         ids = realloc(
             ids as *mut libc::c_void,
             ((MDB_IDL_UM_MAX + 2 as libc::c_int) as libc::c_ulong)
-                .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong)
-                as usize,
+                .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
         ) as MDB_IDL;
         !ids.is_null()
     } {
@@ -95,7 +97,7 @@ unsafe extern "C" fn mdb_midl_grow(mut idp: *mut MDB_IDL, mut num: libc::c_int) 
         (*idn)
             .wrapping_add(num as MDB_ID)
             .wrapping_add(2 as libc::c_int as MDB_ID)
-            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong) as usize,
+            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
     ) as MDB_IDL;
     if idn.is_null() {
         return ENOMEM;
@@ -121,8 +123,7 @@ pub unsafe extern "C" fn mdb_midl_need(
             & -(256 as libc::c_int) as libc::c_uint;
         ids = realloc(
             ids.offset(-(1 as libc::c_int as isize)) as *mut libc::c_void,
-            (num as libc::c_ulong).wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong)
-                as usize,
+            (num as libc::c_ulong).wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
         ) as MDB_IDL;
         if ids.is_null() {
             return ENOMEM;
@@ -145,7 +146,7 @@ pub unsafe extern "C" fn mdb_midl_append(mut idp: *mut MDB_IDL, mut id: MDB_ID) 
     }
     let ref mut fresh4 = *ids.offset(0 as libc::c_int as isize);
     *fresh4 = (*fresh4).wrapping_add(1);
-    let _ = *fresh4;
+    *fresh4;
     *ids.offset(*ids.offset(0 as libc::c_int as isize) as isize) = id;
     return 0 as libc::c_int;
 }
@@ -170,7 +171,7 @@ pub unsafe extern "C" fn mdb_midl_append_list(
         ) as *mut MDB_ID as *mut libc::c_void,
         &mut *app.offset(1 as libc::c_int as isize) as *mut MDB_ID as *const libc::c_void,
         (*app.offset(0 as libc::c_int as isize))
-            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong) as usize,
+            .wrapping_mul(::core::mem::size_of::<MDB_ID>() as libc::c_ulong),
     );
     let ref mut fresh5 = *ids.offset(0 as libc::c_int as isize);
     *fresh5 = (*fresh5).wrapping_add(*app.offset(0 as libc::c_int as isize));
@@ -379,7 +380,7 @@ pub unsafe extern "C" fn mdb_mid2l_insert(mut ids: MDB_ID2L, mut id: *mut MDB_ID
     } else {
         let ref mut fresh13 = (*ids.offset(0 as libc::c_int as isize)).mid;
         *fresh13 = (*fresh13).wrapping_add(1);
-        let _ = *fresh13;
+        *fresh13;
         i = (*ids.offset(0 as libc::c_int as isize)).mid as libc::c_uint;
         while i > x {
             *ids.offset(i as isize) =
@@ -398,7 +399,7 @@ pub unsafe extern "C" fn mdb_mid2l_append(mut ids: MDB_ID2L, mut id: *mut MDB_ID
     }
     let ref mut fresh14 = (*ids.offset(0 as libc::c_int as isize)).mid;
     *fresh14 = (*fresh14).wrapping_add(1);
-    let _ = *fresh14;
+    *fresh14;
     *ids.offset((*ids.offset(0 as libc::c_int as isize)).mid as isize) = *id;
     return 0 as libc::c_int;
 }

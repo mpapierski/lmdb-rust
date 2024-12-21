@@ -1,6 +1,9 @@
 use std::{ffi::CStr, ptr::NonNull};
 
-use lmdb_rust::{self, mdb};
+use lmdb_rust::{
+    self,
+    mdb::{self, MDB_VERSION_STRING},
+};
 
 #[test]
 fn test_version() {
@@ -18,7 +21,10 @@ fn test_version() {
     let safe_ptr = unsafe { CStr::from_ptr(result_ptr) };
     assert_eq!(
         safe_ptr.to_str().unwrap(),
-        "LMDB 0.9.70: (December 19, 2015)"
+        CStr::from_bytes_with_nul(MDB_VERSION_STRING)
+            .unwrap()
+            .to_str()
+            .unwrap()
     );
     assert_eq!(major, 0);
     assert_eq!(minor, 9);

@@ -697,7 +697,7 @@ pub const ENOSPC: libc::c_int = 28 as libc::c_int;
 pub const EROFS: libc::c_int = 30 as libc::c_int;
 pub const EPIPE: libc::c_int = 32 as libc::c_int;
 pub const EAGAIN: libc::c_int = 35 as libc::c_int;
-pub const UINTPTR_MAX: libc::c_ulong = 18446744073709551615 as libc::c_ulong;
+pub const UINTPTR_MAX: libc::c_ulong = libc::c_ulong::MAX;
 pub const SIZE_MAX: libc::c_ulong = UINTPTR_MAX;
 pub const _SC_PAGESIZE: libc::c_int = 29 as libc::c_int;
 pub const _SC_PAGE_SIZE: libc::c_int = _SC_PAGESIZE;
@@ -720,9 +720,7 @@ pub const MDB_SIZE_MAX: libc::c_ulong = SIZE_MAX;
 pub const MDB_VERSION_MAJOR: libc::c_int = 0 as libc::c_int;
 pub const MDB_VERSION_MINOR: libc::c_int = 9 as libc::c_int;
 pub const MDB_VERSION_PATCH: libc::c_int = 70 as libc::c_int;
-pub const MDB_VERSION_STRING: [libc::c_char; 33] = unsafe {
-    *::core::mem::transmute::<&[u8; 33], &[libc::c_char; 33]>(b"LMDB 0.9.70: (December 19, 2015)\0")
-};
+pub const MDB_VERSION_STRING: &'static [u8] = b"LMDB 0.9.70: (December 19, 2015)\0";
 pub const MDB_FIXEDMAP: libc::c_int = 0x1 as libc::c_int;
 pub const MDB_NOSUBDIR: libc::c_int = 0x4000 as libc::c_int;
 pub const MDB_NOSYNC: libc::c_int = 0x10000 as libc::c_int;
@@ -776,8 +774,8 @@ pub const MDB_IDL_LOGN: libc::c_int = 16 as libc::c_int;
 pub const MDB_IDL_UM_SIZE: libc::c_int = (1 as libc::c_int) << MDB_IDL_LOGN + 1 as libc::c_int;
 pub const MDB_IDL_UM_MAX: libc::c_int = MDB_IDL_UM_SIZE - 1 as libc::c_int;
 pub const NULL: libc::c_int = 0 as libc::c_int;
-pub const UINT_MAX: libc::c_uint = 0xffffffff as libc::c_uint;
-pub const LONG_MAX: libc::c_long = 0x7fffffffffffffff as libc::c_long;
+pub const UINT_MAX: libc::c_uint = libc::c_uint::MAX;
+pub const LONG_MAX: libc::c_long = libc::c_long::MAX;
 pub const SSIZE_MAX: libc::c_long = LONG_MAX;
 pub const SEEK_SET: libc::c_int = 0 as libc::c_int;
 pub const SEEK_END: libc::c_int = 2 as libc::c_int;
@@ -906,7 +904,7 @@ pub unsafe extern "C" fn mdb_version(
     if !patch.is_null() {
         *patch = MDB_VERSION_PATCH;
     }
-    return MDB_VERSION_STRING.as_ptr();
+    return MDB_VERSION_STRING.as_ptr() as _;
 }
 static mut mdb_errstr: [*mut libc::c_char; 21] = [
     b"MDB_KEYEXIST: Key/data pair already exists\0" as *const u8 as *const libc::c_char

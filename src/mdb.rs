@@ -651,11 +651,9 @@ pub struct MDB_node {
     pub mn_ksize: libc::c_ushort,
     pub mn_data: [libc::c_char; 1],
 }
-pub const Align: C2RustUnnamed_8 = 8;
-pub type C2RustUnnamed_8 = libc::c_uint;
-pub const Paranoid: C2RustUnnamed_9 = 0;
-pub type C2RustUnnamed_9 = libc::c_uint;
-pub const Max_retries: C2RustUnnamed_9 = 2147483647;
+pub const Align: usize = mem::size_of::<pgno_t>();
+pub const Paranoid: libc::c_uint = 0;
+pub const Max_retries: libc::c_uint = 2147483647;
 pub const MDB_END_COMMITTED: C2RustUnnamed_12 = 0;
 pub const Mask: C2RustUnnamed_10 = 49232;
 pub type C2RustUnnamed_10 = libc::c_uint;

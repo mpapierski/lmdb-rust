@@ -3,12 +3,15 @@ use std::{ffi::CStr, io};
 
 use ::libc;
 use libc::{free, malloc, printf, rand, sprintf, srand};
-use lmdb_rust::mdb::{
-    mdb_cursor_close, mdb_cursor_get, mdb_cursor_open, mdb_dbi_close, mdb_dbi_open, mdb_del,
-    mdb_env_close, mdb_env_create, mdb_env_open, mdb_env_set_mapsize, mdb_env_set_maxreaders,
-    mdb_env_stat, mdb_mode_t, mdb_put, mdb_size_t, mdb_strerror, mdb_txn_abort, mdb_txn_begin,
-    mdb_txn_commit, MDB_cursor, MDB_dbi, MDB_env, MDB_stat, MDB_txn, MDB_val, MDB_FIRST, MDB_LAST,
-    MDB_NEXT, MDB_NOTFOUND, MDB_PREV, NULL,
+use lmdb_rust::{
+    mdb::{
+        mdb_cursor_close, mdb_cursor_get, mdb_cursor_open, mdb_dbi_close, mdb_dbi_open, mdb_del,
+        mdb_env_close, mdb_env_create, mdb_env_open, mdb_env_set_mapsize, mdb_env_set_maxreaders,
+        mdb_env_stat, mdb_mode_t, mdb_put, mdb_size_t, mdb_strerror, mdb_txn_abort, mdb_txn_begin,
+        mdb_txn_commit, MDB_cursor, MDB_dbi, MDB_env, MDB_stat, MDB_txn, MDB_val, MDB_FIRST,
+        MDB_LAST, MDB_NEXT, MDB_NOTFOUND, MDB_PREV, NULL,
+    },
+    MDB_FIXEDMAP,
 };
 #[path = "mtest_shared.rs"]
 mod mtest_shared;
@@ -99,8 +102,8 @@ unsafe fn main_0(_argc: libc::c_int, _argv: *mut *mut libc::c_char) -> libc::c_i
     rc = mdb_env_open(
         env,
         b"./testdb\0" as *const u8 as *const libc::c_char,
-        0x1 as libc::c_int as libc::c_uint,
-        0o664 as libc::c_int as mdb_mode_t,
+        MDB_FIXEDMAP as u32,
+        0o664,
     );
     if rc == 0 as libc::c_int {
     } else {

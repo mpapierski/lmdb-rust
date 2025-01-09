@@ -16,7 +16,6 @@ extern "C" {
         _: *mut FILE,
     ) -> *mut FILE;
     fn putchar(_: libc::c_int) -> libc::c_int;
-    fn __error() -> *mut libc::c_int;
     fn signal(
         _: libc::c_int,
         _: Option::<unsafe extern "C" fn(libc::c_int) -> ()>,

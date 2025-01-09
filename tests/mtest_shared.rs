@@ -1,6 +1,6 @@
 use std::io;
 
-const TEST_DB: &str = "testdb";
+const TEST_DB: &str = "./testdb";
 
 pub fn mtest_wrapper(
     main_0: unsafe fn(libc::c_int, *mut *mut libc::c_char) -> libc::c_int,

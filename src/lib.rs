@@ -6,10 +6,6 @@
 #![allow(unused_assignments)]
 #![allow(unused_mut)]
 
-pub(crate) fn errno() -> i32 {
-    std::io::Error::last_os_error().raw_os_error().unwrap_or(0)
-}
-
 extern crate libc;
 
 pub mod mdb;

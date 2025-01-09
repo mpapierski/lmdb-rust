@@ -23,7 +23,6 @@ extern "C" {
     fn malloc(_: libc::c_ulong) -> *mut libc::c_void;
     fn free(_: *mut libc::c_void);
     fn realloc(_: *mut libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
-    fn __error() -> *mut libc::c_int;
     fn memchr(
         _: *const libc::c_void,
         _: libc::c_int,
